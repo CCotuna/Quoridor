@@ -35,3 +35,13 @@ header {
 .nav__links li a:hover {
     color: #dc5608;   
 }
+
+#nickname {
+    
+    width:300px;
+    height:60px;
+    padding:0 0 0 3%;
+    background-color:#c4c4c3;
+    border:none;
+    border-radius:5px;
+}
