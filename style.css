@@ -36,11 +36,20 @@ header {
     color: #dc5608;   
 }
 
-#nickname {
-    
+.nickname {
     width:300px;
-    height:60px;
     padding:0 0 0 3%;
+    height:60px;
+}
+
+.playButton {
+    width:200px;
+    padding: 0 3%;
+    height:40px;
+    
+}
+
+.inputNP{
     background-color:#c4c4c3;
     border:none;
     border-radius:5px;

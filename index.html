@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
     <header style="padding: 0 5%; background: linear-gradient(90deg, #F35C08 0%, #FFFFFF 32.6%, #FFFFFF 50.83%, #FFFFFF 69.06%, #F35C08 91.98%);">
         <img class="logo" src="images/Logo.svg" alt="logo">
         <nav>
@@ -19,13 +20,16 @@
         </nav>
         <div style="padding-left:7%;"></div>
     </header>
-
+    <!-- Body - Title + Inputs + Photo -->
     <div style="padding:5% 0; display:flex; justify-content:center;"><span style="font-family:Inter; font-size:40px;"><b>Quoridor</b></span></div>
-    <div>
-        <div>
-            <input type="text" id="nickname" placeholder="Enter your nickname ... " >
+    <div style="display:flex; flex-direction:row">
+        <div style="display:flex; flex-direction:column; padding: 10% 20% 0 10%">
+            <input type="text" class="nickname inputNP" placeholder="Enter your nickname ... " style="margin-bottom:10%;">
+            <button class="playButton inputNP" style="margin-left:15%;"><b>Play</b></button>
         </div>
-        <div></div>
+        <div>
+            <img src="Winner.jpg" alt="winner" style="width:400px; height:400px;">
+        </div>
     </div>
 
 
