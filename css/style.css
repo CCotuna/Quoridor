@@ -185,6 +185,10 @@ button:hover{
         display:block;
     }
 
+    button{
+        margin: 10px 0 0 0;
+    }
+
     #menuList {
         overflow:hidden;
         transition: 0.5s;
