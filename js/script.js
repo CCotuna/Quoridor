@@ -10,3 +10,11 @@ function togglemenu(){
         menuList.style.maxHeight = "0px"
     }
 }
+
+function displayDiscord(){
+    alert("ID: nomnom#2027");
+}
+
+function displaySlackAddres(){
+    alert("Email address: calin.cotuna@emanuel.ro")
+}
