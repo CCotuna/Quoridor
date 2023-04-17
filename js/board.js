@@ -1,5 +1,8 @@
+var canvas;
+
 function setup(){
-    createCanvas(440, 440)
+    canvas = createCanvas(440, 440)
+    canvas.parent("myCanvas");
     background(200)
 }
 
@@ -33,5 +36,3 @@ function draw(){
         rows += 1;
     }
 }
-
-draw();
