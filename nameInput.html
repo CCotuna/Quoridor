@@ -5,10 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter your nickname...</title>
+
+    <style>
+        .submitBtn {
+         width: 140px;
+         border: 0;
+         padding: 12px 10px;
+         outline:none;
+         color: #fff;
+         background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
+         border-radius: 6px;
+         cursor: pointer;
+         transition: width 0.5s
+        }
+
+        #playerNameInput {
+            width:200px;
+            border: 0;
+            padding:12px 5px;
+            outline: none;
+            color: #fff;
+            background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
+            border-radius:6px;
+        }
+
+    </style>
 </head>
 <body>
+    
     <input type="text" id="playerNameInput" placeholder="Enter your nickname ... ">
-    <button id="submitButton">Submit</button>
+    <button id="submitButton" class="submitBtn">Submit</button>
 
 
     <script src="vendor/p5.min.js"></script>
