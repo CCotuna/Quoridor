@@ -1,6 +1,7 @@
 let board = [];
 let canvas;
 document.getElementById("resetButton").addEventListener("click", resetBoard);
+document.getElementById("resetButton").addEventListener("mouseover", function(){});
 
 function setup(){
     canvas = createCanvas(630, 630);
@@ -10,7 +11,7 @@ function setup(){
     
     background('darkred');
 
-    let color1 = color(random(255), random(255), random(255));
+    let color1 = 'white';
 
     for(let i = 0; i < 9; i++){
         for(let j = 0; j < 9; j++){
@@ -55,5 +56,7 @@ function mouseClicked(){
 }
 
 function resetBoard(){
-
+    for(let box of board){
+        box.color = 'white';
+    }
 }
