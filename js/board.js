@@ -2,6 +2,17 @@ let board = [];
 
 function setup(){
     createCanvas(500, 400);
+
+    let color1 = 'green';
+
+    for(let i = 0; i < 9; i++){
+        for(let j = 0; j < 9; j++){
+            let x = j * 60 + 50;
+            let y = i * 60 + 50;
+            let box = new Box(x, y, 50, green); 
+            board.push(box);
+        }
+    }
 }
 
 class Box {
