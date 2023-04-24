@@ -1,7 +1,10 @@
 let board = [];
+let canvas;
 
 function setup(){
-    createCanvas(630, 630);
+    canvas = createCanvas(630, 630);
+    canvas.position(400, 200);
+
     background(color(random(255), random(255), random(255)));
     let color1 = color(random(255), random(255), random(255));
 
