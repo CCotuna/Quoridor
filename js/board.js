@@ -1,8 +1,21 @@
-var canvas;
+let board = [];
 
 function setup(){
-    createCanvas(440, 440)
-    background(200)
+    createCanvas(500, 400);
+}
+
+class Box {
+    constructor( x, y, size, color){
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+    }
+
+    display(){
+        fill(this.color);
+        square(this.x, this.y, this.size);
+    }
 }
 
 
