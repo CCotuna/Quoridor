@@ -20,7 +20,6 @@ function setup(){
             board.push(box);
         }
     }
-
 }
 
 class Box {
@@ -44,7 +43,6 @@ class Box {
 
 function draw(){
     for(let box of board){
-        box.hover();
         box.display();
     }
 }
