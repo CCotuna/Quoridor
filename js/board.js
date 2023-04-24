@@ -38,11 +38,26 @@ class Box {
     newColor() {
         this.color = color(random(255), random(255), random(255));
     }
+
+    hover() {
+        if (mouseX > this.x && mouseX < this.x + this.size && mouseY > this.y && mouseY < this.y + this.size) {
+            this.color = color(160, 160, 160);
+        }
+        else {
+            this.color = 'white';
+        }
+    }
+        
+
+    mouseOutside() {
+        this.color = 'white';
+    }
 }
 
 
 function draw(){
     for(let box of board){
+        box.hover();
         box.display();
     }
 }
@@ -58,4 +73,4 @@ function resetBoard(){
     for(let box of board){
         box.color = 'white';
     }
-}
+} 
