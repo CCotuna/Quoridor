@@ -1,12 +1,8 @@
 document.getElementById("submitButton").addEventListener("click", function(){
     let playerName = document.getElementById("playerNameInput").value;
-    displayPlayerName(playerName);
+    localStorage.setItem("playerName", playerName);
+    window.location.href = "gameplay.html";
 })
-
-function setup(){
-    createCanvas(500,500);
-    background('yellow');
-}
 
 function displayPlayerName(playerName){
     textAlign(CENTER, CENTER);

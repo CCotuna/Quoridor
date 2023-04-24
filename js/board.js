@@ -1,6 +1,7 @@
 let board = [];
 let canvas;
 document.getElementById("resetButton").addEventListener("click", resetBoard);
+let playerName = localStorage.getItem("playerName");
 
 function setup(){
     canvas = createCanvas(630, 630);
@@ -59,3 +60,5 @@ function resetBoard(){
         box.color = 'white';
     }
 } 
+
+document.getElementById("playerNameDisplay").textContent = "Player Name: " + playerName; 
