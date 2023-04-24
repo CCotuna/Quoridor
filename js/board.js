@@ -30,6 +30,12 @@ class Box {
 }
 
 
+function draw(){
+    for(let box of board){
+        box.display();
+    }
+}
+
 
 
 
