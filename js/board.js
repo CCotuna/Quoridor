@@ -1,13 +1,15 @@
 let board = [];
 let canvas;
+document.getElementById("resetButton").addEventListener("click", resetBoard);
 
 function setup(){
     canvas = createCanvas(630, 630);
     let canvasX = (windowWidth - width) / 2;
     let canvasY = (windowHeight - height) / 2;
     canvas.position(canvasX, canvasY);
+    
+    background('darkred');
 
-    background(color(random(255), random(255), random(255)));
     let color1 = color(random(255), random(255), random(255));
 
     for(let i = 0; i < 9; i++){
@@ -50,4 +52,8 @@ function mouseClicked(){
         if(mouseX > box.x && mouseX < box.x + box.size && mouseY > box.y && mouseY < box.y + box.size)
             box.newColor();
     }
+}
+
+function resetBoard(){
+
 }
