@@ -1,26 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter your nickname...</title>
     <link rel="stylesheet" href="css/defaultDesign.css">
+    <link rel="stylesheet" href="css/nameInput.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <style>
-        .input {
-         width: 100px;
-         border: 0;
-         padding: 12px 10px;
-         outline:none;
-         color: #fff;
-         background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
-         border-radius: 6px;
-        }
-
-    </style>
 </head>
+
 <body>
     <div class="container">
         <div class="navbar">
@@ -38,8 +29,8 @@
         <div class="row">
             <div class="col-1">
                 <h3>Enter your nickname and get on the first line.</h3>
-                <input type="text" id="playerNameInput" placeholder="Enter your nickname ... " class="input">
-                <button id="submitButton" class="input" style="cursor: default; pointer-events: none;">Submit</button>
+                <input type="text" id="playerNameInput" placeholder="Enter your nickname ... " class="inputBox">
+                <button id="submitButton" class="submitBox">Submit</button>
             </div>
             <div class="col-2">
                 <img src="images/quoridor_table.png" class="qtable">
@@ -49,8 +40,9 @@
         </div>
 
 
-    <script src="vendor/p5.min.js"></script>
-    <script src="js/displayName.js"></script>
-    <script src="js/script.js"></script>
+        <script src="vendor/p5.min.js"></script>
+        <script src="js/displayName.js"></script>
+        <script src="js/script.js"></script>
 </body>
+
 </html>
