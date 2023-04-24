@@ -1,7 +1,6 @@
 let board = [];
 let canvas;
 document.getElementById("resetButton").addEventListener("click", resetBoard);
-document.getElementById("resetButton").addEventListener("mouseover", function(){});
 
 function setup(){
     canvas = createCanvas(630, 630);
