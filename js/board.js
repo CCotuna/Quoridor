@@ -1,7 +1,6 @@
 let board = [];
 let canvas;
 document.getElementById("resetButton").addEventListener("click", resetBoard);
-let hoverColor;
 
 function setup(){
     canvas = createCanvas(630, 630);
@@ -22,7 +21,6 @@ function setup(){
         }
     }
 
-    hoverColor = color(160, 160, 160);
 }
 
 class Box {
@@ -40,20 +38,6 @@ class Box {
 
     newColor() {
         this.color = color(random(255), random(255), random(255));
-    }
-
-    hover() {
-        if (mouseX > this.x && mouseX < this.x + this.size && mouseY > this.y && mouseY < this.y + this.size) {
-            this.color = hoverColor;
-        }
-        else if (this.color !== 'white'){
-            this.color = 'white';
-        }
-    }
-        
-
-    mouseOutside() {
-        this.color = 'white';
     }
 }
 
