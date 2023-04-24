@@ -5,39 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter your nickname...</title>
+    <link rel="stylesheet" href="css/homestyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-        .submitBtn {
-         width: 140px;
+        .input {
+         width: 100px;
          border: 0;
          padding: 12px 10px;
          outline:none;
          color: #fff;
          background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
          border-radius: 6px;
-         cursor: pointer;
-         transition: width 0.5s
-        }
-
-        #playerNameInput {
-            width:200px;
-            border: 0;
-            padding:12px 5px;
-            outline: none;
-            color: #fff;
-            background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
-            border-radius:6px;
         }
 
     </style>
 </head>
 <body>
-    
-    <input type="text" id="playerNameInput" placeholder="Enter your nickname ... ">
-    <button id="submitButton" class="submitBtn">Submit</button>
+    <div class="container">
+        <div class="navbar">
+            <img src="images/Logo.png" class="logo" style="width:100px; height:40px;">
+            <nav>
+                <ul id="menuList">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="rules.html">Rules</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            <img src="images/menu-icon.svg" class="menu-icon" onclick="togglemenu()">
+        </div>
+
+        <div class="row">
+            <div class="col-1">
+                <h3>Enter your nickname and get on the first line.</h3>
+                <input type="text" id="playerNameInput" placeholder="Enter your nickname ... " class="input">
+                <button id="submitButton" class="input" style="cursor: default;">Submit</button>
+            </div>
+            <div class="col-2">
+                <img src="images/quoridor_table.png" class="qtable">
+                <div class="color-box"></div>
+            </div>
+
+        </div>
 
 
     <script src="vendor/p5.min.js"></script>
     <script src="js/displayName.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
