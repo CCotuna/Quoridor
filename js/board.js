@@ -28,9 +28,13 @@ class Box {
         this.color = color;
     }
 
-    display(){
+    display() {
         fill(this.color);
         square(this.x, this.y, this.size);
+    }
+
+    newColor() {
+        this.color = color(random(255), random(255), random(255));
     }
 }
 
@@ -38,5 +42,12 @@ class Box {
 function draw(){
     for(let box of board){
         box.display();
+    }
+}
+
+function mouseClicked(){
+    for(let box of board) {
+        if(mouseX > box.x && mouseX < box.x + box.size && mouseY > box.y && mouseY < box.y + box.size)
+            box.newColor();
     }
 }
