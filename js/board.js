@@ -3,7 +3,9 @@ let canvas;
 
 function setup(){
     canvas = createCanvas(630, 630);
-    canvas.position(400, 200);
+    let canvasX = (windowWidth - width) / 2;
+    let canvasY = (windowHeight - height) / 2;
+    canvas.position(canvasX, canvasY);
 
     background(color(random(255), random(255), random(255)));
     let color1 = color(random(255), random(255), random(255));
