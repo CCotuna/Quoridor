@@ -1,59 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-.container {
-    width:100%;
-    min-height:100vh;
-    padding-left:4%;
-    padding-right:8%;
-    box-sizing: border-box;
-    overflow:hidden;
-}
-
-.navbar {
-    width:100%;
-    display:flex;
-    align-items:center;
-}
-
-.logo {
-    width:100px;
-    cursor:pointer;
-    margin:15px 0;
-}
-
-.menu-icon {
-     width:25px;
-     cursor:pointer;
-    display:none;
-}
-
-nav {
-    flex:1; text-align:right;
-}
-
-nav ul li {
-    list-style: none;
-    display: inline-block;
-    margin-right: 30px;
-
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #000;
-    font-size:20px;
-}
-
-nav ul li a:hover {
-    color: #ff5ea2;
-
-}
 
 
 .row {
@@ -138,38 +84,6 @@ nav ul li a:hover {
 }
 
 @media only screen and (max-width:700px){
-    
-    nav ul {
-        width: 100%;
-        background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
-        position: absolute;
-        top: 75px;
-        right: 0;
-        z-index: 2;   
-    }
-
-    nav ul li {
-        display:block;
-        margin-top:10px;
-        margin-bottom:10px;
-    }
-
-    nav ul li a {
-        color: #fff;
-    }
-
-    .menu-icon{
-        display:block;
-    }
-
-    button{
-        margin: 10px 0 0 0;
-    }
-
-    #menuList {
-        overflow:hidden;
-        transition: 0.5s;
-    }
 
     .row{
         flex-direction:column-reverse;
