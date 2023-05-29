@@ -1,7 +1,7 @@
 document.getElementById("submitButton").addEventListener("click", function(){
     let playerName = document.getElementById("playerNameInput").value;
     localStorage.setItem("playerName", playerName);
-    window.location.href = "gameplay.html";
+    window.location.href = "loading_page.html";
 })
 
 function displayPlayerName(playerName){
