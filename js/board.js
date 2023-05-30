@@ -19,8 +19,19 @@ function setup(){
             let y = i * 60 + 50;
             let box = new Box(x, y, 50, color1);
             board.push(box);
-            let wall = new Wall(box.x+box.size, box.y,10,50,"blue") 
-            board.push(wall);
+            
+            
+        }
+    }
+
+    for(let i = 0; i < 9; i++){
+        for(let j = 0 ; j < 9; j++){
+            let x = j * 60 + 50;
+            let y = i * 60 + 50;
+            let wall1 = new Wall(x+50, y, 10, 60,"blue"); 
+            board.push(wall1);
+            let wall2 = new Wall(x, y+50, 60, 10, "orange");
+            board.push(wall2);
         }
     }
 
