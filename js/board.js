@@ -17,10 +17,15 @@ function setup(){
         for(let j = 0; j < 9; j++){
             let x = j * 60 + 50;
             let y = i * 60 + 50;
-            let box = new Box(x, y, 50, color1); 
+            let box = new Box(x, y, 50, color1);
             board.push(box);
+            let wall = new Wall(box.x+box.size, box.y,10,50,"blue") 
+            board.push(wall);
         }
     }
+
+    
+    
 }
 
 class Box {
@@ -48,18 +53,51 @@ class Wall {
         this.w = w;
         this.h = h;
         this.color = color;
+        this.originalColor = color;
+        this.isMouseOver = false;
     }
 
     display(){
         fill(this.color);
         rect(this.x, this.y, this.w, this.h)
     }
+
+    mouseOver() {
+        this.color = "yellow";
+        this.isMouseOver = true;
+    }
+
+    mouseOut(){
+        this.color = this.originalColor;
+        this.isMouseOver = false;
+    }
+    
 }
 
 
 function draw(){
     for(let box of board){
         box.display();
+    }
+}
+
+
+function mouseMoved() {
+    for (let item of board) {
+      if (
+        mouseX > item.x &&
+        mouseX < item.x + item.w &&
+        mouseY > item.y &&
+        mouseY < item.y + item.h
+      ) {
+        if (item instanceof Wall && !item.isMouseOver) {
+          item.mouseOver();
+        }
+      } else {
+        if (item instanceof Wall && item.isMouseOver) {
+          item.mouseOut();
+        }
+      }
     }
 }
 
