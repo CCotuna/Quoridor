@@ -25,12 +25,19 @@ function setup(){
     }
 
     for(let i = 0; i < 9; i++){
-        for(let j = 0 ; j < 9; j++){
+        for(let j = 0 ; j < 8; j++){
             let x = j * 60 + 50;
             let y = i * 60 + 50;
-            let wall1 = new Wall(x+50, y, 10, 60,"blue"); 
+            let wall1 = new Wall(x+50, y, 10, 50,"blue"); 
             board.push(wall1);
-            let wall2 = new Wall(x, y+50, 60, 10, "orange");
+        }
+    }
+
+    for(let i = 0; i < 8; i++){
+        for(let j = 0; j < 9; j++){
+            let x = j * 60 + 50;
+            let y = i * 60 + 50;
+            let wall2 = new Wall(x, y+50, 50, 10, "orange");
             board.push(wall2);
         }
     }
