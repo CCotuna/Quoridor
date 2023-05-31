@@ -9,7 +9,7 @@ function setup() {
   let canvasY = (windowHeight - height) / 2;
   canvas.position(canvasX, canvasY);
 
-  // background("darkred");
+  background("darkred");
 
   let color1 = "white";
 
@@ -100,12 +100,14 @@ class Pawn {
     this.y = y;
     this.diameter = diameter;
     this.color = color;
+    this.isClicked = false;
   }
 
   display(){
     fill(this.color);
     ellipse(this.x, this.y, this.diameter);
   }
+
 }
 
 function draw() {
