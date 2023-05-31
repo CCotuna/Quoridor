@@ -39,6 +39,14 @@ function setup() {
       board.push(wall2);
     }
   }
+  // step de 60 - sus jos stanga dreapta
+  let pawn1 = new Pawn(315, 75, 30, "yellow");
+  board.push(pawn1);
+  pawn1.x -= 60;
+
+  let pawn2 = new Pawn(315, 555, 30, "yellow");
+  board.push(pawn2);
+  pawn2.y -= 60;
 }
 
 class Box {
@@ -83,6 +91,20 @@ class Wall {
   mouseOut() {
     this.color = this.originalColor;
     this.isMouseOver = false;
+  }
+}
+
+class Pawn {
+  constructor(x, y, diameter, color){
+    this.x = x;
+    this.y = y;
+    this.diameter = diameter;
+    this.color = color;
+  }
+
+  display(){
+    fill(this.color);
+    ellipse(this.x, this.y, this.diameter);
   }
 }
 
