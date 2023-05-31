@@ -108,13 +108,19 @@ function mouseMoved() {
     }
 
     if (item instanceof Wall) {
-      if (
-        item === hoveredWall ||
-        i === board.indexOf(findWallBelow(hoveredWall)) ||
-        i === board.indexOf(findWallBeside(hoveredWall))
-      ) {
+      if(item === hoveredWall || i === board.indexOf(findWallBelow(hoveredWall))){
         item.mouseOver();
-      } else {
+      }
+      else{
+        item.mouseOut();
+      }
+    }
+
+    if(item instanceof Wall){
+      if(item === hoveredWall || i === board.indexOf(findWallBeside(hoveredWall))){
+        item.mouseOver();
+      }
+      else{
         item.mouseOut();
       }
     }
