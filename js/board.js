@@ -9,7 +9,7 @@ function setup() {
   let canvasY = (windowHeight - height) / 2;
   canvas.position(canvasX, canvasY);
 
-  background("darkred");
+  // background("darkred");
 
   let color1 = "white";
 
