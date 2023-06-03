@@ -130,6 +130,8 @@ function mouseClicked() {
           selectedPawn.color = "blue";
           directionChosen = true;
           selectedPawn.isClicked = true;
+          console.log(selectedPawn.x)
+          console.log(selectedPawn.y)
           break; // pentru a nu mai cauta elementul in intreg for-ul atunci cand am gasit deja pionul
         }
       }
@@ -147,7 +149,7 @@ function mouseClicked() {
       }
     }
 
-
+  
     let newX = mouseX - selectedPawn.x;
     let newY = mouseY - selectedPawn.y;
     console.log("new X = " + newX);
@@ -155,24 +157,31 @@ function mouseClicked() {
 
     let isValidStep = true;
     if (abs(newX) > abs(newY)) {
-      if (newX > 0 && selectedPawn.x < width - 120) {
+      if (newX > 0 && selectedPawn.x < width - 120) { //DREAPTA
         for (let item of board) {
           if (
             item instanceof Wall &&
-            item.x === selectedPawn.x + 60 &&
-            item.y === selectedPawn.y &&
-            item.x + item.w > selectedPawn.x + 60 &&
+            item.x >= selectedPawn.x + 60 &&
+            item.y == selectedPawn.y  &&
             item.isPlaced == 1
           ) {
+            
             isValidStep = false;
             break;
+          }
+          else{
+            if(item.isPlaced == 1){
+              console.log("item.x= " +item.x + " >= " + int(selectedPawn.x + 60));
+            console.log("item.y= " + item.y + " == " + selectedPawn.y);
+            console.log("itemIsPlaced == " + item.isPlaced);
+            }
           }
         }
 
         if (isValidStep) {
           selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
         }
-      } else if (newX < 0 && selectedPawn.x > 120) {
+      } else if (newX < 0 && selectedPawn.x > 120) { // STANGA
         for (let item of board) {
           if (
             item instanceof Wall &&
@@ -188,7 +197,7 @@ function mouseClicked() {
         if (isValidStep) selectedPawn.x -= 60; //daca e negativa mutam la stanga
       }
     } else {
-      if (newY > 0 && selectedPawn.y < height - 120) {
+      if (newY > 0 && selectedPawn.y < height - 120) { //JOS
         for (let item of board) {
           if (
             item instanceof Wall &&
@@ -201,7 +210,7 @@ function mouseClicked() {
           }
         }
         if (isValidStep) selectedPawn.y += 60; // daca e pozitiva mutam in jos
-      } else if (newY < 0 && selectedPawn.y > 120) {
+      } else if (newY < 0 && selectedPawn.y > 120) {  //SUS
         for (let item of board) {
           if (
             item instanceof Wall &&
@@ -231,8 +240,13 @@ function mouseClicked() {
         mouseY < item.y + item.h &&
         mouseY > item.y
       )
+        {
         item.display();
         item.isPlaced = 1;
+        console.log("x wall:" + item.x)
+        console.log("y wall:" + item.y)
+        console.log("isplaced = " + item.isPlaced);
+        }
     }
   }
 }
