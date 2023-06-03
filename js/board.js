@@ -161,19 +161,24 @@ function mouseClicked() {
         for (let item of board) {
           if (
             item instanceof Wall &&
-            item.x >= selectedPawn.x + 60 &&
-            item.y == selectedPawn.y  &&
-            item.isPlaced == 1
+            item.x >= selectedPawn.x -60  &&
+            item.y == selectedPawn.y -25 &&
+            item.isPlaced == true
           ) {
-            
+            console.log("\n\nselctedPawn.diameter = " + selectedPawn.diameter/2)
+            console.log("item.x= " +item.x + " >= " + int(selectedPawn.x + selectedPawn.diameter / 2 - 5 ));
+            console.log("item.y= " + item.y + " == " + int(selectedPawn.y - 25));
+            console.log("itemIsPlaced == " + item.isPlaced);
+            console.log("ISINVALIDSTEP ==== " + isValidStep);
             isValidStep = false;
             break;
           }
           else{
             if(item.isPlaced == 1){
-              console.log("item.x= " +item.x + " >= " + int(selectedPawn.x + 60));
-            console.log("item.y= " + item.y + " == " + selectedPawn.y);
-            console.log("itemIsPlaced == " + item.isPlaced);
+            console.log("\n\nselctedPawn.diameter = " + selectedPawn.diameter/2)
+            console.log("item.x= " +item.x + " >= " + int(selectedPawn.x + selectedPawn.diameter / 2 - 5 ));
+            console.log("item.y= " + item.y + " == " + int(selectedPawn.y -25));
+            console.log("ITEMIsPlaced == " + item.isPlaced);
             }
           }
         }
@@ -187,7 +192,7 @@ function mouseClicked() {
             item instanceof Wall &&
             item.x === selectedPawn.x - 60 &&
             item.y === selectedPawn.y &&
-            item.isPlaced == 1
+            item.isPlaced == true
           ) {
             isValidStep = false;
             break;
@@ -203,7 +208,7 @@ function mouseClicked() {
             item instanceof Wall &&
             item.x === selectedPawn.x &&
             item.y === selectedPawn.y + 60 &&
-            item.isPlaced == 1
+            item.isPlaced == true
           ) {
             isValidStep = false;
             break;
@@ -216,7 +221,7 @@ function mouseClicked() {
             item instanceof Wall &&
             item.x === selectedPawn.x &&
             item.y === selectedPawn.y - 60 &&
-            item.isPlaced == 1
+            item.isPlaced == true
           ) {
             isValidStep = false;
             break;
@@ -232,6 +237,7 @@ function mouseClicked() {
     selectedPawn = null;
   }
 
+  
   for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -239,14 +245,15 @@ function mouseClicked() {
         mouseX > item.x &&
         mouseY < item.y + item.h &&
         mouseY > item.y
-      )
-        {
+      ) {
         item.display();
-        item.isPlaced = 1;
-        console.log("x wall:" + item.x)
-        console.log("y wall:" + item.y)
+        item.isPlaced = true;
+        console.log("x wall: " + item.x);
+        console.log("y wall: " + item.y);
         console.log("isplaced = " + item.isPlaced);
-        }
+      }else{
+        item.isPlaced = false;
+      }
     }
   }
 }
