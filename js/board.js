@@ -32,7 +32,7 @@ function setup() {
     for (let j = 0; j < 8; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0);
+      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1);
       board.push(wall1);
     }
   }
@@ -41,7 +41,7 @@ function setup() {
     for (let j = 0; j < 9; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0);
+      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2);
       board.push(wall2);
     }
   }
@@ -74,7 +74,7 @@ class Box {
 }
 
 class Wall {
-  constructor(x, y, w, h, color, isPlaced) {
+  constructor(x, y, w, h, color, isPlaced, type) {
     this.x = x;
     this.y = y;
     this.w = w;
@@ -82,6 +82,7 @@ class Wall {
     this.color = color;
     this.originalColor = this.color;
     this.isPlaced = isPlaced;
+    this.type = type; //tip 0 orizontale - tip 1 verticale
   }
 
   reset() {
@@ -128,7 +129,6 @@ let selectedPawn = null;
 let directionChosen = false;
 
 function mouseClicked() {
-
   if (!directionChosen) {
     for (let item of board) {
       if (item instanceof Pawn) {
@@ -140,8 +140,8 @@ function mouseClicked() {
           selectedPawn.color = "blue";
           directionChosen = true;
           selectedPawn.isClicked = true;
-          console.log(selectedPawn.x)
-          console.log(selectedPawn.y)
+          console.log(selectedPawn.x);
+          console.log(selectedPawn.y);
           break; // pentru a nu mai cauta elementul in intreg for-ul atunci cand am gasit deja pionul
         }
       }
@@ -150,7 +150,7 @@ function mouseClicked() {
     for (let item of board) {
       if (item instanceof Pawn) {
         distance = dist(mouseX, mouseY, item.x, item.y);
-        if(distance < item.diameter / 2){
+        if (distance < item.diameter / 2) {
           selectedPawn.color = selectedPawn.originalColor;
           selectedPawn.isClicked = false;
           selectedPawn = false;
@@ -159,7 +159,6 @@ function mouseClicked() {
       }
     }
 
-  
     let newX = mouseX - selectedPawn.x;
     let newY = mouseY - selectedPawn.y;
     console.log("new X = " + newX);
@@ -169,28 +168,46 @@ function mouseClicked() {
     let isBlocked = false;
 
     if (abs(newX) > abs(newY)) {
-      if (newX > 0 && selectedPawn.x < width - 120) { //DREAPTA
+      if (newX > 0 && selectedPawn.x < width - 120) {
+        //DREAPTA
         for (let item of board) {
           if (
             item instanceof Wall &&
-            item.x >= selectedPawn.x -60  &&
-            item.y == selectedPawn.y -25 &&
+            item.x >= selectedPawn.x - 60 &&
+            item.y == selectedPawn.y - 25 &&
             item.isPlaced == true
           ) {
-            console.log("\n\nselctedPawn.diameter = " + selectedPawn.diameter/2)
-            console.log("item.x= " +item.x + " >= " + int(selectedPawn.x + selectedPawn.diameter / 2 - 5 ));
-            console.log("item.y= " + item.y + " == " + int(selectedPawn.y - 25));
+            console.log(
+              "\n\nselctedPawn.diameter = " + selectedPawn.diameter / 2
+            );
+            console.log(
+              "item.x= " +
+                item.x +
+                " >= " +
+                int(selectedPawn.x + selectedPawn.diameter / 2 - 5)
+            );
+            console.log(
+              "item.y= " + item.y + " == " + int(selectedPawn.y - 25)
+            );
             console.log("itemIsPlaced == " + item.isPlaced);
             console.log("ISINVALIDSTEP ==== " + isValidStep);
             isBlocked = true;
             break;
-          }
-          else{
-            if(item.isPlaced == 1){
-            console.log("\n\nselctedPawn.diameter = " + selectedPawn.diameter/2)
-            console.log("item.x= " +item.x + " >= " + int(selectedPawn.x + selectedPawn.diameter / 2 - 5 ));
-            console.log("item.y= " + item.y + " == " + int(selectedPawn.y -25));
-            console.log("ITEMIsPlaced == " + item.isPlaced);
+          } else {
+            if (item.isPlaced == 1) {
+              console.log(
+                "\n\nselctedPawn.diameter = " + selectedPawn.diameter / 2
+              );
+              console.log(
+                "item.x= " +
+                  item.x +
+                  " >= " +
+                  int(selectedPawn.x + selectedPawn.diameter / 2 - 5)
+              );
+              console.log(
+                "item.y= " + item.y + " == " + int(selectedPawn.y - 25)
+              );
+              console.log("ITEMIsPlaced == " + item.isPlaced);
             }
           }
         }
@@ -198,7 +215,8 @@ function mouseClicked() {
         if (isValidStep) {
           selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
         }
-      } else if (newX < 0 && selectedPawn.x > 120) { // STANGA
+      } else if (newX < 0 && selectedPawn.x > 120) {
+        // STANGA
         for (let item of board) {
           if (
             item instanceof Wall &&
@@ -214,7 +232,8 @@ function mouseClicked() {
         if (isValidStep) selectedPawn.x -= 60; //daca e negativa mutam la stanga
       }
     } else {
-      if (newY > 0 && selectedPawn.y < height - 120) { //JOS
+      if (newY > 0 && selectedPawn.y < height - 120) {
+        //JOS
         for (let item of board) {
           if (
             item instanceof Wall &&
@@ -227,7 +246,8 @@ function mouseClicked() {
           }
         }
         if (isValidStep) selectedPawn.y += 60; // daca e pozitiva mutam in jos
-      } else if (newY < 0 && selectedPawn.y > 120) {  //SUS
+      } else if (newY < 0 && selectedPawn.y > 120) {
+        //SUS
         for (let item of board) {
           if (
             item instanceof Wall &&
@@ -249,8 +269,8 @@ function mouseClicked() {
     selectedPawn = null;
   }
 
- 
-  let wallsHovered = [];
+  let wallsHoveredHorizontally = [];
+  let wallsHoveredVertically = [];
   for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -259,28 +279,76 @@ function mouseClicked() {
         mouseY < item.y + item.h &&
         mouseY > item.y
       ) {
-
-        item.isPlaced = true;
-        wallsHovered.push(item);
-        wallsHovered.push(findWallBeside(item));
-        if(wallsHovered.length == 2 && findWallBeside(item).w + findWallBeside(item).x < canvasWidth){
-          item.color = "purple";
-          findWallBeside(item).color = "purple";
+        if (item.type == 2 && findWallBeside(item).type == 2) {
+          console.log(item.type);
+          console.log(findWallBeside(item).type);
+          wallsHoveredHorizontally.push(item);
+          wallsHoveredHorizontally.push(findWallBeside(item));
+          if (
+            wallsHoveredHorizontally.length == 2 &&
+            findWallBeside(item).w + findWallBeside(item).x < canvasWidth
+          ) {
+            item.color = "purple";
+            findWallBeside(item).color = "purple";
+            item.isPlaced = true;
+            findWallBeside(item).isPlaced = true;
+          }
+          break;
         }
-        break;
+
+        if (item.type == 1 && findWallUnder(item).type == 1) {
+          console.log(item.type);
+          console.log(findWallUnder(item).type);
+          wallsHoveredVertically.push(item);
+          wallsHoveredVertically.push(findWallUnder(item));
+          if (
+            wallsHoveredVertically.length == 2 &&
+            findWallUnder(item).h + findWallUnder(item).y < canvasHeight
+          ) {
+            item.color = "purple";
+            findWallUnder(item).color = "purple";
+            item.isPlaced = true;
+            findWallUnder(item).isPlaced = true;
+          }
+          break;
+        }
       }
     }
   }
+}
 
-function findWallBeside(findWall){
-  for(let item of board){
-    if(item instanceof Wall){
-      if(item.x === findWall.x+60 && item.y === findWall.y && item.w + findWall.w == 100)
+//urmeaza: combina cele 2 functii pentru a fi una singura si verifica tinand cont de type - daca e 1 sau 0 si asa reducem din cod si mai sus.
+function findWallBeside(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (
+        item.x === findWall.x + 60 &&
+        item.y === findWall.y &&
+        item.w + findWall.w == 100
+      )
         return item;
     }
   }
   return null;
-} 
+}
+
+function findWallUnder(findWall) {
+  for (let item of board) {
+    console.log("Item: ", item);
+    if (item instanceof Wall) {
+      console.log("Is Wall");
+      console.log("Condition: ", item.x === findWall.x, item.y === findWall.y + findWall.h, item.w === findWall.w, item.y > findWall.y);
+      if (
+        item.x === findWall.x &&
+        item.y > findWall.y &&
+        item.w === findWall.w
+      ) {
+        console.log("Wall Found");
+        return item;
+      }
+    }
+  }
+  return null;
 }
 // console.log("x wall: " + item.x);
 // console.log("y wall: " + item.y);
@@ -302,8 +370,8 @@ function resetPawns() {
 function resetBoard() {
   resetPawns();
 
-  for(item of board){
-    if(item instanceof Wall){
+  for (item of board) {
+    if (item instanceof Wall) {
       item.reset();
     }
   }
