@@ -207,6 +207,7 @@ function mouseClicked() {
             (currentPlayer === 1 && selectedPawn === pawn1) ||
             (currentPlayer === 2 && selectedPawn === pawn2)
           ) {
+            
             selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
             currentPlayer = currentPlayer === 1 ? 2 : 1;
           } else {
