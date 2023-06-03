@@ -3,6 +3,7 @@ let playerName = localStorage.getItem("playerName");
 let board = [];
 let canvas;
 let pawn1, pawn2;
+let distance;
 
 function setup() {
   canvas = createCanvas(630, 630);
@@ -75,6 +76,7 @@ class Wall {
     this.w = w;
     this.h = h;
     this.color = color;
+    this.isPlaced = 0;
   }
 
   display() {
@@ -120,7 +122,7 @@ function mouseClicked() {
   if (!directionChosen) {
     for (let item of board) {
       if (item instanceof Pawn) {
-        let distance = dist(mouseX, mouseY, item.x, item.y);
+        distance = dist(mouseX, mouseY, item.x, item.y);
 
         if (distance < item.diameter / 2) {
           selectedPawn = item;
@@ -135,9 +137,8 @@ function mouseClicked() {
   } else {
     for (let item of board) {
       if (item instanceof Pawn) {
-        let distance = dist(mouseX, mouseY, item.x, item.y);
+        distance = dist(mouseX, mouseY, item.x, item.y);
         if(distance < item.diameter / 2){
-          
           selectedPawn.color = selectedPawn.originalColor;
           selectedPawn.isClicked = false;
           selectedPawn = false;
@@ -160,7 +161,8 @@ function mouseClicked() {
             item instanceof Wall &&
             item.x === selectedPawn.x + 60 &&
             item.y === selectedPawn.y &&
-            item.x + item.w > selectedPawn.x + 60
+            item.x + item.w > selectedPawn.x + 60 &&
+            item.isPlaced == 1
           ) {
             isValidStep = false;
             break;
@@ -175,7 +177,8 @@ function mouseClicked() {
           if (
             item instanceof Wall &&
             item.x === selectedPawn.x - 60 &&
-            item.y === selectedPawn.y
+            item.y === selectedPawn.y &&
+            item.isPlaced == 1
           ) {
             isValidStep = false;
             break;
@@ -190,7 +193,8 @@ function mouseClicked() {
           if (
             item instanceof Wall &&
             item.x === selectedPawn.x &&
-            item.y === selectedPawn.y + 60
+            item.y === selectedPawn.y + 60 &&
+            item.isPlaced == 1
           ) {
             isValidStep = false;
             break;
@@ -202,7 +206,8 @@ function mouseClicked() {
           if (
             item instanceof Wall &&
             item.x === selectedPawn.x &&
-            item.y === selectedPawn.y - 60
+            item.y === selectedPawn.y - 60 &&
+            item.isPlaced == 1
           ) {
             isValidStep = false;
             break;
@@ -227,6 +232,7 @@ function mouseClicked() {
         mouseY > item.y
       )
         item.display();
+        item.isPlaced = 1;
     }
   }
 }
@@ -247,6 +253,12 @@ function resetPawns() {
 
 function resetBoard() {
   resetPawns();
+
+  for (let item of board) {
+    if (item instanceof Wall) {
+      item.isPlaced = 0;
+    }
+  }
 }
 
 document.getElementById("playerNameDisplay").textContent =
