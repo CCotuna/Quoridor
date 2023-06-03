@@ -82,16 +82,7 @@ class Wall {
     fill(this.color);
     rect(this.x, this.y, this.w, this.h);
   }
-
-  mouseOver() {
-    this.color = "yellow";
-    this.isMouseOver = true;
-  }
-
-  mouseOut() {
-    this.color = this.originalColor;
-    this.isMouseOver = false;
-  }
+  
 }
 
 class Pawn {
@@ -116,84 +107,25 @@ function draw() {
   }
 }
 
-function mouseMoved() {
-  let hoveredWall = null;
-
-  for (let i = 0; i < board.length; i++) {
-    let item = board[i];
-    if (
-      item instanceof Wall &&
-      mouseX > item.x &&
-      mouseX < item.x + item.w &&
-      mouseY > item.y &&
-      mouseY < item.y + item.h
-    ) {
-      hoveredWall = item;
-    }
-
-    if (item instanceof Wall) {
-      if(item === hoveredWall || i === board.indexOf(findWallBelow(hoveredWall))){
-        item.mouseOver();
-      }
-      else{
-        item.mouseOut();
-      }
-    }
-
-    if(item instanceof Wall){
-      if(item === hoveredWall || i === board.indexOf(findWallBeside(hoveredWall))){
-        item.mouseOver();
-      }
-      else{
-        item.mouseOut();
-      }
-    }
-  }
-}
-
-function findWallBelow(wall) {
-  const index = board.indexOf(wall);
-  const numColumns = 8;
-
-  const column = index % numColumns;
-  const row = Math.floor(index / numColumns);
-
-  const wallBelowIndex = index + numColumns;
-  if (wallBelowIndex >= board.length) {
-    return null;
-  }
-
-  return board[wallBelowIndex];
-}
-
-function findWallBeside(wall) {
-    const index = board.indexOf(wall);
-    const rowLength = 8; // Number of walls in each row
-  
-    const row = Math.floor(index / rowLength);
-    const col = index % rowLength;
-  
-    if (col === 7) return null; // If wall is in the last column, no wall beside
-  
-    return board[index + 1];
-  }
-
-
 function mouseClicked() {
-  for (let box of board) {
-    if (
-      mouseX > box.x &&
-      mouseX < box.x + box.size &&
-      mouseY > box.y &&
-      mouseY < box.y + box.size
+  for (let item of board) {
+    if(item instanceof Box){
+      if (
+      mouseX > item.x &&
+      mouseX < item.x + item.size &&
+      mouseY > item.y &&
+      mouseY < item.y + item.size
     )
-      box.newColor();
+      item.newColor();
+    }
   }
 }
 
 function resetBoard() {
-  for (let box of board) {
-    box.color = "white";
+  for (let item of board) {
+    if(item instanceof Box){
+      item.color = "white";
+    }
   }
 }
 
