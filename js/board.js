@@ -1,5 +1,6 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
 let playerName = localStorage.getItem("playerName");
+let wallsUsed = [];
 let board = [];
 let canvas;
 let pawn1, pawn2;
@@ -269,7 +270,6 @@ function mouseClicked() {
     selectedPawn = null;
   }
 
-  let wallsUsed = [];
   for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -278,24 +278,39 @@ function mouseClicked() {
         mouseY < item.y + item.h &&
         mouseY > item.y
       ) {
-        if(item.type == findWall(item).type){
+        if (item.type == findWall(item).type) {
           wallsUsed.push(item);
           wallsUsed.push(findWall(item));
-          if(findWall(item).w + findWall(item).x < canvasWidth || findWall(item).h +findWall(item).y < canvasHeight){
+          let isWallPlaced = wallsUsed.some((pos) => (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+          (pos.x === findWall(item).x &&
+            pos.y === findWall(item).y &&
+            pos.isPlaced === 1));
+          console.log(isWallPlaced);
+          
+          if (
+            findWall(item).w + findWall(item).x < canvasWidth ||
+            findWall(item).h + findWall(item).y < canvasHeight
+          ) {
             item.color = "purple";
             findWall(item).color = "purple";
+            item.isPlaced = 1;
+            findWall(item).isPlaced = 1;
           }
           break;
         }
       }
     }
+    let isValidPosition = true;
+    
+
+    
   }
 }
 
-function findWall(findWall){
-  for(let item of board){
-    if(item instanceof Wall){
-      if(item.type == 2){
+function findWall(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (item.type == 2) {
         if (
           item.x === findWall.x + 60 &&
           item.y === findWall.y &&
@@ -304,13 +319,13 @@ function findWall(findWall){
           return item;
       }
 
-      if(item.type == 1){
-       if(
-        item.x === findWall.x &&
-        item.y > findWall.y &&
-        item.w === findWall.w
-       )
-        return item;
+      if (item.type == 1) {
+        if (
+          item.x === findWall.x &&
+          item.y > findWall.y &&
+          item.w === findWall.w
+        )
+          return item;
       }
     }
   }
