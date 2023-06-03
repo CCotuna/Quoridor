@@ -32,7 +32,7 @@ function setup() {
     for (let j = 0; j < 8; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1);
+      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1); //verticale
       board.push(wall1);
     }
   }
@@ -41,7 +41,7 @@ function setup() {
     for (let j = 0; j < 9; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2);
+      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2); //orizontale
       board.push(wall2);
     }
   }
@@ -82,7 +82,7 @@ class Wall {
     this.color = color;
     this.originalColor = this.color;
     this.isPlaced = isPlaced;
-    this.type = type; //tip 0 orizontale - tip 1 verticale
+    this.type = type; //tip 2 orizontale - tip 1 verticale
   }
 
   reset() {
@@ -317,39 +317,64 @@ function mouseClicked() {
   }
 }
 
-//urmeaza: combina cele 2 functii pentru a fi una singura si verifica tinand cont de type - daca e 1 sau 0 si asa reducem din cod si mai sus.
-function findWallBeside(findWall) {
-  for (let item of board) {
-    if (item instanceof Wall) {
-      if (
-        item.x === findWall.x + 60 &&
-        item.y === findWall.y &&
-        item.w + findWall.w == 100
-      )
-        return item;
-    }
-  }
-  return null;
-}
+function findWall(findWall){
+  for(let item of board){
+    if(item instanceof Wall){
+      if(item.type == 2){
+        if (
+          item.x === findWall.x + 60 &&
+          item.y === findWall.y &&
+          item.w + findWall.w == 100
+        )
+          return item;
+      }
 
-function findWallUnder(findWall) {
-  for (let item of board) {
-    console.log("Item: ", item);
-    if (item instanceof Wall) {
-      console.log("Is Wall");
-      console.log("Condition: ", item.x === findWall.x, item.y === findWall.y + findWall.h, item.w === findWall.w, item.y > findWall.y);
-      if (
+      if(item.type == 1){
+       if(
         item.x === findWall.x &&
         item.y > findWall.y &&
         item.w === findWall.w
-      ) {
-        console.log("Wall Found");
+       )
         return item;
       }
     }
   }
   return null;
 }
+
+//urmeaza: combina cele 2 functii pentru a fi una singura si verifica tinand cont de type - daca e 1 sau 0 si asa reducem din cod si mai sus.
+// function findWallBeside(findWall) {
+//   for (let item of board) {
+//     if (item instanceof Wall) {
+//       if (
+//         item.x === findWall.x + 60 &&
+//         item.y === findWall.y &&
+//         item.w + findWall.w == 100
+//       )
+//         return item;
+//     }
+//   }
+//   return null;
+// }
+
+// function findWallUnder(findWall) {
+//   for (let item of board) {
+//     console.log("Item: ", item);
+//     if (item instanceof Wall) {
+//       console.log("Is Wall");
+//       console.log("Condition: ", item.x === findWall.x, item.y === findWall.y + findWall.h, item.w === findWall.w, item.y > findWall.y);
+//       if (
+//         item.x === findWall.x &&
+//         item.y > findWall.y &&
+//         item.w === findWall.w
+//       ) {
+//         console.log("Wall Found");
+//         return item;
+//       }
+//     }
+//   }
+//   return null;
+// }
 // console.log("x wall: " + item.x);
 // console.log("y wall: " + item.y);
 // console.log("isplaced = " + item.isPlaced);
