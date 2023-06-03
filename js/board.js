@@ -4,9 +4,13 @@ let board = [];
 let canvas;
 let pawn1, pawn2;
 let distance;
+let canvasWidth;
+let canvasHeight;
 
 function setup() {
   canvas = createCanvas(630, 630);
+  canvasWidth = width;
+  canvasHeight = height;
   let canvasX = (windowWidth - width) / 2;
   let canvasY = (windowHeight - height) / 2;
   canvas.position(canvasX, canvasY);
@@ -246,7 +250,7 @@ function mouseClicked() {
   }
 
  
-  
+  let wallsHovered = [];
   for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -255,9 +259,15 @@ function mouseClicked() {
         mouseY < item.y + item.h &&
         mouseY > item.y
       ) {
+
         item.isPlaced = true;
-        item.color = "purple";
-        findWallBeside(item).color = "purple";
+        wallsHovered.push(item);
+        wallsHovered.push(findWallBeside(item));
+        if(wallsHovered.length == 2 && findWallBeside(item).w + findWallBeside(item).x < canvasWidth){
+          item.color = "purple";
+          findWallBeside(item).color = "purple";
+        }
+        break;
       }
     }
   }
@@ -265,17 +275,12 @@ function mouseClicked() {
 function findWallBeside(findWall){
   for(let item of board){
     if(item instanceof Wall){
-      if(item.x === findWall.x+60 && 
-        item.y === findWall.y)
+      if(item.x === findWall.x+60 && item.y === findWall.y && item.w + findWall.w == 100)
         return item;
     }
   }
   return null;
-}
-
-
-
-  
+} 
 }
 // console.log("x wall: " + item.x);
 // console.log("y wall: " + item.y);
