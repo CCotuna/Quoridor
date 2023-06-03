@@ -281,29 +281,29 @@ function mouseClicked() {
         if (item.type == findWall(item).type) {
           wallsUsed.push(item);
           wallsUsed.push(findWall(item));
-          let isWallPlaced = wallsUsed.some((pos) => (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
-          (pos.x === findWall(item).x &&
-            pos.y === findWall(item).y &&
-            pos.isPlaced === 1));
+          let isWallPlaced = wallsUsed.some(
+            (pos) =>
+              (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) || (pos.x === findWall(item).x && pos.y === findWall(item).y && pos.isPlaced === 1)
+          );
           console.log(isWallPlaced);
           
-          if (
-            findWall(item).w + findWall(item).x < canvasWidth ||
-            findWall(item).h + findWall(item).y < canvasHeight
-          ) {
-            item.color = "purple";
-            findWall(item).color = "purple";
-            item.isPlaced = 1;
-            findWall(item).isPlaced = 1;
+          if(!isWallPlaced){
+            if (
+              findWall(item).w + findWall(item).x < canvasWidth ||
+              findWall(item).h + findWall(item).y < canvasHeight
+            ) {
+              item.color = "purple";
+              findWall(item).color = "purple";
+              item.isPlaced = 1;
+              findWall(item).isPlaced = 1;
+            }
+            break;
           }
-          break;
+          
         }
       }
     }
     let isValidPosition = true;
-    
-
-    
   }
 }
 
