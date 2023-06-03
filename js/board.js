@@ -269,8 +269,7 @@ function mouseClicked() {
     selectedPawn = null;
   }
 
-  let wallsHoveredHorizontally = [];
-  let wallsHoveredVertically = [];
+  let wallsUsed = [];
   for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -279,36 +278,12 @@ function mouseClicked() {
         mouseY < item.y + item.h &&
         mouseY > item.y
       ) {
-        if (item.type == 2 && findWallBeside(item).type == 2) {
-          console.log(item.type);
-          console.log(findWallBeside(item).type);
-          wallsHoveredHorizontally.push(item);
-          wallsHoveredHorizontally.push(findWallBeside(item));
-          if (
-            wallsHoveredHorizontally.length == 2 &&
-            findWallBeside(item).w + findWallBeside(item).x < canvasWidth
-          ) {
+        if(item.type == findWall(item).type){
+          wallsUsed.push(item);
+          wallsUsed.push(findWall(item));
+          if(findWall(item).w + findWall(item).x < canvasWidth || findWall(item).h +findWall(item).y < canvasHeight){
             item.color = "purple";
-            findWallBeside(item).color = "purple";
-            item.isPlaced = true;
-            findWallBeside(item).isPlaced = true;
-          }
-          break;
-        }
-
-        if (item.type == 1 && findWallUnder(item).type == 1) {
-          console.log(item.type);
-          console.log(findWallUnder(item).type);
-          wallsHoveredVertically.push(item);
-          wallsHoveredVertically.push(findWallUnder(item));
-          if (
-            wallsHoveredVertically.length == 2 &&
-            findWallUnder(item).h + findWallUnder(item).y < canvasHeight
-          ) {
-            item.color = "purple";
-            findWallUnder(item).color = "purple";
-            item.isPlaced = true;
-            findWallUnder(item).isPlaced = true;
+            findWall(item).color = "purple";
           }
           break;
         }
@@ -342,39 +317,6 @@ function findWall(findWall){
   return null;
 }
 
-//urmeaza: combina cele 2 functii pentru a fi una singura si verifica tinand cont de type - daca e 1 sau 0 si asa reducem din cod si mai sus.
-// function findWallBeside(findWall) {
-//   for (let item of board) {
-//     if (item instanceof Wall) {
-//       if (
-//         item.x === findWall.x + 60 &&
-//         item.y === findWall.y &&
-//         item.w + findWall.w == 100
-//       )
-//         return item;
-//     }
-//   }
-//   return null;
-// }
-
-// function findWallUnder(findWall) {
-//   for (let item of board) {
-//     console.log("Item: ", item);
-//     if (item instanceof Wall) {
-//       console.log("Is Wall");
-//       console.log("Condition: ", item.x === findWall.x, item.y === findWall.y + findWall.h, item.w === findWall.w, item.y > findWall.y);
-//       if (
-//         item.x === findWall.x &&
-//         item.y > findWall.y &&
-//         item.w === findWall.w
-//       ) {
-//         console.log("Wall Found");
-//         return item;
-//       }
-//     }
-//   }
-//   return null;
-// }
 // console.log("x wall: " + item.x);
 // console.log("y wall: " + item.y);
 // console.log("isplaced = " + item.isPlaced);
