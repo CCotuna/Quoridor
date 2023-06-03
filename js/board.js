@@ -8,7 +8,7 @@ let distance;
 let canvasWidth;
 let canvasHeight;
 let player1, player2;
-let currentPlayer = 1;
+let currentPlayer = Math.floor(Math.random() * 2) + 1;
 
 function setup() {
   canvas = createCanvas(630, 630);
@@ -47,11 +47,11 @@ function setup() {
     }
   }
   // step de 60 - sus jos stanga dreapta
-  pawn1 = new Pawn(315, 75, 30, "yellow");
+  pawn1 = new Pawn(315, 75, 30, "red");
   board.push(pawn1);
   // pawn1.x -= 60;
 
-  pawn2 = new Pawn(315, 555, 30, "yellow");
+  pawn2 = new Pawn(315, 555, 30, "green");
   board.push(pawn2);
   // pawn2.y -= 60;
 
@@ -141,6 +141,7 @@ function draw() {
   fill("yellow")
   text(`Number of walls: ${player1.name} [${player1.wallCount}]`, 10, 15)
   text(`Number of walls: ${player2.name} [${player2.wallCount}]`, 10, 40)
+  currentPlayer === 1 ? text(`Current turn: ${player1.name}`, 300, 30) : text(`Current turn: ${player2.name}`, 300, 30);
 }
 
 let selectedPawn = null;
@@ -231,7 +232,14 @@ function mouseClicked() {
         }
 
         if (isValidStep) {
-          selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+          if ((currentPlayer === 1 && selectedPawn === pawn1) || (currentPlayer === 2 && selectedPawn === pawn2)) {
+            selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+          }
+          else {
+            // It's not the pawn's turn, movement is blocked
+            isBlocked = true;
+          }
         }
       } else if (newX < 0 && selectedPawn.x > 120) {
         // STANGA
@@ -247,7 +255,17 @@ function mouseClicked() {
           }
         }
 
-        if (isValidStep) selectedPawn.x -= 60; //daca e negativa mutam la stanga
+        if (isValidStep) {
+          if ((currentPlayer === 1 && selectedPawn === pawn1) || (currentPlayer === 2 && selectedPawn === pawn2)){
+            selectedPawn.x -= 60; //daca e negativa mutam la stanga
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+          }
+          else{
+            isBlocked = true;
+          }
+          
+        }
+        
       }
     } else {
       if (newY > 0 && selectedPawn.y < height - 120) {
@@ -263,7 +281,15 @@ function mouseClicked() {
             break;
           }
         }
-        if (isValidStep) selectedPawn.y += 60; // daca e pozitiva mutam in jos
+        if (isValidStep) {
+          if ((currentPlayer === 1 && selectedPawn === pawn1) || (currentPlayer === 2 && selectedPawn === pawn2)){
+            selectedPawn.y += 60; // daca e pozitiva mutam in jos
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+        }
+        else{
+          isBlocked = true;
+        }
+        }
       } else if (newY < 0 && selectedPawn.y > 120) {
         //SUS
         for (let item of board) {
@@ -277,8 +303,20 @@ function mouseClicked() {
             break;
           }
         }
-        if (isValidStep) selectedPawn.y -= 60; // daca e negativa mutam in sus
+        if (isValidStep) {
+          if ((currentPlayer === 1 && selectedPawn === pawn1) || (currentPlayer === 2 && selectedPawn === pawn2)){
+            selectedPawn.y -= 60; // daca e negativa mutam in sus
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+          }
+          else{
+            isBlocked = true;
+          }
+        }
       }
+    }
+
+    if(isBlocked){
+      alert("It's not your turn!")
     }
     //reinitializam valorile pentru a selecta o alta piesa
     selectedPawn.isClicked = false;
@@ -401,6 +439,8 @@ function resetBoard() {
   player1.wallCount = 10;
   player2.wallCount = 10;
   currentPlayer = 1;
+
+  currentPlayer = Math.floor(Math.random() * 2) + 1;
 }
 
 document.getElementById("playerNameDisplay").textContent =
