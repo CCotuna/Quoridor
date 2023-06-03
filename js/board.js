@@ -7,6 +7,8 @@ let pawn1, pawn2;
 let distance;
 let canvasWidth;
 let canvasHeight;
+let player1, player2;
+let currentPlayer = 1;
 
 function setup() {
   canvas = createCanvas(630, 630);
@@ -15,8 +17,6 @@ function setup() {
   let canvasX = (windowWidth - width) / 2;
   let canvasY = (windowHeight - height) / 2;
   canvas.position(canvasX, canvasY);
-
-  background("darkred");
 
   let color1 = "white";
 
@@ -54,6 +54,9 @@ function setup() {
   pawn2 = new Pawn(315, 555, 30, "yellow");
   board.push(pawn2);
   // pawn2.y -= 60;
+
+  player1 = new Player("George", 10);
+  player2 = new Player("Cornel", 10);
 }
 
 class Player{
@@ -126,11 +129,18 @@ class Pawn {
 }
 
 function draw() {
+  background("darkred");
+
   for (let item of board) {
     if (item instanceof Box || item instanceof Pawn || item instanceof Wall) {
       item.display();
     }
   }
+ 
+  textSize(14);
+  fill("yellow")
+  text(`Number of walls: ${player1.name} [${player1.wallCount}]`, 10, 15)
+  text(`Number of walls: ${player2.name} [${player2.wallCount}]`, 10, 40)
 }
 
 let selectedPawn = null;
@@ -298,16 +308,36 @@ function mouseClicked() {
           console.log(isWallPlaced);
 
           if (!isWallPlaced) {
-            if (
-              findWall(item).w + findWall(item).x < canvasWidth ||
-              findWall(item).h + findWall(item).y < canvasHeight
-            ) {
-              item.color = "purple";
-              findWall(item).color = "purple";
-              item.isPlaced = 1;
-              findWall(item).isPlaced = 1;
+            if(currentPlayer === 1 && player1.wallCount > 0){
+              if (
+                findWall(item).w + findWall(item).x < canvasWidth ||
+                findWall(item).h + findWall(item).y < canvasHeight
+              ) {
+                item.color = "purple";
+                findWall(item).color = "purple";
+                item.isPlaced = 1;
+                findWall(item).isPlaced = 1;
+                player1.wallCount--;
+                currentPlayer = 2;
+              }
+              break;
+            }else if(
+              currentPlayer === 2 && player2.wallCount > 0
+            ){
+              if (
+                findWall(item).w + findWall(item).x < canvasWidth ||
+                findWall(item).h + findWall(item).y < canvasHeight
+              ) {
+                item.color = "purple";
+                findWall(item).color = "purple";
+                item.isPlaced = 1;
+                findWall(item).isPlaced = 1;
+                player2.wallCount--;
+                currentPlayer = 1;
+              }
+              break;
             }
-            break;
+            
           }
         }
       }
@@ -367,6 +397,10 @@ function resetBoard() {
   }
 
   selectedWall = null;
+
+  player1.wallCount = 10;
+  player2.wallCount = 10;
+  currentPlayer = 1;
 }
 
 document.getElementById("playerNameDisplay").textContent =
