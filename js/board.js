@@ -56,6 +56,13 @@ function setup() {
   // pawn2.y -= 60;
 }
 
+class Player{
+  constructor(name, wallCount){
+    this.name = name;
+    this.wallCount = wallCount;
+  }
+}
+
 class Box {
   constructor(x, y, size, color) {
     this.x = x;
@@ -283,11 +290,14 @@ function mouseClicked() {
           wallsUsed.push(findWall(item));
           let isWallPlaced = wallsUsed.some(
             (pos) =>
-              (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) || (pos.x === findWall(item).x && pos.y === findWall(item).y && pos.isPlaced === 1)
+              (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+              (pos.x === findWall(item).x &&
+                pos.y === findWall(item).y &&
+                pos.isPlaced === 1)
           );
           console.log(isWallPlaced);
-          
-          if(!isWallPlaced){
+
+          if (!isWallPlaced) {
             if (
               findWall(item).w + findWall(item).x < canvasWidth ||
               findWall(item).h + findWall(item).y < canvasHeight
@@ -299,11 +309,9 @@ function mouseClicked() {
             }
             break;
           }
-          
         }
       }
     }
-    let isValidPosition = true;
   }
 }
 
