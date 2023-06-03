@@ -8,7 +8,8 @@ let distance;
 let canvasWidth;
 let canvasHeight;
 let player1, player2;
-let currentPlayer = Math.floor(Math.random() * 2) + 1;
+let currentPlayer = 1;
+// Math.floor(Math.random() * 2) + 1;
 
 function setup() {
   canvas = createCanvas(630, 630);
@@ -46,23 +47,25 @@ function setup() {
       board.push(wall2);
     }
   }
+  player1 = new Player("George", 10, "red");
+  player2 = new Player("Cornel", 10, "green");
   // step de 60 - sus jos stanga dreapta
-  pawn1 = new Pawn(315, 75, 30, "red");
+  pawn1 = new Pawn(315, 75, 30, player1.color);
   board.push(pawn1);
   // pawn1.x -= 60;
 
-  pawn2 = new Pawn(315, 555, 30, "green");
+  pawn2 = new Pawn(315, 555, 30, player2.color);
   board.push(pawn2);
   // pawn2.y -= 60;
 
-  player1 = new Player("George", 10);
-  player2 = new Player("Cornel", 10);
+  
 }
 
 class Player {
-  constructor(name, wallCount) {
+  constructor(name, wallCount, color) {
     this.name = name;
     this.wallCount = wallCount;
+    this.color = color;
   }
 }
 
@@ -187,17 +190,17 @@ function mouseClicked() {
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
         //DREAPTA
-        for (let item of board) {
-          if (
-            item instanceof Wall &&
-            item.x >= selectedPawn.x - 60 &&
-            item.y == selectedPawn.y - 25 &&
-            item.isPlaced == true
-          ) {
-            isBlocked = true;
-            break;
-          } 
-        }
+        // for (let item of board) {
+        //   if (
+        //     item instanceof Wall &&
+        //     item.x >= selectedPawn.x - 60 &&
+        //     item.y == selectedPawn.y - 25 &&
+        //     item.isPlaced == true
+        //   ) {
+        //     isBlocked = true;
+        //     break;
+        //   } 
+        // }
 
         if (isValidStep) {
           if (
@@ -213,17 +216,17 @@ function mouseClicked() {
         }
       } else if (newX < 0 && selectedPawn.x > 120) {
         // STANGA
-        for (let item of board) {
-          if (
-            item instanceof Wall &&
-            item.x === selectedPawn.x - 60 &&
-            item.y === selectedPawn.y &&
-            item.isPlaced == true
-          ) {
-            isValidStep = false;
-            break;
-          }
-        }
+        // for (let item of board) {
+        //   if (
+        //     item instanceof Wall &&
+        //     item.x === selectedPawn.x - 60 &&
+        //     item.y === selectedPawn.y &&
+        //     item.isPlaced == true
+        //   ) {
+        //     isValidStep = false;
+        //     break;
+        //   }
+        // }
 
         if (isValidStep) {
           if (
@@ -240,17 +243,17 @@ function mouseClicked() {
     } else {
       if (newY > 0 && selectedPawn.y < height - 120) {
         //JOS
-        for (let item of board) {
-          if (
-            item instanceof Wall &&
-            item.x === selectedPawn.x &&
-            item.y === selectedPawn.y + 60 &&
-            item.isPlaced == true
-          ) {
-            isValidStep = false;
-            break;
-          }
-        }
+        // for (let item of board) {
+        //   if (
+        //     item instanceof Wall &&
+        //     item.x === selectedPawn.x &&
+        //     item.y === selectedPawn.y + 60 &&
+        //     item.isPlaced == true
+        //   ) {
+        //     isValidStep = false;
+        //     break;
+        //   }
+        // }
         if (isValidStep) {
           if (
             (currentPlayer === 1 && selectedPawn === pawn1) ||
@@ -263,7 +266,6 @@ function mouseClicked() {
           }
         }
       } else if (newY < 0 && selectedPawn.y > 120) {
-        //SUS
         for (let item of board) {
           if (
             item instanceof Wall &&
@@ -287,6 +289,11 @@ function mouseClicked() {
           }
         }
       }
+    }
+
+    if (checkForWall(selectedPawn)) {
+      alert("There is a wall blocking the pawn's movement!");
+      return; // Abort the movement if there's a wall
     }
 
     if (isBlocked) {
@@ -327,6 +334,8 @@ function mouseClicked() {
               ) {
                 item.color = "purple";
                 findWall(item).color = "purple";
+                console.log("wall1: x:" + item.x + "y: " + item.y);
+                console.log("wall1below: x: " + findWall(item).x + "y: " + findWall(item).y);
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
                 player1.wallCount--;
@@ -340,6 +349,8 @@ function mouseClicked() {
               ) {
                 item.color = "purple";
                 findWall(item).color = "purple";
+                console.log("wall1: x:" + item.x + "y: " + item.y);
+                console.log("wall1below: x: " + findWall(item).x + "y: " + findWall(item).y);
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
                 player2.wallCount--;
@@ -358,21 +369,34 @@ function mouseClicked() {
   }
 }
 
-function checkForWall(pawn){
+function checkForWall(pawn) {
   const positions = [
-    {x: pawn.x-60, y: pawn.y}, //left
-    {x: pawn.x+60, y: pawn.y}, //right
-    {x: pawn.x, y:pawn.y+60}, //down
-    {x: pawn.x, y:pawn.y-60} //up
-  ]  
+    { x: pawn.x - 25, y: pawn.y }, // left
+    { x: pawn.x + 25, y: pawn.y }, // right
+    { x: pawn.x, y : pawn.y + 25 }, // down
+    { x: pawn.x, y: pawn.y - 25 } // up
+  ];
 
-  for(let position of positions){
-    for(let item of board){
-      if(item instanceof Wall && item.x === position.x && item.y === position.y && item.isPlaced)
-      return true;
+  for (let position of positions) {
+    let isBlocked = false;
+    
+    for (let item of board) {
+      if (
+        item instanceof Wall &&
+        item.x === position.x &&
+        item.y === position.y &&
+        item.isPlaced
+      ) {
+        isBlocked = true;
+        break; // Exit the inner loop since a wall is found
+      }
+    }
+    if (isBlocked) {
+      return true; // There is a wall blocking the pawn's movement
     }
   }
-  return false;
+
+  return false; // No wall found in the surrounding positions
 }
 
 function findWall(findWall) {
@@ -429,7 +453,8 @@ function resetBoard() {
   player2.wallCount = 10;
   currentPlayer = 1;
 
-  currentPlayer = Math.floor(Math.random() * 2) + 1;
+  currentPlayer = 1;
+  // Math.floor(Math.random() * 2) + 1;
 }
 
 document.getElementById("playerNameDisplay").textContent =
