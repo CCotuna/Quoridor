@@ -1,7 +1,8 @@
-let board = [];
-let canvas;
 document.getElementById("resetButton").addEventListener("click", resetBoard);
 let playerName = localStorage.getItem("playerName");
+let board = [];
+let canvas;
+let pawn1, pawn2;
 
 function setup() {
   canvas = createCanvas(630, 630);
@@ -40,11 +41,11 @@ function setup() {
     }
   }
   // step de 60 - sus jos stanga dreapta
-  let pawn1 = new Pawn(315, 75, 30, "yellow");
+  pawn1 = new Pawn(315, 75, 30, "yellow");
   board.push(pawn1);
   // pawn1.x -= 60;
 
-  let pawn2 = new Pawn(315, 555, 30, "yellow");
+  pawn2 = new Pawn(315, 555, 30, "yellow");
   board.push(pawn2);
   // pawn2.y -= 60;
 }
@@ -105,7 +106,7 @@ class Pawn {
 
 function draw() {
   for (let item of board) {
-    if(item instanceof Box || item instanceof Pawn){
+    if (item instanceof Box || item instanceof Pawn) {
       item.display();
     }
   }
@@ -115,6 +116,7 @@ let selectedPawn = null;
 let directionChosen = false;
 
 function mouseClicked() {
+
   if (!directionChosen) {
     for (let item of board) {
       if (item instanceof Pawn) {
@@ -131,22 +133,82 @@ function mouseClicked() {
       }
     }
   } else {
+    for (let item of board) {
+      if (item instanceof Pawn) {
+        let distance = dist(mouseX, mouseY, item.x, item.y);
+        if(distance < item.diameter / 2){
+          
+          selectedPawn.color = selectedPawn.originalColor;
+          selectedPawn.isClicked = false;
+          selectedPawn = false;
+          break;
+        }
+      }
+    }
+
+
     let newX = mouseX - selectedPawn.x;
     let newY = mouseY - selectedPawn.y;
     console.log("new X = " + newX);
     console.log("new Y = " + newY);
 
+    let isValidStep = true;
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
-        selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+        for (let item of board) {
+          if (
+            item instanceof Wall &&
+            item.x === selectedPawn.x + 60 &&
+            item.y === selectedPawn.y &&
+            item.x + item.w > selectedPawn.x + 60
+          ) {
+            isValidStep = false;
+            break;
+          }
+        }
+
+        if (isValidStep) {
+          selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+        }
       } else if (newX < 0 && selectedPawn.x > 120) {
-        selectedPawn.x -= 60; //daca e negativa mutam la stanga
+        for (let item of board) {
+          if (
+            item instanceof Wall &&
+            item.x === selectedPawn.x - 60 &&
+            item.y === selectedPawn.y
+          ) {
+            isValidStep = false;
+            break;
+          }
+        }
+
+        if (isValidStep) selectedPawn.x -= 60; //daca e negativa mutam la stanga
       }
     } else {
       if (newY > 0 && selectedPawn.y < height - 120) {
-        selectedPawn.y += 60; // daca e pozitiva mutam in jos
+        for (let item of board) {
+          if (
+            item instanceof Wall &&
+            item.x === selectedPawn.x &&
+            item.y === selectedPawn.y + 60
+          ) {
+            isValidStep = false;
+            break;
+          }
+        }
+        if (isValidStep) selectedPawn.y += 60; // daca e pozitiva mutam in jos
       } else if (newY < 0 && selectedPawn.y > 120) {
-        selectedPawn.y -= 60; // daca e negativa mutam in sus
+        for (let item of board) {
+          if (
+            item instanceof Wall &&
+            item.x === selectedPawn.x &&
+            item.y === selectedPawn.y - 60
+          ) {
+            isValidStep = false;
+            break;
+          }
+        }
+        if (isValidStep) selectedPawn.y -= 60; // daca e negativa mutam in sus
       }
     }
     //reinitializam valorile pentru a selecta o alta piesa
@@ -156,23 +218,35 @@ function mouseClicked() {
     selectedPawn = null;
   }
 
-  for(let item of board){
-    if(item instanceof Wall){
-      if(mouseX < item.x+ item.w &&
-         mouseX > item.x &&
-         mouseY < item.y + item.h &&
-         mouseY > item.y)
-         item.display();
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (
+        mouseX < item.x + item.w &&
+        mouseX > item.x &&
+        mouseY < item.y + item.h &&
+        mouseY > item.y
+      )
+        item.display();
+    }
+  }
+}
+
+function resetPawns() {
+  for (let item of board) {
+    if (item instanceof Pawn) {
+      if (item === pawn1) {
+        item.x = 315;
+        item.y = 75;
+      } else if (item === pawn2) {
+        item.x = 315;
+        item.y = 555;
+      }
     }
   }
 }
 
 function resetBoard() {
-  for (let item of board) {
-    if (item instanceof Box) {
-      item.color = "white";
-    }
-  }
+  resetPawns();
 }
 
 document.getElementById("playerNameDisplay").textContent =
