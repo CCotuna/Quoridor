@@ -104,8 +104,10 @@ class Pawn {
 }
 
 function draw() {
-  for (let box of board) {
-    box.display();
+  for (let item of board) {
+    if(item instanceof Box || item instanceof Pawn){
+      item.display();
+    }
   }
 }
 
@@ -152,6 +154,16 @@ function mouseClicked() {
     selectedPawn.color = selectedPawn.originalColor;
     directionChosen = false;
     selectedPawn = null;
+  }
+
+  for(let item of board){
+    if(item instanceof Wall){
+      if(mouseX < item.x+ item.w &&
+         mouseX > item.x &&
+         mouseY < item.y + item.h &&
+         mouseY > item.y)
+         item.display();
+    }
   }
 }
 
