@@ -47,7 +47,6 @@ function setup() {
   let pawn2 = new Pawn(315, 555, 30, "yellow");
   board.push(pawn2);
   // pawn2.y -= 60;
-
 }
 
 class Box {
@@ -81,11 +80,10 @@ class Wall {
     fill(this.color);
     rect(this.x, this.y, this.w, this.h);
   }
-  
 }
 
 class Pawn {
-  constructor(x, y, diameter, color){
+  constructor(x, y, diameter, color) {
     this.x = x;
     this.y = y;
     this.diameter = diameter;
@@ -94,13 +92,13 @@ class Pawn {
     this.isClicked = false;
   }
 
-  display(){
+  display() {
     noStroke();
     fill(this.color);
     ellipse(this.x, this.y, this.diameter);
   }
 
-  newColor(){
+  newColor() {
     this.color = color(random(255), random(255), random(255));
   }
 }
@@ -114,14 +112,13 @@ function draw() {
 let selectedPawn = null;
 let directionChosen = false;
 
-function mouseClicked(){
-  if(!directionChosen){
-
-    for(let item of board){
-      if(item instanceof Pawn){
+function mouseClicked() {
+  if (!directionChosen) {
+    for (let item of board) {
+      if (item instanceof Pawn) {
         let distance = dist(mouseX, mouseY, item.x, item.y);
 
-        if(distance < item.diameter / 2){
+        if (distance < item.diameter / 2) {
           selectedPawn = item;
           selectedPawn.originalColor = selectedPawn.color;
           selectedPawn.color = "blue";
@@ -131,30 +128,26 @@ function mouseClicked(){
         }
       }
     }
-
-  }
-  else{
+  } else {
     let newX = mouseX - selectedPawn.x;
     let newY = mouseY - selectedPawn.y;
-    console.log("new X = " + newX)
-    console.log("new Y = " + newY)
-    
-    if(abs(newX) > abs(newY)){
-      if(newX > 0 && selectedPawn.x < width - 120){
+    console.log("new X = " + newX);
+    console.log("new Y = " + newY);
+
+    if (abs(newX) > abs(newY)) {
+      if (newX > 0 && selectedPawn.x < width - 120) {
         selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
-      }
-      else if (newX < 0 && selectedPawn.x > 120){
+      } else if (newX < 0 && selectedPawn.x > 120) {
         selectedPawn.x -= 60; //daca e negativa mutam la stanga
       }
-        
-    }
-    else{
-      if(newY > 0 && selectedPawn.y < height - 120){
+    } else {
+      if (newY > 0 && selectedPawn.y < height - 120) {
         selectedPawn.y += 60; // daca e pozitiva mutam in jos
-      }else if(newY < 0 && selectedPawn.y > 120){
+      } else if (newY < 0 && selectedPawn.y > 120) {
         selectedPawn.y -= 60; // daca e negativa mutam in sus
       }
     }
+    //reinitializam valorile pentru a selecta o alta piesa
     selectedPawn.isClicked = false;
     selectedPawn.color = selectedPawn.originalColor;
     directionChosen = false;
@@ -162,11 +155,9 @@ function mouseClicked(){
   }
 }
 
-
-
 function resetBoard() {
   for (let item of board) {
-    if(item instanceof Box){
+    if (item instanceof Box) {
       item.color = "white";
     }
   }
