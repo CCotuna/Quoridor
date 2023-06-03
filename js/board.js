@@ -358,6 +358,23 @@ function mouseClicked() {
   }
 }
 
+function checkForWall(pawn){
+  const positions = [
+    {x: pawn.x-60, y: pawn.y}, //left
+    {x: pawn.x+60, y: pawn.y}, //right
+    {x: pawn.x, y:pawn.y+60}, //down
+    {x: pawn.x, y:pawn.y-60} //up
+  ]  
+
+  for(let position of positions){
+    for(let item of board){
+      if(item instanceof Wall && item.x === position.x && item.y === position.y && item.isPlaced)
+      return true;
+    }
+  }
+  return false;
+}
+
 function findWall(findWall) {
   for (let item of board) {
     if (item instanceof Wall) {
