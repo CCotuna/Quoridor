@@ -1,5 +1,6 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
-let playerName = localStorage.getItem("playerName");
+let player1Name = localStorage.getItem("player1Name");
+let player2Name = localStorage.getItem("player2Name");
 let wallsUsed = [];
 let board = [];
 let canvas;
@@ -460,5 +461,7 @@ function resetBoard() {
   // Math.floor(Math.random() * 2) + 1;
 }
 
-document.getElementById("playerNameDisplay").textContent =
-  "Player Name: " + playerName;
+document.getElementById("player1NameDisplay").textContent =
+  "Player1 Name: " + player1Name;
+document.getElementById("player2NameDisplay").textContent =
+  "Player2 Name: " + player2Name;
