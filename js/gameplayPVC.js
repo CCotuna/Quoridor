@@ -1,6 +1,7 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
 let playerName = localStorage.getItem("playerName");
-console.log(playerName);
+
+let wallPositions[];
 let wallsUsed = [];
 let board = [];
 let canvas;
@@ -238,7 +239,7 @@ function mouseClicked() {
     if (isBlocked) {
       alert("It's not your turn!");
     }
-    
+
     //reinitializam valorile pentru a selecta o alta piesa
     selectedPawn.isClicked = false;
     selectedPawn.color = selectedPawn.originalColor;
@@ -369,35 +370,10 @@ function moveAI() {
   }
 }
 
-function checkForWall(pawn) {
-  const positions = [
-    { x: pawn.x - 25, y: pawn.y }, // left
-    { x: pawn.x + 25, y: pawn.y }, // right
-    { x: pawn.x, y: pawn.y + 25 }, // down
-    { x: pawn.x, y: pawn.y - 25 }, // up
-  ];
-
-  for (let position of positions) {
-    let isBlocked = false;
-
-    for (let item of board) {
-      if (
-        item instanceof Wall &&
-        item.x === position.x &&
-        item.y === position.y &&
-        item.isPlaced
-      ) {
-        isBlocked = true;
-        break; // Exit the inner loop since a wall is found
-      }
-    }
-    if (isBlocked) {
-      return true; // There is a wall blocking the pawn's movement
-    }
-  }
-
-  return false; // No wall found in the surrounding positions
+function placeWallAI(){
+    
 }
+
 
 function findWall(findWall) {
   for (let item of board) {

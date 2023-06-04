@@ -374,7 +374,7 @@ function mouseClicked() {
     }
   }
 }
-
+console.log(wallsUsed);
 function checkForWall(pawn) {
   const positions = [
     { x: pawn.x - 25, y: pawn.y }, // left
