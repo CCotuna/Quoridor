@@ -13,43 +13,43 @@ export let player1, player2;
 export let currentPlayer = 1;
 // Math.floor(Math.random() * 2) + 1;
 
-export function setup() {
-  canvas = createCanvas(630, 630);
-  canvasWidth = width;
-  canvasHeight = height;
-  let canvasX = (windowWidth - width) / 2;
-  let canvasY = (windowHeight - height) / 2;
-  canvas.position(canvasX, canvasY);
+// function setup() {
+//   canvas = createCanvas(630, 630);
+//   canvasWidth = width;
+//   canvasHeight = height;
+//   let canvasX = (windowWidth - width) / 2;
+//   let canvasY = (windowHeight - height) / 2;
+//   canvas.position(canvasX, canvasY);
 
-  let color1 = "white";
+//   let color1 = "white";
 
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      let x = j * 60 + 50;
-      let y = i * 60 + 50;
-      let box = new Box(x, y, 50, color1);
-      board.push(box);
-    }
-  }
+//   for (let i = 0; i < 9; i++) {
+//     for (let j = 0; j < 9; j++) {
+//       let x = j * 60 + 50;
+//       let y = i * 60 + 50;
+//       let box = new Box(x, y, 50, color1);
+//       board.push(box);
+//     }
+//   }
 
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 8; j++) {
-      let x = j * 60 + 50;
-      let y = i * 60 + 50;
-      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1); //verticale
-      board.push(wall1);
-    }
-  }
+//   for (let i = 0; i < 9; i++) {
+//     for (let j = 0; j < 8; j++) {
+//       let x = j * 60 + 50;
+//       let y = i * 60 + 50;
+//       let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1); //verticale
+//       board.push(wall1);
+//     }
+//   }
 
-  for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 9; j++) {
-      let x = j * 60 + 50;
-      let y = i * 60 + 50;
-      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2); //orizontale
-      board.push(wall2);
-    }
-  }
-}
+//   for (let i = 0; i < 8; i++) {
+//     for (let j = 0; j < 9; j++) {
+//       let x = j * 60 + 50;
+//       let y = i * 60 + 50;
+//       let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2); //orizontale
+//       board.push(wall2);
+//     }
+//   }
+// }
 
 export class Player {
   constructor(name, wallCount, color) {
