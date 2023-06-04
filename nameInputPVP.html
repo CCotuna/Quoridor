@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter your nickname...</title>
+    <link rel="stylesheet" href="css/defaultDesign.css">
+    <link rel="stylesheet" href="css/nameInput.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <img src="images/Logo.png" class="logo" style="width:100px; height:40px;">
+            <nav>
+                <ul id="menuList">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="rules.html">Rules</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            <img src="images/menu-icon.svg" class="menu-icon" onclick="togglemenu()">
+        </div>
+
+    <div class="row">
+        <div class="col-1">
+                <h3>Enter your nickname and get on the first line.</h3>
+                <input type="text" id="player1NameInput" placeholder="  Player 1 : ... " class="inputBox" style="margin-bottom: 10px;">
+                <input type="text" id="player2NameInput" placeholder="  Player 2 : ... " class="inputBox">
+                <button id="submitButton" class="submitBox">Submit</button>
+            </div>
+        <div class="col-2">
+            <img src="images/quoridor_table.png" class="qtable">
+           <div class="color-box"></div>
+        </div>
+    </div>
+
+
+        <script src="vendor/p5.min.js"></script>
+        <script src="js/displayName.js"></script>
+        <script src="js/script.js"></script>
+</body>
+
+</html>
