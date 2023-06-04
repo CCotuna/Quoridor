@@ -42,11 +42,28 @@
     </div>
     
     <script>
-        window.addEventListener('load', function(){
+        var playerName = localStorage.getItem("playerName");
+        var player1Name = localStorage.getItem("player1Name");
+        var player2Name = localStorage.getItem("player2Name");
+
+        if(playerName != null){
+            window.addEventListener('load', function(){
             setTimeout(function(){
-                window.location.href = "gameplay.html";
+                localStorage.removeItem("playerName");
+                window.location.href = "gameplayPVC.html";
             }, 1500);
         });
+        }
+        else if(player1Name != null && player2Name != null){
+            window.addEventListener('load', function(){
+            setTimeout(function(){
+                localStorage.removeItem("player1Name");
+                localStorage.removeItem("player2Name");
+                window.location.href = "gameplayPVP.html";
+            }, 1500);
+        });
+        }
+        
     </script>
     
 </body>
