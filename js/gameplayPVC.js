@@ -58,8 +58,6 @@ function setup() {
   pawn2 = new Pawn(315, 555, 30, player2.color);
   board.push(pawn2);
   // pawn2.y -= 60;
-
-  
 }
 
 class Player {
@@ -154,114 +152,105 @@ let selectedPawn = null;
 let directionChosen = false;
 
 function mouseClicked() {
-    if (!directionChosen) {
-      for (let item of board) {
-        if (item instanceof Pawn) {
-          distance = dist(mouseX, mouseY, item.x, item.y);
-  
-          if (distance < item.diameter / 2) {
-            selectedPawn = item;
-            selectedPawn.originalColor = selectedPawn.color;
-            selectedPawn.color = "blue";
-            directionChosen = true;
-            selectedPawn.isClicked = true;
-            break; // pentru a nu mai cauta elementul in intreg for-ul atunci cand am gasit deja pionul
+  if (!directionChosen) {
+    for (let item of board) {
+      if (item instanceof Pawn) {
+        distance = dist(mouseX, mouseY, item.x, item.y);
+
+        if (distance < item.diameter / 2) {
+          selectedPawn = item;
+          selectedPawn.originalColor = selectedPawn.color;
+          selectedPawn.color = "blue";
+          directionChosen = true;
+          selectedPawn.isClicked = true;
+          break; // pentru a nu mai cauta elementul in intreg for-ul atunci cand am gasit deja pionul
+        }
+      }
+    }
+  } else {
+    for (let item of board) {
+      if (item instanceof Pawn) {
+        distance = dist(mouseX, mouseY, item.x, item.y);
+        if (distance < item.diameter / 2) {
+          selectedPawn.color = selectedPawn.originalColor;
+          selectedPawn.isClicked = false;
+          selectedPawn = false;
+          break;
+        }
+      }
+    }
+
+    let newX = mouseX - selectedPawn.x;
+    let newY = mouseY - selectedPawn.y;
+
+    let isValidStep = true;
+    let isBlocked = false;
+
+    // trying separately another way to implement the pawn's movement
+
+    if (abs(newX) > abs(newY)) {
+      if (newX > 0 && selectedPawn.x < width - 120) {
+        //DREAPTA
+        if (isValidStep) {
+          if (currentPlayer === 2 && selectedPawn === pawn2) {
+            selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+            currentPlayer = currentPlayer === 2 ? 1 : 2;
+          } else {
+            // It's not the pawn's turn, movement is blocked
+            isBlocked = true;
+          }
+        }
+      } else if (newX < 0 && selectedPawn.x > 120) {
+        // STANGA
+        if (isValidStep) {
+          if (currentPlayer === 2 && selectedPawn === pawn2) {
+            selectedPawn.x -= 60; //daca e negativa mutam la stanga
+            currentPlayer = currentPlayer === 2 ? 1 : 2;
+          } else {
+            isBlocked = true;
           }
         }
       }
     } else {
-      for (let item of board) {
-        if (item instanceof Pawn) {
-          distance = dist(mouseX, mouseY, item.x, item.y);
-          if (distance < item.diameter / 2) {
-            selectedPawn.color = selectedPawn.originalColor;
-            selectedPawn.isClicked = false;
-            selectedPawn = false;
-            break;
+      if (newY > 0 && selectedPawn.y < height - 120) {
+        //JOS
+        if (isValidStep) {
+          if (currentPlayer === 2 && selectedPawn === pawn2) {
+            selectedPawn.y += 60; // daca e pozitiva mutam in jos
+            currentPlayer = currentPlayer === 2 ? 1 : 2;
+          } else {
+            isBlocked = true;
+          }
+        }
+      } else if (newY < 0 && selectedPawn.y > 120) {
+        // SUS
+        if (isValidStep) {
+          if (currentPlayer === 2 && selectedPawn === pawn2) {
+            selectedPawn.y -= 60; // daca e negativa mutam in sus
+            currentPlayer = currentPlayer === 2 ? 1 : 2;
+          } else {
+            isBlocked = true;
           }
         }
       }
-  
-      let newX = mouseX - selectedPawn.x;
-      let newY = mouseY - selectedPawn.y;
-      console.log(newX + " :newx && newy:" + newY);
-      console.log(selectedPawn.x + " pawnX + pawnY " + selectedPawn.y);
-    // daca newX > 0 merge la dreapta altfel la stanga
-    // daca newY > 0 merge in sus altfel in jos
-    let isValidStep = true;
-    let isBlocked = false;
+    }
+
+    if (isBlocked) {
+      alert("It's not your turn!");
+    }
     
-    if(abs(newX) > abs(newY)) {
-    //merge pe orizontala
-    //DREAPTA
-    if(newX > 0 && selectedPawn.x < width - 120){
-        if(isValidStep){
-            if(currentPlayer === 2 && selectedPawn === pawn2){
-                selectedPawn.x += 60;
-                currentPlayer = currentPlayer === 1 ? 2 : 1;
-            }
-            else{
-                isBlocked = true;
-            }
-        }
-    }
-    else if(newX < 0 && selectedPawn.x > 120){
-        // STANGA
-        if(isValidStep){
-            if(currentPlayer === 2){
-                selectedPawn.x -= 60;
-                currentPlayer = currentPlayer === 1 ? 2 : 1;
-            }
-            else{
-                isBlocked = true;
-            }
-        }
-    }
-    else if(newY > 0 && selectedPawn.y < height - 120){
-        //mutam pe verticala
-        //JOS
-        if(isValidStep){
-            if(currentPlayer === 2){
-                selectedPawn.y += 60;
-                currentPlayer = currentPlayer === 1 ? 2 : 1;
-            }
-            else{
-                isBlocked = true;
-            }
-        }
-    }
-    else if(newY < 0 && selectedPawn.y > 120){
-        // SUS
-        console.log(isValidStep + " isvalidStep");
-        console.log(currentPlayer + " currentPlayer");
-        if(isValidStep){
-            if(currentPlayer === 2){
-                selectedPawn.y -= 60;
-                currentPlayer = currentPlayer === 1 ? 2 : 1;
-            }
-            else{
-                isBlocked = true;
-            }
-        }
-    }
-}
-
-    if(isBlocked){
-        alert("It's not your turn! Wait yours!");
-    }
-
+    //reinitializam valorile pentru a selecta o alta piesa
     selectedPawn.isClicked = false;
     selectedPawn.color = selectedPawn.originalColor;
     directionChosen = false;
     selectedPawn = null;
 
     if (!isBlocked && !directionChosen && currentPlayer === 1) {
-        moveAI();
+      moveAI();
     }
   }
 
-
-// place walls
+  // place walls
   for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -291,7 +280,12 @@ function mouseClicked() {
                 item.color = "purple";
                 findWall(item).color = "purple";
                 console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log("wall1below: x: " + findWall(item).x + "y: " + findWall(item).y);
+                console.log(
+                  "wall1below: x: " +
+                    findWall(item).x +
+                    "y: " +
+                    findWall(item).y
+                );
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
                 player1.wallCount--;
@@ -306,7 +300,12 @@ function mouseClicked() {
                 item.color = "purple";
                 findWall(item).color = "purple";
                 console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log("wall1below: x: " + findWall(item).x + "y: " + findWall(item).y);
+                console.log(
+                  "wall1below: x: " +
+                    findWall(item).x +
+                    "y: " +
+                    findWall(item).y
+                );
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
                 player2.wallCount--;
@@ -323,69 +322,64 @@ function mouseClicked() {
       }
     }
   }
-
 }
 
-function moveAI(){
-    console.log("Am intrat macar aici")
-    if(currentPlayer === 1){
-        const directions = [1,2,3,4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
-        const randomIndex = Math.floor(Math.random() * directions.length);
-        const randomDirection = directions[randomIndex];
-        let initialx = pawn1.x;
-        let initialy = pawn1.y;
-        switch(randomDirection){
-            case 1: //sus
-                if(pawn1.y > 120){
-                    pawn1.y -= 60;
-                    break;
-                }
-                else{
-                    break;
-                }
-            case 2: //jos
-                if(pawn1.y < height-120){
-                    pawn1.y += 60;
-                    break;
-                }
-                else{
-                    break;
-                }
-            case 3: //dreapta
-                if(pawn1.x < width - 120){
-                    pawn1.x += 60;
-                    break;
-                }
-                else{
-                    break;
-                }
-            case 4: //stanga
-                if(pawn1.x > 120){
-                    pawn1.x -= 60;
-                    break;
-                }
-                else{
-                    break;
-                }
+function moveAI() {
+  console.log("Am intrat macar aici");
+  if (currentPlayer === 1) {
+    const directions = [1, 2, 3, 4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
+    const randomIndex = Math.floor(Math.random() * directions.length);
+    const randomDirection = directions[randomIndex];
+    let initialx = pawn1.x;
+    let initialy = pawn1.y;
+    switch (randomDirection) {
+      case 1: //sus
+        if (pawn1.y > 120) {
+          pawn1.y -= 60;
+          break;
+        } else {
+          break;
         }
-        if(pawn1.x == initialx && pawn1.y == initialy){
-            moveAI();
+      case 2: //jos
+        if (pawn1.y < height - 120) {
+          pawn1.y += 60;
+          break;
+        } else {
+          break;
         }
-        currentPlayer = 2;
+      case 3: //dreapta
+        if (pawn1.x < width - 120) {
+          pawn1.x += 60;
+          break;
+        } else {
+          break;
+        }
+      case 4: //stanga
+        if (pawn1.x > 120) {
+          pawn1.x -= 60;
+          break;
+        } else {
+          break;
+        }
     }
-} 
+    if (pawn1.x == initialx && pawn1.y == initialy) {
+      moveAI();
+    }
+    currentPlayer = 2;
+  }
+}
 
 function checkForWall(pawn) {
   const positions = [
     { x: pawn.x - 25, y: pawn.y }, // left
     { x: pawn.x + 25, y: pawn.y }, // right
-    { x: pawn.x, y : pawn.y + 25 }, // down
-    { x: pawn.x, y: pawn.y - 25 } // up
+    { x: pawn.x, y: pawn.y + 25 }, // down
+    { x: pawn.x, y: pawn.y - 25 }, // up
   ];
 
   for (let position of positions) {
     let isBlocked = false;
-    
+
     for (let item of board) {
       if (
         item instanceof Wall &&
