@@ -46,6 +46,16 @@
         var player1Name = localStorage.getItem("player1Name");
         var player2Name = localStorage.getItem("player2Name");
 
+
+        console.log("playerName:", playerName);
+        console.log("player1Name:", player1Name);
+        console.log("player2Name:", player2Name);
+
+        // localStorage.removeItem("playerName");  
+        // localStorage.removeItem("player1Name"); 
+        // localStorage.removeItem("player2Name"); 
+
+
         if(playerName != null){
             window.addEventListener('load', function(){
             setTimeout(function(){

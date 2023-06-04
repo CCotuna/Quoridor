@@ -29,5 +29,13 @@
     
     <script src="vendor/p5.min.js"></script>
     <script src="js/gameplayPVP.js"></script>
+
+    <script>
+        window.onunload = function() {
+  // Sterge valorile din localStorage
+    localStorage.removeItem("player1Name");
+    localStorage.removeItem("player2Name");
+}
+    </script>
 </body>
 </html>

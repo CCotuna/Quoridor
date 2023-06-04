@@ -1,5 +1,6 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
 let playerName = localStorage.getItem("playerName");
+console.log(playerName);
 let wallsUsed = [];
 let board = [];
 let canvas;
@@ -462,3 +463,5 @@ function resetBoard() {
 
 document.getElementById("playerNameDisplay").textContent =
   "Player Name: " + playerName;
+
+//   localStorage.removeItem("playerName");

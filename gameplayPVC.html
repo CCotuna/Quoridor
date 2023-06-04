@@ -29,5 +29,12 @@
     <script src="vendor/p5.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script> -->
     <script src="js/gameplayPVC.js"></script>
+
+    <script>
+        window.onunload = function() {
+  // Sterge valorile din localStorage
+    localStorage.removeItem("playerName");
+}
+    </script>
 </body>
 </html>
