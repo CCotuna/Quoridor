@@ -154,40 +154,38 @@ let selectedPawn = null;
 let directionChosen = false;
 
 function mouseClicked() {
-  if(!directionChosen){
-    //selecting the pawn
-    for(let item of board){
-        if(item instanceof Pawn && item === pawn2){
-            distance = dist(mouseX, mouseY, item.x, item.y);
-
-            if(distance < item.diameter / 2){ // the cursor is inside the pawn
-                selectedPawn = item;
-                selectedPawn.originalColor = selectedPawn.color;
-                selectedPawn.color = "blue";
-                directionChosen = true;
-                selectedPawn.isClicked = true;
-                
-                break;
-            }
+    if (!directionChosen) {
+      for (let item of board) {
+        if (item instanceof Pawn) {
+          distance = dist(mouseX, mouseY, item.x, item.y);
+  
+          if (distance < item.diameter / 2) {
+            selectedPawn = item;
+            selectedPawn.originalColor = selectedPawn.color;
+            selectedPawn.color = "blue";
+            directionChosen = true;
+            selectedPawn.isClicked = true;
+            break; // pentru a nu mai cauta elementul in intreg for-ul atunci cand am gasit deja pionul
+          }
         }
-    }
-  }
-  else{
-    //deselecting the pawn
-    for(let item of board){
-        if(item instanceof Pawn){
-            distance = dist(mouseX, mouseY, item.x, item.y);
-
-            if(distance < item.diameter / 2){
-                selectedPawn.color = selectedPawn.originalColor;
-                selectedPawn.isClicked = false;
-                selectedPawn = false;
-                break
-            }
+      }
+    } else {
+      for (let item of board) {
+        if (item instanceof Pawn) {
+          distance = dist(mouseX, mouseY, item.x, item.y);
+          if (distance < item.diameter / 2) {
+            selectedPawn.color = selectedPawn.originalColor;
+            selectedPawn.isClicked = false;
+            selectedPawn = false;
+            break;
+          }
         }
-    }
-    let newX = mouseX - selectedPawn.x;
-    let newY = mouseY - selectedPawn.y;
+      }
+  
+      let newX = mouseX - selectedPawn.x;
+      let newY = mouseY - selectedPawn.y;
+      console.log(newX + " :newx && newy:" + newY);
+      console.log(selectedPawn.x + " pawnX + pawnY " + selectedPawn.y);
     // daca newX > 0 merge la dreapta altfel la stanga
     // daca newY > 0 merge in sus altfel in jos
     let isValidStep = true;
@@ -223,7 +221,7 @@ function mouseClicked() {
         //mutam pe verticala
         //JOS
         if(isValidStep){
-            if(currentPlayer === 2 && selectedPawn === pawn2){
+            if(currentPlayer === 2){
                 selectedPawn.y += 60;
                 currentPlayer = currentPlayer === 1 ? 2 : 1;
             }
@@ -232,10 +230,12 @@ function mouseClicked() {
             }
         }
     }
-    else if(newY > 0 && selectedPawn.y > 120){
+    else if(newY < 0 && selectedPawn.y > 120){
         // SUS
+        console.log(isValidStep + " isvalidStep");
+        console.log(currentPlayer + " currentPlayer");
         if(isValidStep){
-            if(currentPlayer === 2 && selectedPawn === pawn2){
+            if(currentPlayer === 2){
                 selectedPawn.y -= 60;
                 currentPlayer = currentPlayer === 1 ? 2 : 1;
             }
