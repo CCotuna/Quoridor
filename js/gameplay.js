@@ -121,7 +121,7 @@ export class Pawn {
   }
 }
 
-function mouseClicked(){
+export function mouseClicked(){
     for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -240,6 +240,3 @@ export function resetBoard() {
   currentPlayer = 1;
   // Math.floor(Math.random() * 2) + 1; (alternanta player1 player2)
 }
-
-document.getElementById("playerNameDisplay").textContent =
-  "Player Name: " + playerName;
