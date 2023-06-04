@@ -186,8 +186,78 @@ function mouseClicked() {
             }
         }
     }
+    let newX = mouseX - selectedPawn.x;
+    let newY = mouseY - selectedPawn.y;
+    // daca newX > 0 merge la dreapta altfel la stanga
+    // daca newY > 0 merge in sus altfel in jos
+    let isValidStep = true;
+    let isBlocked = false;
     
-    
+    if(abs(newX) > abs(newY)) {
+    //merge pe orizontala
+    //DREAPTA
+    if(newX > 0 && selectedPawn.x < width - 120){
+        if(isValidStep){
+            if(currentPlayer === 2 && selectedPawn === pawn2){
+                selectedPawn.x += 60;
+                currentPlayer = currentPlayer === 1 ? 2 : 1;
+            }
+            else{
+                isBlocked = true;
+            }
+        }
+    }
+    else if(newX < 0 && selectedPawn.x > 120){
+        // STANGA
+        if(isValidStep){
+            if(currentPlayer === 2){
+                selectedPawn.x -= 60;
+                currentPlayer = currentPlayer === 1 ? 2 : 1;
+            }
+            else{
+                isBlocked = true;
+            }
+        }
+    }
+    else if(newY > 0 && selectedPawn.y < height - 120){
+        //mutam pe verticala
+        //JOS
+        if(isValidStep){
+            if(currentPlayer === 2 && selectedPawn === pawn2){
+                selectedPawn.y += 60;
+                currentPlayer = currentPlayer === 1 ? 2 : 1;
+            }
+            else{
+                isBlocked = true;
+            }
+        }
+    }
+    else if(newY > 0 && selectedPawn.y > 120){
+        // SUS
+        if(isValidStep){
+            if(currentPlayer === 2 && selectedPawn === pawn2){
+                selectedPawn.y -= 60;
+                currentPlayer = currentPlayer === 1 ? 2 : 1;
+            }
+            else{
+                isBlocked = true;
+            }
+        }
+    }
+}
+
+    if(isBlocked){
+        alert("It's not your turn! Wait yours!");
+    }
+
+    selectedPawn.isClicked = false;
+    selectedPawn.color = selectedPawn.originalColor;
+    directionChosen = false;
+    selectedPawn = null;
+
+    if (!isBlocked && !directionChosen && currentPlayer === 1) {
+        moveAI();
+    }
   }
 
 
@@ -257,38 +327,40 @@ function mouseClicked() {
 }
 
 function moveAI(){
+    console.log("Am intrat macar aici")
     if(currentPlayer === 1){
         const directions = [1,2,3,4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
         const randomIndex = Math.floor(Math.random() * directions.length);
         const randomDirection = directions[randomIndex];
-
+        let initialx = pawn1.x;
+        let initialy = pawn1.y;
         switch(randomDirection){
-            case 1:
-                if(pawn1.x < canvasWidth-120 && pawn1.x > 60 && pawn1.y > 60 && pawn1.y < canvasHeight-120){
+            case 1: //sus
+                if(pawn1.y > 120){
                     pawn1.y -= 60;
                     break;
                 }
                 else{
                     break;
                 }
-            case 2:
-                if(pawn1.x < canvasWidth-120 && pawn1.x > 60 && pawn1.y > 60 && pawn1.y < canvasHeight-120){
+            case 2: //jos
+                if(pawn1.y < height-120){
                     pawn1.y += 60;
                     break;
                 }
                 else{
                     break;
                 }
-            case 3:
-                if(pawn1.x < canvasWidth-120 && pawn1.x > 60 && pawn1.y > 60 && pawn1.y < canvasHeight-120){
+            case 3: //dreapta
+                if(pawn1.x < width - 120){
                     pawn1.x += 60;
                     break;
                 }
                 else{
                     break;
                 }
-            case 4:
-                if(pawn1.x < canvasWidth-120 && pawn1.x > 60 && pawn1.y > 60 && pawn1.y < canvasHeight-120){
+            case 4: //stanga
+                if(pawn1.x > 120){
                     pawn1.x -= 60;
                     break;
                 }
@@ -296,8 +368,10 @@ function moveAI(){
                     break;
                 }
         }
-
-        currentPlayer = 1;
+        if(pawn1.x == initialx && pawn1.y == initialy){
+            moveAI();
+        }
+        currentPlayer = 2;
     }
 } 
 
