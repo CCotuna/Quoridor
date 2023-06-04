@@ -187,6 +187,8 @@ function mouseClicked() {
     let isValidStep = true;
     let isBlocked = false;
 
+    // trying separately another way to implement the pawn's movement
+
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
         //DREAPTA
