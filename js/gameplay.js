@@ -238,9 +238,7 @@ export function resetBoard() {
   player1.wallCount = 10;
   player2.wallCount = 10;
   currentPlayer = 1;
-
-  currentPlayer = 1;
-  // Math.floor(Math.random() * 2) + 1;
+  // Math.floor(Math.random() * 2) + 1; (alternanta player1 player2)
 }
 
 document.getElementById("playerNameDisplay").textContent =

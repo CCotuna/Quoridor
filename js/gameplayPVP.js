@@ -48,8 +48,8 @@ function setup() {
       board.push(wall2);
     }
   }
-  player1 = new Player("George", 10, "red");
-  player2 = new Player("Cornel", 10, "green");
+  player1 = new Player(player1Name, 10, "red");
+  player2 = new Player(player2Name, 10, "green");
   // step de 60 - sus jos stanga dreapta
   pawn1 = new Pawn(315, 75, 30, player1.color);
   board.push(pawn1);
