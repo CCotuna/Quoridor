@@ -325,14 +325,19 @@ function mouseClicked() {
                 currentPlayer = 1;
                 let random = generateRandomNumber();
                 if (random === 1) {
+                  console.log("E TURA MEAAAAAAAAAAAAAAA SI AICI TREBUIE SA MUT NEAPARAT")
                   moveAI();
-                } else {
-                  if (player1.wallCount == 0) {
-                    moveAI();
-                  } else {
-                    placeWallAI();
-                  }
                 }
+                else if(random === 2){
+                  if(player1.wallCount === 0){
+                    console.log("AICI AM AVUT DE ALES SI POT SA MUT")
+                    moveAI(); 
+                  }
+                  else{
+                    console.log("AICI AM AVUT DE ALES SI POT SA PUN UN ZID")
+                    placeWallAI(); 
+                  }
+                } 
               }
               break;
             }
@@ -408,9 +413,12 @@ function placeWallAI() {
   let randomWall = wallsUsed[randomIndex];
 
   let isWallPlaced = false;
+  let canPlaceWall = true;
+
   console.log(wallPositions);
 
-  for (let pos of wallPositions) {
+  for (let pos of board)
+    if(pos instanceof Wall) {
     if ((pos.x === randomWall.x && pos.y === randomWall.y && pos.isPlaced === 1) ||
     (findWall(randomWall) !== null &&
       pos.x === findWall(randomWall).x &&
@@ -423,33 +431,60 @@ function placeWallAI() {
   }
   console.log("wallul random este: ");
   console.log( randomWall);
-  console.log(randomWall.type);
+  if(randomWall.type == 1){
+    console.log("wallul random de sub el este: ")
+    console.log(findWall(randomWall));
+  }
+  else if(randomWall.type == 2){
+    console.log("wallul random de langa el este: ")
+    console.log(findWall(randomWall));
+  }
+  
+  
+  console.log();
+  console.log("SUNT IN AFARA isWALLPLACED? : " + currentPlayer)
+  console.log("Hai sa vedem daca isWallPlaced e true")
+  console.log(!isWallPlaced)
+  
   if (!isWallPlaced) {
     if (
       currentPlayer === 1 &&
       player1.wallCount > 0 &&
-      findWall(randomWall).w + findWall(randomWall).x < canvasWidth &&
-      findWall(randomWall).h + findWall(randomWall).y < canvasHeight
+      findWall(randomWall) != null && 
+      findWall(randomWall).w + findWall(randomWall).x < canvasWidth - 180 &&
+      findWall(randomWall).h + findWall(randomWall).y < canvasHeight - 180 
     ) {
       // Place the wall
-      randomWall.color = "purple";
-      randomWall.isPlaced = 1;
-      player1.wallCount--;
-      currentPlayer = 2;
-    }
-  }
-  drawWalls();
-  
-}
-function drawWalls() {
-    for (let item of wallPositions) {
-      if (item.isPlaced === 1) {
-        // Draw the wall
-        fill("purple");
-        rect(item.x, item.y, item.w, item.h);
+      for(let itemBoard of board){
+        if(itemBoard instanceof Wall)
+        if( (itemBoard.x === randomWall.x &&
+          itemBoard.y === randomWall.y &&
+          itemBoard.isPlaced === 1 &&
+          itemBoard.type === randomWall.type) ||
+        (findWall(randomWall) !== null &&
+          itemBoard.x === findWall(randomWall).x &&
+          itemBoard.y === findWall(randomWall).y &&
+          itemBoard.isPlaced === 1 &&
+          itemBoard.type === randomWall.type)){
+            itemBoard.color = "purple";
+            itemBoard.isPlaced = 1;
+            player1.wallCount--;
+            itemBoard.display();
+            findWall(itemBoard).display();
+            console.log("OARE AM AJUNS SA AFISEZ A CUI TURA E ACUM? : " + currentPlayer);
+            currentPlayer = 2;
+            
+        }
       }
     }
   }
+  moveAI();
+  
+  
+ 
+
+}
+
 
 function findWall(findWall) {
   for (let item of board) {
