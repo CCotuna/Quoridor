@@ -252,14 +252,22 @@ function mouseClicked() {
     selectedPawn.color = selectedPawn.originalColor;
     directionChosen = false;
     selectedPawn = null;
-
+    
     if (!isBlocked && !directionChosen && currentPlayer === 1 && player1.wallCount > 0) {
-      let random = generateRandomNumber();
+      if(player1.wallCount > 0){
+        console.log(currentPlayer + " inside player1WallCount > 0");
+        let random = generateRandomNumber();
+        console.log(random);
         if(random === 1){
             moveAI();
         }else{
             placeWallAI();
         }
+      }else if(!isBlocked && !directionChosen && currentPlayer === 1 && player1.wallCount == 0){
+        console.log(currentPlayer + " inside player1WallCount == 0");
+        moveAI();
+      }
+      
     }
   }
 
@@ -387,9 +395,6 @@ function moveAI() {
 
 function placeWallAI() {
   for (let item of wallPositions) {
-    let randomIndex = Math.floor(Math.random() * wallPositions.length);
-    let randomWall = wallPositions[randomIndex];
-
     let isWallPlaced = wallsUsed.some(
       (pos) =>
         (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
@@ -413,8 +418,6 @@ function placeWallAI() {
       }
     }
   }
-
-  drawWalls();
 }
 
 function addWallPosition(x, y, wallPositions) {
@@ -422,15 +425,15 @@ function addWallPosition(x, y, wallPositions) {
   wallPositions.push(position);
 }
 
-function drawWalls() {
-    for (let item of wallPositions) {
-      if (item.isPlaced === 1) {
-        // Draw the wall
-        fill("purple");
-        rect(item.x, item.y, item.w, item.h);
-      }
-    }
-  }
+// function drawWalls() {
+//     for (let item of wallPositions) {
+//       if (item.isPlaced === 1) {
+//         // Draw the wall
+//         fill("purple");
+//         rect(item.x, item.y, item.w, item.h);
+//       }
+//     }
+//   }
 
 function findWall(findWall) {
   for (let item of board) {
