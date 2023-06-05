@@ -543,6 +543,15 @@ function resetBoard() {
   // Math.floor(Math.random() * 2) + 1;
 }
 
+function checkWinner(pawn){
+  if(pawn.y == 555 || pawn.y == 100){
+    gameover();
+  }
+}
+
+function gameover(){
+  window.location.href = ""
+}
 document.getElementById("playerNameDisplay").textContent =
   "Player Name: " + playerName;
 
