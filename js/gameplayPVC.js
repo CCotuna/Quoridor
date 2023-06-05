@@ -1,7 +1,7 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
 let playerName = localStorage.getItem("playerName");
 
-let wallPositions[];
+let wallPositions = [];
 let wallsUsed = [];
 let board = [];
 let canvas;
@@ -59,6 +59,13 @@ function setup() {
   pawn2 = new Pawn(315, 555, 30, player2.color);
   board.push(pawn2);
   // pawn2.y -= 60;
+
+  for (let item of board) {
+    if (item instanceof Wall) {
+      addWallPosition(item.x, item.y, wallsUsed);
+    //   console.log(item.x + " " + item.y);
+    }
+  }
 }
 
 class Player {
@@ -246,8 +253,13 @@ function mouseClicked() {
     directionChosen = false;
     selectedPawn = null;
 
-    if (!isBlocked && !directionChosen && currentPlayer === 1) {
-      moveAI();
+    if (!isBlocked && !directionChosen && currentPlayer === 1 && player1.wallCount > 0) {
+      let random = generateRandomNumber();
+        if(random === 1){
+            moveAI();
+        }else{
+            placeWallAI();
+        }
     }
   }
 
@@ -261,9 +273,9 @@ function mouseClicked() {
         mouseY > item.y
       ) {
         if (item.type == findWall(item).type) {
-          wallsUsed.push(item);
-          wallsUsed.push(findWall(item));
-          let isWallPlaced = wallsUsed.some(
+          wallPositions.push(item);
+          wallPositions.push(findWall(item));
+          let isWallPlaced = wallPositions.some(
             (pos) =>
               (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
               (pos.x === findWall(item).x &&
@@ -273,31 +285,12 @@ function mouseClicked() {
           console.log(isWallPlaced);
 
           if (!isWallPlaced) {
-            if (currentPlayer === 1 && player1.wallCount > 0) {
+           if (currentPlayer === 2 && player2.wallCount > 0) {
               if (
                 findWall(item).w + findWall(item).x < canvasWidth ||
                 findWall(item).h + findWall(item).y < canvasHeight
               ) {
-                item.color = "purple";
-                findWall(item).color = "purple";
-                console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log(
-                  "wall1below: x: " +
-                    findWall(item).x +
-                    "y: " +
-                    findWall(item).y
-                );
-                item.isPlaced = 1;
-                findWall(item).isPlaced = 1;
-                player1.wallCount--;
-                currentPlayer = 2;
-              }
-              break;
-            } else if (currentPlayer === 2 && player2.wallCount > 0) {
-              if (
-                findWall(item).w + findWall(item).x < canvasWidth ||
-                findWall(item).h + findWall(item).y < canvasHeight
-              ) {
+                console.log("Am ajuns sa vad aici");
                 item.color = "purple";
                 findWall(item).color = "purple";
                 console.log("wall1: x:" + item.x + "y: " + item.y);
@@ -311,6 +304,17 @@ function mouseClicked() {
                 findWall(item).isPlaced = 1;
                 player2.wallCount--;
                 currentPlayer = 1;
+                let random = generateRandomNumber();
+            if(random === 1){
+                moveAI();
+            }else{
+                if(player1.wallCount == 0){
+                    moveAI();
+                }
+                else{
+                    placeWallAI();
+                }
+            }
               }
               break;
             }
@@ -320,9 +324,20 @@ function mouseClicked() {
             );
           }
         }
+        if(player2.wallCount == 0){
+            alert("You don't have walls!");
+        }
       }
     }
   }
+
+  //   console.log(wallPositions.length);
+//   for (let item of wallPositions) {
+//     console.log(`x: ${item.x}, y: ${item.y}`);
+//   }
+}
+function generateRandomNumber() {
+    return Math.floor(Math.random() * 2) + 1;
 }
 
 function moveAI() {
@@ -370,10 +385,52 @@ function moveAI() {
   }
 }
 
-function placeWallAI(){
-    
+function placeWallAI() {
+  for (let item of wallPositions) {
+    let randomIndex = Math.floor(Math.random() * wallPositions.length);
+    let randomWall = wallPositions[randomIndex];
+
+    let isWallPlaced = wallsUsed.some(
+      (pos) =>
+        (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+        (pos.x === findWall(item).x &&
+          pos.y === findWall(item).y &&
+          pos.isPlaced === 1)
+    );
+    if (!isWallPlaced) {
+      if (currentPlayer === 1 && player1.wallCount > 0) {
+        if (
+          findWall(item).w + findWall(item).x < canvasWidth ||
+          findWall(item).h + findWall(item).y < canvasHeight
+        ) {
+          item.color = "purple";
+          findWall(item).color = "purple";
+          item.isPlaced = 1;
+          findWall(item).isPlaced = 1;
+          player1.wallCount--;
+          currentPlayer = 2;
+        }
+      }
+    }
+  }
+
+  drawWalls();
 }
 
+function addWallPosition(x, y, wallPositions) {
+  let position = { x: x, y: y };
+  wallPositions.push(position);
+}
+
+function drawWalls() {
+    for (let item of wallPositions) {
+      if (item.isPlaced === 1) {
+        // Draw the wall
+        fill("purple");
+        rect(item.x, item.y, item.w, item.h);
+      }
+    }
+  }
 
 function findWall(findWall) {
   for (let item of board) {
