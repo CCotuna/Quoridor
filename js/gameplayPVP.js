@@ -323,6 +323,7 @@ function mouseClicked() {
         if (item.type == findWall(item).type) {
           wallsUsed.push(item);
           wallsUsed.push(findWall(item));
+          
           let isWallPlaced = wallsUsed.some(
             (pos) =>
               (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
