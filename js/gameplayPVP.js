@@ -461,8 +461,6 @@ function resetBoard() {
   player1.wallCount = 10;
   player2.wallCount = 10;
   currentPlayer = 1;
-
-  currentPlayer = 1;
   // Math.floor(Math.random() * 2) + 1;
 }
 
@@ -492,7 +490,8 @@ document.getElementById("player2NameDisplay").textContent =
      
     const message = pawnName + " has won the game!";
     alert(message);
-    console.log("Am ajuns aici la sfarsit")
+  
+    localStorage.setItem("winner", pawnName);
     // Redirect to the winner.html page
     window.location.href = "winner.html";
   }

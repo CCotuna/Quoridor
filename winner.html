@@ -57,5 +57,14 @@
         
     </div>
 
+
+    <script>
+        const winner = localStorage.getItem("winner");
+        const winnerNameElement = document.querySelector("p:first-child");
+        winnerNameElement.textContent = "WINNER: " + winner;
+    
+        //Sterge winnerul din localstorage pentru a forta userul sa introduca iar numele.
+        localStorage.removeItem("winner");
+      </script>
 </body>
 </html>
