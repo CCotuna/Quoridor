@@ -374,6 +374,8 @@ function mouseClicked() {
       }
     }
   }
+
+  checkWinner(pawn1, pawn2);
 }
 console.log(wallsUsed);
 function checkForWall(pawn) {
@@ -471,3 +473,26 @@ document.getElementById("player2NameDisplay").textContent =
 
   // localStorage.removeItem("player1Name"); 
   // localStorage.removeItem("player2Name"); 
+
+
+  function checkWinner(pawn1, pawn2) {
+    if (pawn1.y == 555) {
+      gameover(pawn1);
+    } else if (pawn2.y == 75) {
+      gameover(pawn2);
+    }
+  }
+  
+  function gameover(winningPawn) {
+    if(winningPawn.color == player1.color){
+       pawnName = player1.name;
+    }else if(winningPawn.color == player2.color){
+       pawnName = player2.name;
+    }
+     
+    const message = pawnName + " has won the game!";
+    alert(message);
+    console.log("Am ajuns aici la sfarsit")
+    // Redirect to the winner.html page
+    window.location.href = "winner.html";
+  }
