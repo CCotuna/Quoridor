@@ -50,7 +50,7 @@ function setup() {
     }
   }
   player1 = new Player("Computer", 10, "rgb(220, 20, 60)");
-  player2 = new Player(playerName, 10, "rgb(186, 85, 211)");
+  player2 = new Player(playerName, 10, "rgb(0, 0, 0)");
   // step de 60 - sus jos stanga dreapta
   pawn1 = new Pawn(315, 75, 30, player1.color);
   board.push(pawn1);
