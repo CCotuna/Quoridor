@@ -36,7 +36,7 @@ function setup() {
     for (let j = 0; j < 8; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1); //verticale
+      let wall1 = new Wall(x + 50, y, 10, 50, "black", 0, 1); //verticale
       board.push(wall1);
     }
   }
@@ -45,12 +45,12 @@ function setup() {
     for (let j = 0; j < 9; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2); //orizontale
+      let wall2 = new Wall(x, y + 50, 50, 10, "black", 0, 2); //orizontale
       board.push(wall2);
     }
   }
-  player1 = new Player("Computer", 10, "red");
-  player2 = new Player(playerName, 10, "green");
+  player1 = new Player("Computer", 10, "rgb(220, 20, 60)");
+  player2 = new Player(playerName, 10, "rgb(186, 85, 211)");
   // step de 60 - sus jos stanga dreapta
   pawn1 = new Pawn(315, 75, 30, player1.color);
   board.push(pawn1);
@@ -558,7 +558,7 @@ document.getElementById("playerNameDisplay").textContent =
 
 //   localStorage.removeItem("playerName");
 
-
+  
 function checkWinner(pawn1, pawn2) {
   if (pawn1.y == 555) {
     gameover(pawn1);
