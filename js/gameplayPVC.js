@@ -62,14 +62,32 @@ function setup() {
 
   for (let item of board) {
     if (item instanceof Wall) {
-      addWallPosition(item.x, item.y, item.w, item.h, item.color, item.isPlaced, item.type, wallsUsed);
+      addWallPosition(
+        item.x,
+        item.y,
+        item.w,
+        item.h,
+        item.color,
+        item.isPlaced,
+        item.type,
+        wallsUsed
+      );
       //   console.log(item.x + " " + item.y);
     }
   }
 }
 
 function addWallPosition(x, y, w, h, color, isPlaced, type, wallPositions) {
-  let position = { x: x, y: y, w: w, h:h, color:color, originalColor:color ,isPlaced: isPlaced, type: type};
+  let position = {
+    x: x,
+    y: y,
+    w: w,
+    h: h,
+    color: color,
+    originalColor: color,
+    isPlaced: isPlaced,
+    type: type,
+  };
   wallPositions.push(position);
 }
 
@@ -131,13 +149,11 @@ class Pawn {
     this.originalColor = null;
     this.isClicked = false;
   }
-
   display() {
     noStroke();
     fill(this.color);
     ellipse(this.x, this.y, this.diameter);
   }
-
   newColor() {
     this.color = color(random(255), random(255), random(255));
   }
@@ -145,7 +161,6 @@ class Pawn {
 
 function draw() {
   background("darkred");
-
   for (let item of board) {
     if (item instanceof Box || item instanceof Pawn || item instanceof Wall) {
       item.display();
@@ -168,6 +183,7 @@ function mouseClicked() {
   if (!directionChosen) {
     for (let item of board) {
       if (item instanceof Pawn) {
+        //distance = sqrt((mouseX - item.x)^2 + (mouseY - item.y)^2)
         distance = dist(mouseX, mouseY, item.x, item.y);
 
         if (distance < item.diameter / 2) {
@@ -198,8 +214,6 @@ function mouseClicked() {
 
     let isValidStep = true;
     let isBlocked = false;
-
-    // trying separately another way to implement the pawn's movement
 
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
@@ -251,7 +265,6 @@ function mouseClicked() {
     if (isBlocked) {
       alert("It's not your turn!");
     }
-
     //reinitializam valorile pentru a selecta o alta piesa
     selectedPawn.isClicked = false;
     selectedPawn.color = selectedPawn.originalColor;
@@ -270,8 +283,8 @@ function mouseClicked() {
         console.log(random);
         if (random === 1) {
           moveAI();
-        } else if(random === 2){
-          console.log("Am ajuns pana inainte sa se apeleze functia")
+        } else if (random === 2) {
+          console.log("Am ajuns pana inainte sa se apeleze functia");
           placeWallAI();
         }
       } else if (
@@ -317,7 +330,12 @@ function mouseClicked() {
                 findWall(item).color = "purple";
 
                 console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log("wall1below: x: " +findWall(item).x +"y: " +findWall(item).y);
+                console.log(
+                  "wall1below: x: " +
+                    findWall(item).x +
+                    "y: " +
+                    findWall(item).y
+                );
 
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
@@ -325,19 +343,17 @@ function mouseClicked() {
                 currentPlayer = 1;
                 let random = generateRandomNumber();
                 if (random === 1) {
-                  console.log("E TURA MEAAAAAAAAAAAAAAA SI AICI TREBUIE SA MUT NEAPARAT")
+                  // console.log("E TURA MEAAAAAAAAAAAAAAA SI AICI TREBUIE SA MUT NEAPARAT")
                   moveAI();
+                } else if (random === 2) {
+                  if (player1.wallCount === 0) {
+                    // console.log("AICI AM AVUT DE ALES SI POT SA MUT")
+                    moveAI();
+                  } else {
+                    // console.log("AICI AM AVUT DE ALES SI POT SA PUN UN ZID")
+                    placeWallAI();
+                  }
                 }
-                else if(random === 2){
-                  if(player1.wallCount === 0){
-                    console.log("AICI AM AVUT DE ALES SI POT SA MUT")
-                    moveAI(); 
-                  }
-                  else{
-                    console.log("AICI AM AVUT DE ALES SI POT SA PUN UN ZID")
-                    placeWallAI(); 
-                  }
-                } 
               }
               break;
             }
@@ -365,7 +381,7 @@ function generateRandomNumber() {
 }
 
 function moveAI() {
-  console.log("Am intrat macar aici");
+  // console.log("Am intrat macar aici");
   if (currentPlayer === 1) {
     const directions = [1, 2, 3, 4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
     const randomIndex = Math.floor(Math.random() * directions.length);
@@ -419,73 +435,68 @@ function placeWallAI() {
   console.log(wallPositions);
 
   for (let pos of board)
-    if(pos instanceof Wall) {
-    if ((pos.x === randomWall.x && pos.y === randomWall.y && pos.isPlaced === 1) ||
-    (findWall(randomWall) !== null &&
-      pos.x === findWall(randomWall).x &&
-      pos.y === findWall(randomWall).y &&
-      pos.isPlaced === 1)) 
-    {
-      isWallPlaced = true;
-      break;
+    if (pos instanceof Wall) {
+      if (
+        (pos.x === randomWall.x &&
+          pos.y === randomWall.y &&
+          pos.isPlaced === 1) ||
+        (findWall(randomWall) !== null &&
+          pos.x === findWall(randomWall).x &&
+          pos.y === findWall(randomWall).y &&
+          pos.isPlaced === 1)
+      ) {
+        isWallPlaced = true;
+        break;
+      }
     }
-  }
   console.log("wallul random este: ");
-  console.log( randomWall);
-  if(randomWall.type == 1){
-    console.log("wallul random de sub el este: ")
+  console.log(randomWall);
+  if (randomWall.type == 1) {
+    console.log("wallul random de sub el este: ");
+    console.log(findWall(randomWall));
+  } else if (randomWall.type == 2) {
+    console.log("wallul random de langa el este: ");
     console.log(findWall(randomWall));
   }
-  else if(randomWall.type == 2){
-    console.log("wallul random de langa el este: ")
-    console.log(findWall(randomWall));
-  }
-  
-  
-  console.log();
-  console.log("SUNT IN AFARA isWALLPLACED? : " + currentPlayer)
-  console.log("Hai sa vedem daca isWallPlaced e true")
-  console.log(!isWallPlaced)
-  
+  // console.log();
+  // console.log("SUNT IN AFARA isWALLPLACED? : " + currentPlayer)
+  // console.log("Hai sa vedem daca isWallPlaced e true")
+  // console.log(!isWallPlaced)
   if (!isWallPlaced) {
     if (
       currentPlayer === 1 &&
       player1.wallCount > 0 &&
-      findWall(randomWall) != null && 
+      findWall(randomWall) != null &&
       findWall(randomWall).w + findWall(randomWall).x < canvasWidth - 180 &&
-      findWall(randomWall).h + findWall(randomWall).y < canvasHeight - 180 
+      findWall(randomWall).h + findWall(randomWall).y < canvasHeight - 180
     ) {
       // Place the wall
-      for(let itemBoard of board){
-        if(itemBoard instanceof Wall)
-        if( (itemBoard.x === randomWall.x &&
-          itemBoard.y === randomWall.y &&
-          itemBoard.isPlaced === 1 &&
-          itemBoard.type === randomWall.type) ||
-        (findWall(randomWall) !== null &&
-          itemBoard.x === findWall(randomWall).x &&
-          itemBoard.y === findWall(randomWall).y &&
-          itemBoard.isPlaced === 1 &&
-          itemBoard.type === randomWall.type)){
+      for (let itemBoard of board) {
+        if (itemBoard instanceof Wall)
+          if (
+            (itemBoard.x === randomWall.x &&
+              itemBoard.y === randomWall.y &&
+              itemBoard.isPlaced === 1 &&
+              itemBoard.type === randomWall.type) ||
+            (findWall(randomWall) !== null &&
+              itemBoard.x === findWall(randomWall).x &&
+              itemBoard.y === findWall(randomWall).y &&
+              itemBoard.isPlaced === 1 &&
+              itemBoard.type === randomWall.type)
+          ) {
             itemBoard.color = "purple";
             itemBoard.isPlaced = 1;
             player1.wallCount--;
             itemBoard.display();
             findWall(itemBoard).display();
-            console.log("OARE AM AJUNS SA AFISEZ A CUI TURA E ACUM? : " + currentPlayer);
+            // console.log("OARE AM AJUNS SA AFISEZ A CUI TURA E ACUM? : " + currentPlayer);
             currentPlayer = 2;
-            
-        }
+          }
       }
     }
   }
   moveAI();
-  
-  
- 
-
 }
-
 
 function findWall(findWall) {
   for (let item of board) {
@@ -498,7 +509,6 @@ function findWall(findWall) {
         )
           return item;
       }
-
       if (item.type == 1) {
         if (
           item.x === findWall.x &&
@@ -528,37 +538,32 @@ function resetPawns() {
 
 function resetBoard() {
   resetPawns();
-
   for (item of board) {
     if (item instanceof Wall) {
       item.reset();
     }
   }
-
   selectedWall = null;
-
   player1.wallCount = 10;
   player2.wallCount = 10;
-
   currentPlayer = 2;
   // Math.floor(Math.random() * 2) + 1;
 }
 
-function checkWinner(pawn){
-  if(pawn.y == 555 || pawn.y == 100){
+function checkWinner(pawn) {
+  if (pawn.y == 555 || pawn.y == 100) {
     gameover();
   }
 }
 
-function gameover(){
-  window.location.href = ""
+function gameover() {
+  window.location.href = "";
 }
 document.getElementById("playerNameDisplay").textContent =
   "Player Name: " + playerName;
 
 //   localStorage.removeItem("playerName");
 
-  
 function checkWinner(pawn1, pawn2) {
   if (pawn1.y == 555) {
     gameover(pawn1);
@@ -568,15 +573,13 @@ function checkWinner(pawn1, pawn2) {
 }
 
 function gameover(winningPawn) {
-  if(winningPawn.color == player1.color){
-     pawnName = player1.name;
-  }else if(winningPawn.color == player2.color){
-     pawnName = player2.name;
+  if (winningPawn.color == player1.color) {
+    pawnName = player1.name;
+  } else if (winningPawn.color == player2.color) {
+    pawnName = player2.name;
   }
-   
   const message = pawnName + " has won the game!";
   alert(message);
-
   localStorage.setItem("winner", pawnName);
   // Redirect to the winner.html page
   window.location.href = "winner.html";
