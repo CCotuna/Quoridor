@@ -388,35 +388,73 @@ function moveAI() {
     const randomDirection = directions[randomIndex];
     let initialx = pawn1.x;
     let initialy = pawn1.y;
+
+    let ableToMove = true;
     switch (randomDirection) {
-      case 1: //sus
-        if (pawn1.y > 120) {
+      case 1: // up
+        if (
+          pawn1.y > 120 &&
+          !(pawn1.x === pawn2.x && pawn1.y - 60 === pawn2.y)
+        ) {
           pawn1.y -= 60;
-          break;
+        } else if (
+          pawn1.y > 180 &&
+          pawn1.y - 120 === pawn2.y &&
+          pawn1.x === pawn2.x
+        ) {
+          pawn1.y -= 120;
         } else {
-          break;
+          ableToMove = false;
         }
-      case 2: //jos
-        if (pawn1.y < height - 120) {
+        break;
+      case 2: // down
+        if (
+          pawn1.y < height - 180 &&
+          !(pawn1.x === pawn2.x && pawn1.y + 60 === pawn2.y)
+        ) {
           pawn1.y += 60;
-          break;
+        } else if (
+          pawn1.y < height - 240 &&
+          pawn1.y + 120 === pawn2.y &&
+          pawn1.x === pawn2.x
+        ) {
+          pawn1.y += 120;
         } else {
-          break;
+          ableToMove = false;
         }
-      case 3: //dreapta
-        if (pawn1.x < width - 120) {
+        break;
+      case 3: // right
+        if (
+          pawn1.x < width - 180 &&
+          !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y)
+        ) {
           pawn1.x += 60;
-          break;
+        } else if (
+          pawn1.x < width - 240 &&
+          pawn1.x + 120 === pawn2.x &&
+          pawn1.y === pawn2.y
+        ) {
+          pawn1.x += 120;
         } else {
-          break;
+          ableToMove = false;
         }
-      case 4: //stanga
-        if (pawn1.x > 120) {
+        break;
+      case 4: // left
+        if (
+          pawn1.x > 120 &&
+          !(pawn1.x - 60 === pawn2.x && pawn1.y === pawn2.y)
+        ) {
           pawn1.x -= 60;
-          break;
+        } else if (
+          pawn1.x > 180 &&
+          pawn1.x - 120 === pawn2.x &&
+          pawn1.y === pawn2.y
+        ) {
+          pawn1.x -= 120;
         } else {
-          break;
+          ableToMove = false;
         }
+        break;
     }
     if (pawn1.x == initialx && pawn1.y == initialy) {
       moveAI();
@@ -458,10 +496,7 @@ function placeWallAI() {
     console.log("wallul random de langa el este: ");
     console.log(findWall(randomWall));
   }
-  // console.log();
-  // console.log("SUNT IN AFARA isWALLPLACED? : " + currentPlayer)
-  // console.log("Hai sa vedem daca isWallPlaced e true")
-  // console.log(!isWallPlaced)
+
   if (!isWallPlaced) {
     if (
       currentPlayer === 1 &&
@@ -489,13 +524,48 @@ function placeWallAI() {
             player1.wallCount--;
             itemBoard.display();
             findWall(itemBoard).display();
-            // console.log("OARE AM AJUNS SA AFISEZ A CUI TURA E ACUM? : " + currentPlayer);
             currentPlayer = 2;
           }
       }
     }
   }
   moveAI();
+}
+
+function checkForWallRight(pawnChecked) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (
+        pawnChecked.x == item.x - 25 &&
+        pawnChecked.y == item.y + 25 &&
+        item.isPlaced === 1
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function checkForWallLeft(pawnChecked) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+    }
+  }
+}
+
+function checkForWallUp(pawnChecked) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+    }
+  }
+}
+
+function checkForWallDown(pawnChecked) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+    }
+  }
 }
 
 function findWall(findWall) {
