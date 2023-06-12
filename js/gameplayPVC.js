@@ -240,6 +240,7 @@ function mouseClicked() {
             } else {
               // It's not the pawn's turn, movement is blocked
               isBlocked = true;
+              alert("It's not your turn!")
             }
           }
         }
@@ -258,13 +259,14 @@ function mouseClicked() {
 
         if (isBlocked) {
           alert("You can't move the pawn there! There is a wall!");
-        }else if(!isBlocked){
-          if(isValidStep) {
+        } else {
+          if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x -= 60; //daca e negativa mutam la stanga
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               isBlocked = true;
+              alert("It's not your turn!")
             }
           }
         }
@@ -285,31 +287,44 @@ function mouseClicked() {
 
         if (isBlocked) {
           alert("You can't move the pawn there! There is a wall!");
-        }else if(!isBlocked){
-        if (isValidStep) {
-          if (currentPlayer === 2 && selectedPawn === pawn2) {
-            selectedPawn.y += 60; // daca e pozitiva mutam in jos
-            currentPlayer = currentPlayer === 2 ? 1 : 2;
-          } else {
-            isBlocked = true;
+        } else if (!isBlocked) {
+          if (isValidStep) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
+              selectedPawn.y += 60; // daca e pozitiva mutam in jos
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
+            } else {
+              isBlocked = true;
+              alert("It's not your turn!")
+            }
           }
         }
-      }
       } else if (newY < 0 && selectedPawn.y > 120) {
         // SUS
-        if (isValidStep) {
-          if (currentPlayer === 2 && selectedPawn === pawn2) {
-            selectedPawn.y -= 60; // daca e negativa mutam in sus
-            currentPlayer = currentPlayer === 2 ? 1 : 2;
-          } else {
+        for (let wall of wallPositions) {
+          if (
+            wall.x === selectedPawn.x - 25 &&
+            wall.y === selectedPawn.y - 35 &&
+            wall.isPlaced === 1
+          ) {
             isBlocked = true;
+            break;
+          }
+        }
+
+        if (isBlocked) {
+          alert("You can't move the pawn there! There is a wall!");
+        } else if (!isBlocked) {
+          if (isValidStep) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
+              selectedPawn.y -= 60; // daca e negativa mutam in sus
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
+            } else {
+              isBlocked = true;
+              alert("It's not your turn!")
+            }
           }
         }
       }
-    }
-
-    if (isBlocked) {
-      alert("It's not your turn!");
     }
     //reinitializam valorile pentru a selecta o alta piesa
     selectedPawn.isClicked = false;
