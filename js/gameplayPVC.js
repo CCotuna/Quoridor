@@ -232,7 +232,7 @@ function mouseClicked() {
 
         if (isBlocked) {
           alert("You can't move the pawn there! There is a wall!");
-        } else if(!isBlocked){
+        } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
@@ -245,12 +245,27 @@ function mouseClicked() {
         }
       } else if (newX < 0 && selectedPawn.x > 120) {
         // STANGA
-        if (isValidStep) {
-          if (currentPlayer === 2 && selectedPawn === pawn2) {
-            selectedPawn.x -= 60; //daca e negativa mutam la stanga
-            currentPlayer = currentPlayer === 2 ? 1 : 2;
-          } else {
+        for (let wall of wallPositions) {
+          if (
+            wall.x === selectedPawn.x - 35 &&
+            wall.y === selectedPawn.y - 25 &&
+            wall.isPlaced === 1
+          ) {
             isBlocked = true;
+            break;
+          }
+        }
+
+        if (isBlocked) {
+          alert("You can't move the pawn there! There is a wall!");
+        }else if(!isBlocked){
+          if(isValidStep) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
+              selectedPawn.x -= 60; //daca e negativa mutam la stanga
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
+            } else {
+              isBlocked = true;
+            }
           }
         }
       }
