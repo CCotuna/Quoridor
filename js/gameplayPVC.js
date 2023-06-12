@@ -488,7 +488,7 @@ function moveAI() {
         if (
           pawn1.x < width - 180 &&
           !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y) && 
-          !checkForWall(pawn1.x + 35, pawn1.y - 25)
+          !checkForWall(pawn1.x + 25, pawn1.y - 25)
         ) {
           pawn1.x += 60;
         } else if (
@@ -506,7 +506,7 @@ function moveAI() {
         if (
           pawn1.x > 120 &&
           !(pawn1.x - 60 === pawn2.x && pawn1.y === pawn2.y) &&
-          !checkForWall(pawn1.x - 95 , pawn1.y - 25)
+          !checkForWall(pawn1.x - 35 , pawn1.y - 25)
         ) {
           pawn1.x -= 60;
         } else if (
