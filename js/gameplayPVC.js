@@ -240,7 +240,7 @@ function mouseClicked() {
             } else {
               // It's not the pawn's turn, movement is blocked
               isBlocked = true;
-              alert("It's not your turn!")
+              alert("It's not your turn!");
             }
           }
         }
@@ -266,7 +266,7 @@ function mouseClicked() {
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               isBlocked = true;
-              alert("It's not your turn!")
+              alert("It's not your turn!");
             }
           }
         }
@@ -294,7 +294,7 @@ function mouseClicked() {
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               isBlocked = true;
-              alert("It's not your turn!")
+              alert("It's not your turn!");
             }
           }
         }
@@ -320,7 +320,7 @@ function mouseClicked() {
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               isBlocked = true;
-              alert("It's not your turn!")
+              alert("It's not your turn!");
             }
           }
         }
@@ -430,19 +430,13 @@ function mouseClicked() {
       }
     }
   }
-
   checkWinner(pawn1, pawn2);
-  //   console.log(wallPositions.length);
-  //   for (let item of wallPositions) {
-  //     console.log(`x: ${item.x}, y: ${item.y}`);
-  //   }
 }
 function generateRandomNumber() {
   return Math.floor(Math.random() * 2) + 1;
 }
 
 function moveAI() {
-  // console.log("Am intrat macar aici");
   if (currentPlayer === 1) {
     const directions = [1, 2, 3, 4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
     const randomIndex = Math.floor(Math.random() * directions.length);
@@ -455,7 +449,8 @@ function moveAI() {
       case 1: // up
         if (
           pawn1.y > 120 &&
-          !(pawn1.x === pawn2.x && pawn1.y - 60 === pawn2.y)
+          !(pawn1.x === pawn2.x && pawn1.y - 60 === pawn2.y) &&
+          !checkForWallUp(pawn1)
         ) {
           pawn1.y -= 60;
         } else if (
@@ -471,7 +466,8 @@ function moveAI() {
       case 2: // down
         if (
           pawn1.y < height - 180 &&
-          !(pawn1.x === pawn2.x && pawn1.y + 60 === pawn2.y)
+          !(pawn1.x === pawn2.x && pawn1.y + 60 === pawn2.y) &&
+          !checkForWallDown(pawn1)
         ) {
           pawn1.y += 60;
         } else if (
@@ -487,7 +483,8 @@ function moveAI() {
       case 3: // right
         if (
           pawn1.x < width - 180 &&
-          !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y)
+          !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y) && 
+          !checkForWallRight(pawn1)
         ) {
           pawn1.x += 60;
         } else if (
@@ -503,7 +500,8 @@ function moveAI() {
       case 4: // left
         if (
           pawn1.x > 120 &&
-          !(pawn1.x - 60 === pawn2.x && pawn1.y === pawn2.y)
+          !(pawn1.x - 60 === pawn2.x && pawn1.y === pawn2.y) &&
+          !checkForWallLeft(pawn1)
         ) {
           pawn1.x -= 60;
         } else if (
@@ -594,37 +592,53 @@ function placeWallAI() {
 }
 
 function checkForWallRight(pawnChecked) {
-  for (let item of board) {
-    if (item instanceof Wall) {
-      if (
-        pawnChecked.x == item.x - 25 &&
-        pawnChecked.y == item.y + 25 &&
-        item.isPlaced === 1
-      ) {
-        return true;
-      }
+  for (let wall of wallPositions) {
+    if (
+      wall.x === pawnChecked.x + 25 &&
+      wall.y === pawnChecked.y - 25 &&
+      wall.isPlaced === 1
+    ) {
+      return true;
     }
   }
   return false;
 }
 
 function checkForWallLeft(pawnChecked) {
-  for (let item of board) {
-    if (item instanceof Wall) {
+  for (let wall of wallPositions) {
+    if (
+      wall.x === pawnChecked.x - 35 &&
+      wall.y === pawnChecked.y - 25 &&
+      wall.isPlaced === 1
+    ) {
+      isBlocked = true;
+      break;
     }
   }
 }
 
 function checkForWallUp(pawnChecked) {
-  for (let item of board) {
-    if (item instanceof Wall) {
+  for (let wall of wallPositions) {
+    if (
+      wall.x === pawnChecked.x - 25 &&
+      wall.y === pawnChecked.y - 35 &&
+      wall.isPlaced === 1
+    ) {
+      isBlocked = true;
+      break;
     }
   }
 }
 
 function checkForWallDown(pawnChecked) {
-  for (let item of board) {
-    if (item instanceof Wall) {
+  for (let wall of wallPositions) {
+    if (
+      wall.x === pawnChecked.x - 25 &&
+      wall.y === pawnChecked.y + 25 &&
+      wall.isPlaced === 1
+    ) {
+      isBlocked = true;
+      break;
     }
   }
 }
