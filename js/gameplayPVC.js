@@ -218,13 +218,29 @@ function mouseClicked() {
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
         //DREAPTA
-        if (isValidStep) {
-          if (currentPlayer === 2 && selectedPawn === pawn2) {
-            selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
-            currentPlayer = currentPlayer === 2 ? 1 : 2;
-          } else {
-            // It's not the pawn's turn, movement is blocked
+
+        for (let wall of wallPositions) {
+          if (
+            wall.x === selectedPawn.x + 25 &&
+            wall.y === selectedPawn.y - 25 &&
+            wall.isPlaced === 1
+          ) {
             isBlocked = true;
+            break;
+          }
+        }
+
+        if (isBlocked) {
+          alert("You can't move the pawn there! There is a wall!");
+        } else if(!isBlocked){
+          if (isValidStep) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
+              selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
+            } else {
+              // It's not the pawn's turn, movement is blocked
+              isBlocked = true;
+            }
           }
         }
       } else if (newX < 0 && selectedPawn.x > 120) {
