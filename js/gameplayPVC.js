@@ -272,6 +272,20 @@ function mouseClicked() {
     } else {
       if (newY > 0 && selectedPawn.y < height - 120) {
         //JOS
+        for (let wall of wallPositions) {
+          if (
+            wall.x === selectedPawn.x - 25 &&
+            wall.y === selectedPawn.y + 25 &&
+            wall.isPlaced === 1
+          ) {
+            isBlocked = true;
+            break;
+          }
+        }
+
+        if (isBlocked) {
+          alert("You can't move the pawn there! There is a wall!");
+        }else if(!isBlocked){
         if (isValidStep) {
           if (currentPlayer === 2 && selectedPawn === pawn2) {
             selectedPawn.y += 60; // daca e pozitiva mutam in jos
@@ -280,6 +294,7 @@ function mouseClicked() {
             isBlocked = true;
           }
         }
+      }
       } else if (newY < 0 && selectedPawn.y > 120) {
         // SUS
         if (isValidStep) {
