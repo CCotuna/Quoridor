@@ -72,6 +72,8 @@ function setup() {
       );
     }
   }
+
+  canvas.mouseMoved(mouseHover);
 }
 
 function addWallPosition(x, y, w, h, color, isPlaced, type, wallPositions) {
@@ -135,10 +137,6 @@ class Wall {
     fill(this.color);
     rect(this.x, this.y, this.w, this.h);
   }
-
-  mouseOver(){
-    fill("gray");
-  }
 }
 
 class Pawn {
@@ -176,9 +174,30 @@ function draw() {
     ? text(`Current turn: ${player1.name}`, 300, 30)
     : text(`Current turn: ${player2.name}`, 300, 30);
 
-  HoveringEffect();
+
 }
 
+function mouseHover(){
+  for (let item of board) {
+    if (item instanceof Wall && 
+      mouseX < item.x + item.w &&
+      mouseX > item.x &&
+      mouseY < item.y + item.h &&
+      mouseY > item.y)  
+       {
+        if (item.type == findWall(item).type) { 
+        item.color = "gray";
+        findWall(item).color = "gray";
+        console.log("item mouseOver a ajuns aici - deci am click pe wall");
+        }
+        
+        console.log("s-a refacut");
+      }
+    }
+  item.color = "black";
+  findWall(item).color = "black";
+  console.log("functia nu face nimic");
+}
 
 let selectedPawn = null;
 let directionChosen = false;
