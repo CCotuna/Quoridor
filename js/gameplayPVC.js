@@ -450,13 +450,14 @@ function moveAI() {
         if (
           pawn1.y > 120 &&
           !(pawn1.x === pawn2.x && pawn1.y - 60 === pawn2.y) &&
-          !checkForWallUp(pawn1)
+          !checkForWall(pawn1.x - 25, pawn1.y - 35)
         ) {
           pawn1.y -= 60;
         } else if (
           pawn1.y > 180 &&
           pawn1.y - 120 === pawn2.y &&
-          pawn1.x === pawn2.x
+          pawn1.x === pawn2.x && 
+          !checkForWall(pawn1.x - 25, pawn1.y - 95)
         ) {
           pawn1.y -= 120;
         } else {
@@ -467,30 +468,34 @@ function moveAI() {
         if (
           pawn1.y < height - 180 &&
           !(pawn1.x === pawn2.x && pawn1.y + 60 === pawn2.y) &&
-          !checkForWallDown(pawn1)
+          !checkForWall(pawn1.x - 25, pawn1.y + 25)
         ) {
+          console.log(checkForWall(pawn1.x - 25, pawn1.y - 25) + " aparent pot muta aici")
           pawn1.y += 60;
         } else if (
           pawn1.y < height - 240 &&
           pawn1.y + 120 === pawn2.y &&
-          pawn1.x === pawn2.x
+          pawn1.x === pawn2.x &&
+          !checkForWall(pawn1.x - 25, pawn1.y + 55)
         ) {
           pawn1.y += 120;
         } else {
           ableToMove = false;
+          console.log(ableToMove + " abletoMove e false deci nu poate muta")
         }
         break;
       case 3: // right
         if (
           pawn1.x < width - 180 &&
           !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y) && 
-          !checkForWallRight(pawn1)
+          !checkForWall(pawn1.x + 35, pawn1.y - 25)
         ) {
           pawn1.x += 60;
         } else if (
           pawn1.x < width - 240 &&
           pawn1.x + 120 === pawn2.x &&
-          pawn1.y === pawn2.y
+          pawn1.y === pawn2.y &&
+          !checkForWall(pawn1.x + 95, pawn1.y - 25)
         ) {
           pawn1.x += 120;
         } else {
@@ -501,13 +506,14 @@ function moveAI() {
         if (
           pawn1.x > 120 &&
           !(pawn1.x - 60 === pawn2.x && pawn1.y === pawn2.y) &&
-          !checkForWallLeft(pawn1)
+          !checkForWall(pawn1.x - 95 , pawn1.y - 25)
         ) {
           pawn1.x -= 60;
         } else if (
           pawn1.x > 180 &&
           pawn1.x - 120 === pawn2.x &&
-          pawn1.y === pawn2.y
+          pawn1.y === pawn2.y &&
+          !checkForWall(pawn1.x - 155, pawn1.y - 25)
         ) {
           pawn1.x -= 120;
         } else {
@@ -591,58 +597,6 @@ function placeWallAI() {
   moveAI();
 }
 
-function checkForWallRight(pawnChecked) {
-  for (let wall of wallPositions) {
-    if (
-      wall.x === pawnChecked.x + 25 &&
-      wall.y === pawnChecked.y - 25 &&
-      wall.isPlaced === 1
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function checkForWallLeft(pawnChecked) {
-  for (let wall of wallPositions) {
-    if (
-      wall.x === pawnChecked.x - 35 &&
-      wall.y === pawnChecked.y - 25 &&
-      wall.isPlaced === 1
-    ) {
-      isBlocked = true;
-      break;
-    }
-  }
-}
-
-function checkForWallUp(pawnChecked) {
-  for (let wall of wallPositions) {
-    if (
-      wall.x === pawnChecked.x - 25 &&
-      wall.y === pawnChecked.y - 35 &&
-      wall.isPlaced === 1
-    ) {
-      isBlocked = true;
-      break;
-    }
-  }
-}
-
-function checkForWallDown(pawnChecked) {
-  for (let wall of wallPositions) {
-    if (
-      wall.x === pawnChecked.x - 25 &&
-      wall.y === pawnChecked.y + 25 &&
-      wall.isPlaced === 1
-    ) {
-      isBlocked = true;
-      break;
-    }
-  }
-}
-
 function findWall(findWall) {
   for (let item of board) {
     if (item instanceof Wall) {
@@ -665,6 +619,15 @@ function findWall(findWall) {
     }
   }
   return null;
+}
+
+function checkForWall(x, y){
+  for(let wall of wallPositions){
+    if(wall.x == x && wall.y == y && wall.isPlaced === 1){
+      return true;
+    }
+  }
+  return false;
 }
 
 function resetPawns() {
