@@ -277,7 +277,7 @@ function mouseClicked() {
           alert(
             "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
           );
-        } else if(!isBlocked){
+        } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x -= 60; //daca e negativa mutam la stanga
@@ -623,9 +623,6 @@ function checkWinner(pawn) {
   }
 }
 
-function gameover() {
-  window.location.href = "";
-}
 document.getElementById("playerNameDisplay").textContent =
   "Player Name: " + playerName;
 

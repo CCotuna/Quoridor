@@ -74,7 +74,6 @@ function setup() {
       );
     }
   }
-  
 }
 
 function addWallPosition(x, y, w, h, color, isPlaced, type, wallPositions) {
@@ -218,13 +217,11 @@ function mouseClicked() {
     let isValidStep = true;
     let isBlocked = false;
 
-    // trying separately another way to implement the pawn's movement
-
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
         //DREAPTA
 
-        for (let wall of wallPositions) {
+        for (let wall of wallsUsed) {
           if (
             wall.x === selectedPawn.x + 25 &&
             wall.y === selectedPawn.y - 25 &&
@@ -240,25 +237,24 @@ function mouseClicked() {
             "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
           );
         } else if (!isBlocked) {
-        if (isValidStep) {
-          if (
-            (currentPlayer === 1 && selectedPawn === pawn1) ||
-            (currentPlayer === 2 && selectedPawn === pawn2)
-          ) {
-            
-            selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
-            currentPlayer = currentPlayer === 1 ? 2 : 1;
-          } else {
-            // It's not the pawn's turn, movement is blocked
-            isBlocked = true;
-            alert("It's not your turn!");
+          if (isValidStep) {
+            if (
+              (currentPlayer === 1 && selectedPawn === pawn1) ||
+              (currentPlayer === 2 && selectedPawn === pawn2)
+            ) {
+              selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+              currentPlayer = currentPlayer === 1 ? 2 : 1;
+            } else {
+              // It's not the pawn's turn, movement is blocked
+              isBlocked = true;
+              alert("It's not your turn!");
+            }
           }
         }
-      }
       } else if (newX < 0 && selectedPawn.x > 120) {
         // STANGA
-        
-        for (let wall of wallPositions) {
+
+        for (let wall of wallsUsed) {
           if (
             wall.x === selectedPawn.x - 35 &&
             wall.y === selectedPawn.y - 25 &&
@@ -273,25 +269,26 @@ function mouseClicked() {
           alert(
             "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
           );
-        } else {
-        if (isValidStep) {
-          if (
-            (currentPlayer === 1 && selectedPawn === pawn1) ||
-            (currentPlayer === 2 && selectedPawn === pawn2)
-          ) {
-            selectedPawn.x -= 60; //daca e negativa mutam la stanga
-            currentPlayer = currentPlayer === 1 ? 2 : 1;
-          } else {
-            isBlocked = true;
+        } else if (!isBlocked) {
+          if (isValidStep) {
+            if (
+              (currentPlayer === 1 && selectedPawn === pawn1) ||
+              (currentPlayer === 2 && selectedPawn === pawn2)
+            ) {
+              selectedPawn.x -= 60; //daca e negativa mutam la stanga
+              currentPlayer = currentPlayer === 1 ? 2 : 1;
+            } else {
+              isBlocked = true;
+              alert("It's not your turn!");
+            }
           }
         }
-      }
       }
     } else {
       if (newY > 0 && selectedPawn.y < height - 120) {
         //JOS
-        
-        for (let wall of wallPositions) {
+
+        for (let wall of wallsUsed) {
           if (
             wall.x === selectedPawn.x - 25 &&
             wall.y === selectedPawn.y + 25 &&
@@ -307,21 +304,22 @@ function mouseClicked() {
             "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
           );
         } else if (!isBlocked) {
-        if (isValidStep) {
-          if (
-            (currentPlayer === 1 && selectedPawn === pawn1) ||
-            (currentPlayer === 2 && selectedPawn === pawn2)
-          ) {
-            selectedPawn.y += 60; // daca e pozitiva mutam in jos
-            currentPlayer = currentPlayer === 1 ? 2 : 1;
-          } else {
-            isBlocked = true;
+          if (isValidStep) {
+            if (
+              (currentPlayer === 1 && selectedPawn === pawn1) ||
+              (currentPlayer === 2 && selectedPawn === pawn2)
+            ) {
+              selectedPawn.y += 60; // daca e pozitiva mutam in jos
+              currentPlayer = currentPlayer === 1 ? 2 : 1;
+            } else {
+              isBlocked = true;
+              alert("It's not your turn!");
+            }
           }
         }
-      }
       } else if (newY < 0 && selectedPawn.y > 120) {
         // SUS
-        for (let wall of wallPositions) {
+        for (let wall of wallsUsed) {
           if (
             wall.x === selectedPawn.x - 25 &&
             wall.y === selectedPawn.y - 35 &&
@@ -337,24 +335,20 @@ function mouseClicked() {
             "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
           );
         } else if (!isBlocked) {
-        if (isValidStep) {
-          if (
-            (currentPlayer === 1 && selectedPawn === pawn1) ||
-            (currentPlayer === 2 && selectedPawn === pawn2)
-          ) {
-            selectedPawn.y -= 60; // daca e negativa mutam in sus
-            currentPlayer = currentPlayer === 1 ? 2 : 1;
-          } else {
-            isBlocked = true;
+          if (isValidStep) {
+            if (
+              (currentPlayer === 1 && selectedPawn === pawn1) ||
+              (currentPlayer === 2 && selectedPawn === pawn2)
+            ) {
+              selectedPawn.y -= 60; // daca e negativa mutam in sus
+              currentPlayer = currentPlayer === 1 ? 2 : 1;
+            } else {
+              isBlocked = true;
+              alert("It's not your turn!");
+            }
           }
         }
       }
-      }
-    }
-
-    if (checkForWall(selectedPawn)) {
-      alert("There is a wall blocking the pawn's movement!");
-      return; // Abort the movement if there's a wall
     }
 
     //reinitializam valorile pentru a selecta o alta piesa
@@ -375,7 +369,7 @@ function mouseClicked() {
         if (item.type == findWall(item).type) {
           wallsUsed.push(item);
           wallsUsed.push(findWall(item));
-          
+
           let isWallPlaced = wallsUsed.some(
             (pos) =>
               (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
@@ -394,7 +388,12 @@ function mouseClicked() {
                 item.color = "purple";
                 findWall(item).color = "purple";
                 console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log("wall1below: x: " + findWall(item).x + "y: " + findWall(item).y);
+                console.log(
+                  "wall1below: x: " +
+                    findWall(item).x +
+                    "y: " +
+                    findWall(item).y
+                );
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
                 player1.wallCount--;
@@ -409,7 +408,12 @@ function mouseClicked() {
                 item.color = "purple";
                 findWall(item).color = "purple";
                 console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log("wall1below: x: " + findWall(item).x + "y: " + findWall(item).y);
+                console.log(
+                  "wall1below: x: " +
+                    findWall(item).x +
+                    "y: " +
+                    findWall(item).y
+                );
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
                 player2.wallCount--;
@@ -423,7 +427,7 @@ function mouseClicked() {
             );
           }
         }
-        if(player1.wallCount == 0 || player2.wallCount == 0){
+        if (player1.wallCount == 0 || player2.wallCount == 0) {
           alert("You don't have walls!");
         }
       }
@@ -442,7 +446,6 @@ function checkForWall(x, y) {
   }
   return false;
 }
-
 
 function findWall(findWall) {
   for (let item of board) {
@@ -505,29 +508,28 @@ document.getElementById("player1NameDisplay").textContent =
 document.getElementById("player2NameDisplay").textContent =
   "Player2 Name: " + player2Name;
 
-  // localStorage.removeItem("player1Name"); 
-  // localStorage.removeItem("player2Name"); 
+// localStorage.removeItem("player1Name");
+// localStorage.removeItem("player2Name");
 
+function checkWinner(pawn1, pawn2) {
+  if (pawn1.y == 555) {
+    gameover(pawn1);
+  } else if (pawn2.y == 75) {
+    gameover(pawn2);
+  }
+}
 
-  function checkWinner(pawn1, pawn2) {
-    if (pawn1.y == 555) {
-      gameover(pawn1);
-    } else if (pawn2.y == 75) {
-      gameover(pawn2);
-    }
+function gameover(winningPawn) {
+  if (winningPawn.color == player1.color) {
+    pawnName = player1.name;
+  } else if (winningPawn.color == player2.color) {
+    pawnName = player2.name;
   }
-  
-  function gameover(winningPawn) {
-    if(winningPawn.color == player1.color){
-       pawnName = player1.name;
-    }else if(winningPawn.color == player2.color){
-       pawnName = player2.name;
-    }
-     
-    const message = pawnName + " has won the game!";
-    alert(message);
-  
-    localStorage.setItem("winner", pawnName);
-    // Redirect to the winner.html page
-    window.location.href = "winner.html";
-  }
+
+  const message = pawnName + " has won the game!";
+  alert(message);
+
+  localStorage.setItem("winner", pawnName);
+  // Redirect to the winner.html page
+  window.location.href = "winner.html";
+}
