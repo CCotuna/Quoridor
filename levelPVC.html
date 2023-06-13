@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/gameplay.css">
+    <title>Quoridor</title>
+
+    <style>
+        .option_box{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            width:500px;
+            height:300px;
+            margin-top:5%;
+            color : white;
+            font-size:2rem;
+            border-radius:20px;
+        }
+    </style>
+    
+</head>
+<body>
+     <div class="navbar" style="padding-left:4%; padding-right:4%;">
+        <img src="images/Logo.png" class="logo" style="width:100px; height:40px;">    
+        <nav>
+            <ul id="menuList">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="rules.html">Rules</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+        <img src="images/menu-icon.svg" class="menu-icon" onclick="togglemenu()">
+    </div>
+    <div style="text-align:center; font-size:5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);"><p>QUORIDOR</p></div>
+    <div style="display:flex; justify-content: center;">
+        <img src="images/EasyMode.png" class="option_box" id="pvcEasy" onclick="redirectingPage(1)" alt="easyMode image" style="margin-right:30px;">
+        <img src="images/MediumMode.png" class="option_box" id="pvcMedium" onclick="redirectingPage(2)" alt="mediumMode image">
+    </div>
+    <div style="width:100%; background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%); height:10px; margin-top:3%"></div>
+    
+    <script>
+        function redirectingPage(value){
+            if(value === 1){
+                window.location.href = "nameInputPVP.html?PVactivated=1";
+                window.location.href = nameInputPVP.html;
+            } else if(value === 2){
+                window.location.href = "nameInputPVC.html?PVactivated=2";
+                window.location.href = nameInputPVC.html;
+            }
+        }
+    </script>
+    <script src="vendor/p5.min.js"></script>
+</body>
+</html>

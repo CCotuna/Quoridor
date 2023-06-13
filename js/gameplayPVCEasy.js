@@ -653,5 +653,5 @@ function gameover(winningPawn) {
 }
 
 function surrender(){
-  window.location.href = "looser.html";
+  window.location.href = "loser.html";
 }

@@ -2,8 +2,7 @@ document.getElementById("resetButton").addEventListener("click", resetBoard);
 document.getElementById("surrenderButton").addEventListener("click", surrender);
 
 
-let player1Name = localStorage.getItem("player1Name");
-let player2Name = localStorage.getItem("player2Name");
+let playerName = localStorage.getItem("playerName");
 
 let wallPositions = [];
 let wallsUsed = [];
@@ -14,8 +13,8 @@ let distance;
 let canvasWidth;
 let canvasHeight;
 let player1, player2;
-let currentPlayer = 1;
-// Math.floor(Math.random() * 2) + 1;
+let currentPlayer = 2;
+let isOverWall = false;
 
 function setup() {
   canvas = createCanvas(630, 630);
@@ -53,9 +52,8 @@ function setup() {
       board.push(wall2);
     }
   }
-  player1 = new Player(player1Name, 10, "black");
-  player2 = new Player(player2Name, 10, "orangered");
-
+  player1 = new Player("Computer", 10, "orangered");
+  player2 = new Player(playerName, 10, "black");
   // step de 60 - sus jos stanga dreapta
   pawn1 = new Pawn(315, 75, 30, player1.color);
   board.push(pawn1);
@@ -77,6 +75,7 @@ function setup() {
       );
     }
   }
+  // canvas.mouseMoved(mouseHover);
 }
 
 function addWallPosition(x, y, w, h, color, isPlaced, type, wallPositions) {
@@ -151,30 +150,28 @@ class Pawn {
     this.originalColor = null;
     this.isClicked = false;
   }
-
   display() {
     noStroke();
     fill(this.color);
     ellipse(this.x, this.y, this.diameter);
   }
-
   newColor() {
     this.color = color(random(255), random(255), random(255));
   }
 }
 
 function draw() {
+  //darkslateblue
   background("indigo");
-
   for (let item of board) {
     if (item instanceof Box || item instanceof Pawn || item instanceof Wall) {
       item.display();
     }
   }
 
-  textSize(17);
+  textSize(14);
   fill("cornsilk");
-  text(`${player1.name} has ${player1.wallCount} walls.`, 10, 20);
+  text(`${player1.name} has ${player1.wallCount} walls.`, 10, 15);
   text(`${player2.name} has ${player2.wallCount} walls.`, 10, 40);
   currentPlayer === 1
     ? text(`Current turn: ${player1.name}`, 270, 30)
@@ -220,11 +217,27 @@ function mouseClicked() {
     let isValidStep = true;
     let isBlocked = false;
 
+    for (let item of board) {
+      if (item instanceof Pawn && item !== selectedPawn) {
+        let distanceBetPawn = dist(
+          selectedPawn.x + newX,
+          selectedPawn.y + newY,
+          item.x,
+          item.y
+        );
+        if (distanceBetPawn < selectedPawn.diameter) {
+          isValidStep = false;
+          isBlocked = true;
+          break;
+        }
+      }
+    }
+
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
         //DREAPTA
 
-        for (let wall of wallsUsed) {
+        for (let wall of wallPositions) {
           if (
             wall.x === selectedPawn.x + 25 &&
             wall.y === selectedPawn.y - 25 &&
@@ -241,12 +254,9 @@ function mouseClicked() {
           );
         } else if (!isBlocked) {
           if (isValidStep) {
-            if (
-              (currentPlayer === 1 && selectedPawn === pawn1) ||
-              (currentPlayer === 2 && selectedPawn === pawn2)
-            ) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
-              currentPlayer = currentPlayer === 1 ? 2 : 1;
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               // It's not the pawn's turn, movement is blocked
               isBlocked = true;
@@ -256,8 +266,7 @@ function mouseClicked() {
         }
       } else if (newX < 0 && selectedPawn.x > 120) {
         // STANGA
-
-        for (let wall of wallsUsed) {
+        for (let wall of wallPositions) {
           if (
             wall.x === selectedPawn.x - 35 &&
             wall.y === selectedPawn.y - 25 &&
@@ -274,13 +283,11 @@ function mouseClicked() {
           );
         } else if (!isBlocked) {
           if (isValidStep) {
-            if (
-              (currentPlayer === 1 && selectedPawn === pawn1) ||
-              (currentPlayer === 2 && selectedPawn === pawn2)
-            ) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x -= 60; //daca e negativa mutam la stanga
-              currentPlayer = currentPlayer === 1 ? 2 : 1;
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
+              // It's not the pawn's turn, movement is blocked
               isBlocked = true;
               alert("It's not your turn!");
             }
@@ -290,8 +297,7 @@ function mouseClicked() {
     } else {
       if (newY > 0 && selectedPawn.y < height - 120) {
         //JOS
-
-        for (let wall of wallsUsed) {
+        for (let wall of wallPositions) {
           if (
             wall.x === selectedPawn.x - 25 &&
             wall.y === selectedPawn.y + 25 &&
@@ -308,13 +314,11 @@ function mouseClicked() {
           );
         } else if (!isBlocked) {
           if (isValidStep) {
-            if (
-              (currentPlayer === 1 && selectedPawn === pawn1) ||
-              (currentPlayer === 2 && selectedPawn === pawn2)
-            ) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.y += 60; // daca e pozitiva mutam in jos
-              currentPlayer = currentPlayer === 1 ? 2 : 1;
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
+              // It's not the pawn's turn, movement is blocked
               isBlocked = true;
               alert("It's not your turn!");
             }
@@ -322,7 +326,7 @@ function mouseClicked() {
         }
       } else if (newY < 0 && selectedPawn.y > 120) {
         // SUS
-        for (let wall of wallsUsed) {
+        for (let wall of wallPositions) {
           if (
             wall.x === selectedPawn.x - 25 &&
             wall.y === selectedPawn.y - 35 &&
@@ -332,19 +336,18 @@ function mouseClicked() {
             break;
           }
         }
+
         if (isBlocked) {
           alert(
-            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn! Please check if it is your turn!"
+            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
           );
         } else if (!isBlocked) {
           if (isValidStep) {
-            if (
-              (currentPlayer === 1 && selectedPawn === pawn1) ||
-              (currentPlayer === 2 && selectedPawn === pawn2)
-            ) {
+            if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.y -= 60; // daca e negativa mutam in sus
-              currentPlayer = currentPlayer === 1 ? 2 : 1;
+              currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
+              // It's not the pawn's turn, movement is blocked
               isBlocked = true;
               alert("It's not your turn!");
             }
@@ -352,14 +355,26 @@ function mouseClicked() {
         }
       }
     }
-
     //reinitializam valorile pentru a selecta o alta piesa
     selectedPawn.isClicked = false;
     selectedPawn.color = selectedPawn.originalColor;
     directionChosen = false;
     selectedPawn = null;
-  }
 
+    if (!isBlocked && !directionChosen && currentPlayer === 1) {
+      if (player1.wallCount > 0) {
+        let random = generateRandomNumber();
+        if (random === 1) {
+          moveAI();
+        } else if (random === 2) {
+          placeWallAI();
+        }
+      } else {
+        moveAI();
+      }
+    }
+  }
+  // place walls
   for (let item of board) {
     if (item instanceof Wall) {
       if (
@@ -369,10 +384,9 @@ function mouseClicked() {
         mouseY > item.y
       ) {
         if (item.type == findWall(item).type) {
-          wallsUsed.push(item);
-          wallsUsed.push(findWall(item));
-
-          let isWallPlaced = wallsUsed.some(
+          wallPositions.push(item);
+          wallPositions.push(findWall(item));
+          let isWallPlaced = wallPositions.some(
             (pos) =>
               (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
               (pos.x === findWall(item).x &&
@@ -382,13 +396,14 @@ function mouseClicked() {
           console.log(isWallPlaced);
 
           if (!isWallPlaced) {
-            if (currentPlayer === 1 && player1.wallCount > 0) {
+            if (currentPlayer === 2 && player2.wallCount > 0) {
               if (
                 findWall(item).w + findWall(item).x < canvasWidth ||
                 findWall(item).h + findWall(item).y < canvasHeight
               ) {
                 item.color = "chocolate";
                 findWall(item).color = "chocolate";
+
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
                   "wall1below: x: " +
@@ -396,30 +411,23 @@ function mouseClicked() {
                     "y: " +
                     findWall(item).y
                 );
-                item.isPlaced = 1;
-                findWall(item).isPlaced = 1;
-                player1.wallCount--;
-                currentPlayer = 2;
-              }
-              break;
-            } else if (currentPlayer === 2 && player2.wallCount > 0) {
-              if (
-                findWall(item).w + findWall(item).x < canvasWidth ||
-                findWall(item).h + findWall(item).y < canvasHeight
-              ) {
-                item.color = "chocolate";
-                findWall(item).color = "chocolate";
-                console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log(
-                  "wall1below: x: " +
-                    findWall(item).x +
-                    "y: " +
-                    findWall(item).y
-                );
+
                 item.isPlaced = 1;
                 findWall(item).isPlaced = 1;
                 player2.wallCount--;
                 currentPlayer = 1;
+
+                let random = generateRandomNumber();
+                console.log("the random number is: " + random);
+                if (random === 1) {
+                  moveAI();
+                } else if (random === 2) {
+                  if (player1.wallCount != 0) {
+                    placeWallAI();
+                  } else {
+                    moveAI();
+                  }
+                }
               }
               break;
             }
@@ -429,14 +437,124 @@ function mouseClicked() {
             );
           }
         }
-        if (player1.wallCount == 0 || player2.wallCount == 0) {
+        if (player2.wallCount == 0) {
           alert("You don't have walls!");
         }
       }
     }
   }
-
   checkWinner(pawn1, pawn2);
+}
+
+function generateRandomNumber() {
+  return Math.floor(Math.random() * 2) + 1;
+}
+
+function moveAI() {
+  if (currentPlayer === 1) {
+    const directions = [1, 2, 3, 4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
+    const randomIndex = Math.floor(Math.random() * directions.length);
+    const randomDirection = directions[randomIndex];
+    let initialx = pawn1.x;
+    let initialy = pawn1.y;
+
+    let ableToMove = true;
+    switch (randomDirection) {
+      case 1: // up
+        if (
+          pawn1.y > 120 &&
+          !(pawn1.x === pawn2.x && pawn1.y - 60 === pawn2.y) &&
+          !checkForWall(pawn1.x - 25, pawn1.y - 35)
+        ) {
+          pawn1.y -= 60;
+        } else {
+          ableToMove = false;
+        }
+        break;
+      case 2: // down
+        if (
+          pawn1.y < height - 120 &&
+          !(pawn1.x === pawn2.x && pawn1.y + 60 === pawn2.y) &&
+          !checkForWall(pawn1.x - 25, pawn1.y + 25)
+        ) {
+          pawn1.y += 60;
+        } else {
+          ableToMove = false;
+        }
+        break;
+      case 3: // right
+        if (
+          pawn1.x < width - 120 &&
+          !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y) &&
+          !checkForWall(pawn1.x + 25, pawn1.y - 25)
+        ) {
+          pawn1.x += 60;
+        } else {
+          ableToMove = false;
+        }
+        break;
+      case 4: // left
+        if (
+          pawn1.x > 120 &&
+          !(pawn1.x - 60 === pawn2.x && pawn1.y === pawn2.y) &&
+          !checkForWall(pawn1.x - 35, pawn1.y - 25)
+        ) {
+          pawn1.x -= 60;
+        } else {
+          ableToMove = false;
+        }
+        break;
+    }
+    if (pawn1.x == initialx && pawn1.y == initialy) {
+      moveAI();
+    }
+    currentPlayer = 2;
+  }
+}
+
+function placeWallAI() {
+  if (player1.wallCount != 0) {
+    const walls = board.filter((item) => item instanceof Wall);
+    const unplacedWalls = walls.filter((wall) => wall.isPlaced === 0);
+
+    const randomWallIndex = Math.floor(Math.random() * unplacedWalls.length);
+    const randomWall = unplacedWalls[randomWallIndex];
+
+    const adjacentWall = findWall(randomWall);
+
+    if (adjacentWall !== null && adjacentWall.isPlaced == 0) {
+      randomWall.color = "chocolate";
+      randomWall.isPlaced = 1;
+      wallPositions.push(randomWall);
+
+      if (randomWall.type === adjacentWall.type) {
+        wallPositions.push(adjacentWall);
+        adjacentWall.color = "chocolate";
+        adjacentWall.isPlaced = 1;
+      }
+
+      const updateWallIsPlaced = () => {
+        const wallIndex = board.findIndex((item) => item === randomWall);
+        if (wallIndex !== -1) {
+          board[wallIndex].isPlaced = 1;
+        }
+      };
+
+      const updateFindWallIsPlaced = () => {
+        const wallIndex = board.findIndex((item) => item === adjacentWall);
+        if (wallIndex !== -1) {
+          board[wallIndex].isPlaced = 1;
+        }
+      };
+
+      updateWallIsPlaced();
+      updateFindWallIsPlaced();
+    }
+    player1.wallCount--;
+    currentPlayer = 2;
+  } else {
+    moveAI();
+  }
 }
 
 function findWall(findWall) {
@@ -450,7 +568,6 @@ function findWall(findWall) {
         )
           return item;
       }
-
       if (item.type == 1) {
         if (
           item.x === findWall.x &&
@@ -462,6 +579,15 @@ function findWall(findWall) {
     }
   }
   return null;
+}
+
+function checkForWall(x, y) {
+  for (let wall of wallPositions) {
+    if (wall.x == x && wall.y == y && wall.isPlaced === 1) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function resetPawns() {
@@ -480,27 +606,35 @@ function resetPawns() {
 
 function resetBoard() {
   resetPawns();
-
   for (item of board) {
     if (item instanceof Wall) {
       item.reset();
     }
   }
-
   selectedWall = null;
-
   player1.wallCount = 10;
   player2.wallCount = 10;
-  currentPlayer = 1;
+  currentPlayer = 2;
+  // Math.floor(Math.random() * 2) + 1;
 }
 
-document.getElementById("player1NameDisplay").textContent ="First player's name: " + player1Name;
-document.getElementById("player2NameDisplay").textContent ="Second player's name: " + player2Name;
+function checkWinner(pawn) {
+  if (pawn.y == 555 || pawn.y == 100) {
+    gameover();
+  }
+}
+
+document.getElementById("playerNameDisplay").textContent =
+  "Player Name: " + playerName;
+
+//   localStorage.removeItem("playerName");
 
 function checkWinner(pawn1, pawn2) {
   if (pawn1.y == 555) {
+    resetBoard();
     gameover(pawn1);
   } else if (pawn2.y == 75) {
+    resetBoard();
     gameover(pawn2);
   }
 }
@@ -511,11 +645,10 @@ function gameover(winningPawn) {
   } else if (winningPawn.color == player2.color) {
     pawnName = player2.name;
   }
-
   const message = pawnName + " has won the game!";
   alert(message);
-
   localStorage.setItem("winner", pawnName);
+  // Redirect to the winner.html page
   window.location.href = "winner.html";
 }
 
