@@ -13,7 +13,6 @@ let player1, player2;
 let currentPlayer = 2;
 let isOverWall = false;
 
-
 function setup() {
   canvas = createCanvas(630, 630);
   canvasWidth = width;
@@ -214,10 +213,15 @@ function mouseClicked() {
     let isValidStep = true;
     let isBlocked = false;
 
-    for(let item of board){
-      if(item instanceof Pawn && item !== selectedPawn){
-        let distanceBetPawn = dist(selectedPawn.x + newX, selectedPawn.y + newY, item.x, item.y);
-        if(distanceBetPawn < selectedPawn.diameter){
+    for (let item of board) {
+      if (item instanceof Pawn && item !== selectedPawn) {
+        let distanceBetPawn = dist(
+          selectedPawn.x + newX,
+          selectedPawn.y + newY,
+          item.x,
+          item.y
+        );
+        if (distanceBetPawn < selectedPawn.diameter) {
           isValidStep = false;
           isBlocked = true;
           break;
@@ -241,7 +245,9 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
+          alert(
+            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
+          );
         } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
@@ -268,8 +274,10 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
-        } else {
+          alert(
+            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
+          );
+        } else if(!isBlocked){
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x -= 60; //daca e negativa mutam la stanga
@@ -297,7 +305,9 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
+          alert(
+            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
+          );
         } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
@@ -324,7 +334,9 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
+          alert(
+            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
+          );
         } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
@@ -345,11 +357,7 @@ function mouseClicked() {
     directionChosen = false;
     selectedPawn = null;
 
-    if (
-      !isBlocked &&
-      !directionChosen &&
-      currentPlayer === 1
-    ) {
+    if (!isBlocked && !directionChosen && currentPlayer === 1) {
       if (player1.wallCount > 0) {
         let random = generateRandomNumber();
         if (random === 1) {
@@ -411,11 +419,12 @@ function mouseClicked() {
                   moveAI();
                 } else if (random === 2) {
                   if (player1.wallCount != 0) {
-                   placeWallAI();
-                }else{
-                  moveAI();
+                    placeWallAI();
+                  } else {
+                    moveAI();
+                  }
                 }
-              }}
+              }
               break;
             }
           } else {
@@ -496,59 +505,55 @@ function moveAI() {
       moveAI();
     }
     currentPlayer = 2;
-   
   }
 }
 
 function placeWallAI() {
-  if(player1.wallCount != 0){
+  if (player1.wallCount != 0) {
     const walls = board.filter((item) => item instanceof Wall);
     const unplacedWalls = walls.filter((wall) => wall.isPlaced === 0);
-  
+
     const randomWallIndex = Math.floor(Math.random() * unplacedWalls.length);
     const randomWall = unplacedWalls[randomWallIndex];
-  
+
     const adjacentWall = findWall(randomWall);
-  
-    if(adjacentWall !== null && adjacentWall.isPlaced == 0){
+
+    if (adjacentWall !== null && adjacentWall.isPlaced == 0) {
       randomWall.color = "purple";
       randomWall.isPlaced = 1;
       wallPositions.push(randomWall);
-    
-      
+
       if (randomWall.type === adjacentWall.type) {
         wallPositions.push(adjacentWall);
         adjacentWall.color = "purple";
         adjacentWall.isPlaced = 1;
       }
-    
+
       const updateWallIsPlaced = () => {
         const wallIndex = board.findIndex((item) => item === randomWall);
         if (wallIndex !== -1) {
           board[wallIndex].isPlaced = 1;
         }
       };
-    
+
       const updateFindWallIsPlaced = () => {
         const wallIndex = board.findIndex((item) => item === adjacentWall);
         if (wallIndex !== -1) {
           board[wallIndex].isPlaced = 1;
         }
       };
-    
+
       updateWallIsPlaced();
       updateFindWallIsPlaced();
     }
-  
-    console.log("Aici a pus zidul")
+
+    console.log("Aici a pus zidul");
     player1.wallCount--;
     currentPlayer = 2;
-  }
-  else{
-    console.log("AIci trebuie sa mute deja pionul")
+  } else {
+    console.log("AIci trebuie sa mute deja pionul");
     moveAI();
   }
-  
 }
 
 function findWall(findWall) {
@@ -583,7 +588,6 @@ function checkForWall(x, y) {
   }
   return false;
 }
-
 
 function resetPawns() {
   for (let item of board) {
