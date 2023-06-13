@@ -387,8 +387,8 @@ function mouseClicked() {
                 findWall(item).w + findWall(item).x < canvasWidth ||
                 findWall(item).h + findWall(item).y < canvasHeight
               ) {
-                item.color = "purple";
-                findWall(item).color = "purple";
+                item.color = "chocolate";
+                findWall(item).color = "chocolate";
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
                   "wall1below: x: " +
@@ -407,8 +407,8 @@ function mouseClicked() {
                 findWall(item).w + findWall(item).x < canvasWidth ||
                 findWall(item).h + findWall(item).y < canvasHeight
               ) {
-                item.color = "purple";
-                findWall(item).color = "purple";
+                item.color = "chocolate";
+                findWall(item).color = "chocolate";
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
                   "wall1below: x: " +
