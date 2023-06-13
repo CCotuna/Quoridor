@@ -241,7 +241,7 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall!");
+          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
         } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
@@ -268,7 +268,7 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall!");
+          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
         } else {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
@@ -324,7 +324,7 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall!");
+          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
         } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
