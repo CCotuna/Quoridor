@@ -401,8 +401,8 @@ function mouseClicked() {
                 findWall(item).w + findWall(item).x < canvasWidth ||
                 findWall(item).h + findWall(item).y < canvasHeight
               ) {
-                item.color = "gold";
-                findWall(item).color = "gold";
+                item.color = "chocolate";
+                findWall(item).color = "chocolate";
 
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
@@ -523,13 +523,13 @@ function placeWallAI() {
     const adjacentWall = findWall(randomWall);
 
     if (adjacentWall !== null && adjacentWall.isPlaced == 0) {
-      randomWall.color = "gold";
+      randomWall.color = "chocolate";
       randomWall.isPlaced = 1;
       wallPositions.push(randomWall);
 
       if (randomWall.type === adjacentWall.type) {
         wallPositions.push(adjacentWall);
-        adjacentWall.color = "gold";
+        adjacentWall.color = "chocolate";
         adjacentWall.isPlaced = 1;
       }
 
