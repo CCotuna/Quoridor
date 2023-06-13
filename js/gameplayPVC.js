@@ -351,22 +351,25 @@ function mouseClicked() {
       currentPlayer === 1 &&
       player1.wallCount > 0
     ) {
-
-      if (player1.wallCount > 0) {
-        let random = generateRandomNumber();
-        console.log(random);
-        if (random === 1) {
-          moveAI();
-        } else if (random === 2) {
-          placeWallAI();
-        }
-      } else if (
+      let random = generateRandomNumber();
+      if(random === 1){
+        moveAI();
+      }else if (
         !isBlocked &&
         !directionChosen &&
         currentPlayer === 1 &&
         player1.wallCount == 0
       ) {
         moveAI();
+      }
+      else{
+        if(random === 2){
+          if(player1.wallCount > 0){
+            placeWallAI();
+          }else{
+            moveAI();
+          }
+        }
       }
     }
   }
@@ -446,7 +449,7 @@ function mouseClicked() {
 function generateRandomNumber() {
   return Math.floor(Math.random() * 2) + 1;
 }
-//error: AI doesn't win
+
 function moveAI() {
   if (currentPlayer === 1) {
     const directions = [1, 2, 3, 4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
@@ -513,37 +516,42 @@ function placeWallAI() {
   const walls = board.filter((item) => item instanceof Wall);
   const unplacedWalls = walls.filter((wall) => wall.isPlaced === 0);
 
-  if(unplacedWalls === 0){
-    alert("AI can't place walls anymore !")
-    return;
-  }
+  const randomWallIndex = Math.floor(Math.random() * unplacedWalls.length);
+  const randomWall = unplacedWalls[randomWallIndex];
 
-  const randomWall = unplacedWalls[Math.floor(Math.random() * unplacedWalls.length)];
+  const adjacentWall = findWall(randomWall);
 
-  //2 orizontale - 1 verticale
-  if(randomWall.type == findWall(randomWall).type){
+  if(adjacentWall !== null){
     randomWall.color = "purple";
     randomWall.isPlaced = 1;
-    findWall(randomWall).color = "purple";
-    findWall(randomWall).isPlaced = 1;
-  }else{
-    placeWallAI();
-  }
+    wallPositions.push(randomWall);
   
-  for(let item of board){
-    if(item instanceof Wall){
-      if(item === randomWall && findWall(item) === findWall(randomWall) && item.type === findWall(item).type && findWall(randomWall).type == findWall(randomWall).type){
-        item.isPlaced = 1;
-        item.color = "purple";
-        findWall(item).isPlaced = 1;
-        findWall(item).color = "purple";
-        console.log("Am ajuns in forul ce verifica update-ul live")
-      }
+    
+    if (randomWall.type === adjacentWall.type) {
+      wallPositions.push(adjacentWall);
+      adjacentWall.color = "purple";
+      adjacentWall.isPlaced = 1;
     }
+  
+    const updateWallIsPlaced = () => {
+      const wallIndex = board.findIndex((item) => item === randomWall);
+      if (wallIndex !== -1) {
+        board[wallIndex].isPlaced = 1;
+      }
+    };
+  
+    const updateFindWallIsPlaced = () => {
+      const wallIndex = board.findIndex((item) => item === adjacentWall);
+      if (wallIndex !== -1) {
+        board[wallIndex].isPlaced = 1;
+      }
+    };
+  
+    updateWallIsPlaced();
+    updateFindWallIsPlaced();
   }
-  player1.wallCount--;
   currentPlayer = 2;
- 
+  player1.wallCount--;
 }
 
 function findWall(findWall) {
