@@ -6,10 +6,15 @@ It's a game of cunning and strategy that will keep you hooked!
 
 Quoridor game - html/css/js  + p5.js(p5.min.js)
 
-![HomepageV2](https://user-images.githubusercontent.com/126149136/234399407-890502c4-4514-40b5-8a64-da26e166bea8.png)
+![HomePage](https://github.com/CCotuna/Quoridor/assets/126149136/3f003477-48d8-4ce0-9a91-49e616a1b90d)
 
-![InputName](https://user-images.githubusercontent.com/126149136/234399468-eb21dcc3-c9da-48bc-a8cb-7bac02f061fb.png)
+![PVCinput](https://github.com/CCotuna/Quoridor/assets/126149136/b9ac4c48-4d14-4ea1-9337-0c8e2cd857e4)
 
-![Board](https://user-images.githubusercontent.com/126149136/234399499-f5e4c568-3287-4572-9ee9-c9ee4c5a8cfa.png)
+![GamePlayOption](https://github.com/CCotuna/Quoridor/assets/126149136/646bcf14-6c44-46e8-a966-b33eecc8832e)
 
-![RulesOfTheGame](https://user-images.githubusercontent.com/126149136/234399512-eb116018-16fa-4029-a724-164a5f15dba5.png)
+![DifficultyLevelPagePVC](https://github.com/CCotuna/Quoridor/assets/126149136/a82a3e6f-974c-41e3-b817-f14115aebfc0)
+
+![RulesOfTheGame](https://github.com/CCotuna/Quoridor/assets/126149136/eae7a46f-6064-4b30-b3cd-ccb5f731d56d)
+
+![ReturnToLobbyPage](https://github.com/CCotuna/Quoridor/assets/126149136/1dbb9d48-0dc3-49c3-930c-c630e7cff6c4)
+
