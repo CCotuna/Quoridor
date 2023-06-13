@@ -21,7 +21,7 @@
     content: '';
     width:10px;
     height:100%;
-    background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
+    background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%);
     position:absolute;
     right:-40px;
     top:8px;
@@ -31,7 +31,7 @@
     position:absolute;
     left: -100px;
     top: 0;
-    background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
+    background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%);
     border-radius: 0px 20px 20px 0px;
     height:100%;
     width: 80%;
@@ -63,7 +63,7 @@ button {
     padding: 12px 10px;
     outline:none;
     color: #fff;
-    background: linear-gradient(90deg, #8E0E00 0%, #1F1C18 100%);
+    background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%);
     border-radius: 6px;
     cursor: pointer;
     transition: width 0.5s;

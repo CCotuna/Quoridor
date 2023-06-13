@@ -36,7 +36,7 @@ function setup() {
     for (let j = 0; j < 8; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1); //verticale
+      let wall1 = new Wall(x + 50, y, 10, 50, "midnightblue", 0, 1); //verticale
       board.push(wall1);
     }
   }
@@ -45,12 +45,12 @@ function setup() {
     for (let j = 0; j < 9; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2); //orizontale
+      let wall2 = new Wall(x, y + 50, 50, 10, "midnightblue", 0, 2); //orizontale
       board.push(wall2);
     }
   }
-  player1 = new Player("Computer", 10, "rgb(220, 20, 60)");
-  player2 = new Player(playerName, 10, "rgb(0, 0, 0)");
+  player1 = new Player("Computer", 10, "orangered");
+  player2 = new Player(playerName, 10, "black");
   // step de 60 - sus jos stanga dreapta
   pawn1 = new Pawn(315, 75, 30, player1.color);
   board.push(pawn1);
@@ -158,7 +158,8 @@ class Pawn {
 }
 
 function draw() {
-  background("darkred");
+  //darkslateblue
+  background("indigo");
   for (let item of board) {
     if (item instanceof Box || item instanceof Pawn || item instanceof Wall) {
       item.display();
@@ -166,12 +167,12 @@ function draw() {
   }
 
   textSize(14);
-  fill("yellow");
-  text(`Number of walls: ${player1.name} [${player1.wallCount}]`, 10, 15);
-  text(`Number of walls: ${player2.name} [${player2.wallCount}]`, 10, 40);
+  fill("cornsilk");
+  text(`${player1.name} has ${player1.wallCount} walls.`, 10, 15);
+  text(`${player2.name} has ${player2.wallCount} walls.`, 10, 40);
   currentPlayer === 1
-    ? text(`Current turn: ${player1.name}`, 300, 30)
-    : text(`Current turn: ${player2.name}`, 300, 30);
+    ? text(`Current turn: ${player1.name}`, 270, 30)
+    : text(`Current turn: ${player2.name}`, 270, 30);
 }
 
 let selectedPawn = null;
@@ -397,8 +398,8 @@ function mouseClicked() {
                 findWall(item).w + findWall(item).x < canvasWidth ||
                 findWall(item).h + findWall(item).y < canvasHeight
               ) {
-                item.color = "purple";
-                findWall(item).color = "purple";
+                item.color = "gold";
+                findWall(item).color = "gold";
 
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
@@ -519,13 +520,13 @@ function placeWallAI() {
     const adjacentWall = findWall(randomWall);
 
     if (adjacentWall !== null && adjacentWall.isPlaced == 0) {
-      randomWall.color = "purple";
+      randomWall.color = "gold";
       randomWall.isPlaced = 1;
       wallPositions.push(randomWall);
 
       if (randomWall.type === adjacentWall.type) {
         wallPositions.push(adjacentWall);
-        adjacentWall.color = "purple";
+        adjacentWall.color = "gold";
         adjacentWall.isPlaced = 1;
       }
 
@@ -546,12 +547,9 @@ function placeWallAI() {
       updateWallIsPlaced();
       updateFindWallIsPlaced();
     }
-
-    console.log("Aici a pus zidul");
     player1.wallCount--;
     currentPlayer = 2;
   } else {
-    console.log("AIci trebuie sa mute deja pionul");
     moveAI();
   }
 }
@@ -630,8 +628,10 @@ document.getElementById("playerNameDisplay").textContent =
 
 function checkWinner(pawn1, pawn2) {
   if (pawn1.y == 555) {
+    resetBoard();
     gameover(pawn1);
   } else if (pawn2.y == 75) {
+    resetBoard();
     gameover(pawn2);
   }
 }

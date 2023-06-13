@@ -37,7 +37,7 @@ function setup() {
     for (let j = 0; j < 8; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1); //verticale
+      let wall1 = new Wall(x + 50, y, 10, 50, "midnightblue", 0, 1); //verticale
       board.push(wall1);
     }
   }
@@ -46,12 +46,12 @@ function setup() {
     for (let j = 0; j < 9; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2); //orizontale
+      let wall2 = new Wall(x, y + 50, 50, 10, "midnightblue", 0, 2); //orizontale
       board.push(wall2);
     }
   }
-  player1 = new Player(player1Name, 10, "red");
-  player2 = new Player(player2Name, 10, "green");
+  player1 = new Player(player1Name, 10, "black");
+  player2 = new Player(player2Name, 10, "orangered");
 
   // step de 60 - sus jos stanga dreapta
   pawn1 = new Pawn(315, 75, 30, player1.color);
@@ -161,7 +161,7 @@ class Pawn {
 }
 
 function draw() {
-  background("darkred");
+  background("indigo");
 
   for (let item of board) {
     if (item instanceof Box || item instanceof Pawn || item instanceof Wall) {
@@ -169,13 +169,13 @@ function draw() {
     }
   }
 
-  textSize(14);
-  fill("yellow");
-  text(`Number of walls: ${player1.name} [${player1.wallCount}]`, 10, 15);
-  text(`Number of walls: ${player2.name} [${player2.wallCount}]`, 10, 40);
+  textSize(17);
+  fill("cornsilk");
+  text(`${player1.name} has ${player1.wallCount} walls.`, 10, 20);
+  text(`${player2.name} has ${player2.wallCount} walls.`, 10, 40);
   currentPlayer === 1
-    ? text(`Current turn: ${player1.name}`, 300, 30)
-    : text(`Current turn: ${player2.name}`, 300, 30);
+    ? text(`Current turn: ${player1.name}`, 270, 30)
+    : text(`Current turn: ${player2.name}`, 270, 30);
 }
 
 let selectedPawn = null;
@@ -491,10 +491,8 @@ function resetBoard() {
   currentPlayer = 1;
 }
 
-document.getElementById("player1NameDisplay").textContent =
-  "Player1 Name: " + player1Name;
-document.getElementById("player2NameDisplay").textContent =
-  "Player2 Name: " + player2Name;
+document.getElementById("player1NameDisplay").textContent ="First player's name: " + player1Name;
+document.getElementById("player2NameDisplay").textContent ="Second player's name: " + player2Name;
 
 function checkWinner(pawn1, pawn2) {
   if (pawn1.y == 555) {

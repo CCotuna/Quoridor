@@ -9,6 +9,20 @@
     <link rel="stylesheet" href="css/gameplay.css">
     <title>Quoridor</title>
     
+    <style>
+        .names{
+            margin-left:7rem;
+            margin-top:1rem;
+            font-size: 20px;
+        }
+
+        #surrenderButton{
+            float:right;
+            margin-right:15vh;
+        }
+
+    </style>
+
 </head>
 <body>
      <div class="navbar" style="padding-left:4%; padding-right:4%;">
@@ -23,10 +37,12 @@
         <img src="images/menu-icon.svg" class="menu-icon" onclick="togglemenu()">
     </div>
    
-    <button id="resetButton">Reset Board</button>
-    <p id="player1NameDisplay"></p>
-    <p id="player2NameDisplay"></p>
+    <button class="button" id="resetButton">Reset Board</button>
+    <button class="button" id="surrenderButton">Surrender</button>
+    <p class="names" id="player1NameDisplay"></p>
+    <p class="names" id="player2NameDisplay"></p>
     
+
     <script src="vendor/p5.min.js"></script>
     <script src="js/gameplayPVP.js"></script>
 
