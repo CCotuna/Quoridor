@@ -436,16 +436,6 @@ function mouseClicked() {
 
   checkWinner(pawn1, pawn2);
 }
-// console.log(wallsUsed);
-
-function checkForWall(x, y) {
-  for (let wall of wallPositions) {
-    if (wall.x == x && wall.y == y && wall.isPlaced === 1) {
-      return true;
-    }
-  }
-  return false;
-}
 
 function findWall(findWall) {
   for (let item of board) {
