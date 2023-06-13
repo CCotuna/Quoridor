@@ -224,18 +224,23 @@ function mouseClicked() {
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
         //DREAPTA
-        // for (let item of board) {
-        //   if (
-        //     item instanceof Wall &&
-        //     item.x >= selectedPawn.x - 60 &&
-        //     item.y == selectedPawn.y - 25 &&
-        //     item.isPlaced == true
-        //   ) {
-        //     isBlocked = true;
-        //     break;
-        //   } 
-        // }
 
+        for (let wall of wallPositions) {
+          if (
+            wall.x === selectedPawn.x + 25 &&
+            wall.y === selectedPawn.y - 25 &&
+            wall.isPlaced === 1
+          ) {
+            isBlocked = true;
+            break;
+          }
+        }
+
+        if (isBlocked) {
+          alert(
+            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
+          );
+        } else if (!isBlocked) {
         if (isValidStep) {
           if (
             (currentPlayer === 1 && selectedPawn === pawn1) ||
@@ -249,6 +254,7 @@ function mouseClicked() {
             isBlocked = true;
           }
         }
+      }
       } else if (newX < 0 && selectedPawn.x > 120) {
         // STANGA
         // for (let item of board) {
