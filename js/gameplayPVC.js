@@ -173,7 +173,6 @@ function draw() {
   currentPlayer === 1
     ? text(`Current turn: ${player1.name}`, 300, 30)
     : text(`Current turn: ${player2.name}`, 300, 30);
-
 }
 
 let selectedPawn = null;
@@ -433,7 +432,7 @@ function mouseClicked() {
 function generateRandomNumber() {
   return Math.floor(Math.random() * 2) + 1;
 }
-
+//error: AI doesn't win
 function moveAI() {
   if (currentPlayer === 1) {
     const directions = [1, 2, 3, 4]; //1 sus | 2 jos | 3 dreapta | 4 stanga
