@@ -61,7 +61,35 @@ function setup() {
   board.push(pawn2);
   // pawn2.y -= 60;
 
+  for (let item of board) {
+    if (item instanceof Wall) {
+      addWallPosition(
+        item.x,
+        item.y,
+        item.w,
+        item.h,
+        item.color,
+        item.isPlaced,
+        item.type,
+        wallsUsed
+      );
+    }
+  }
   
+}
+
+function addWallPosition(x, y, w, h, color, isPlaced, type, wallPositions) {
+  let position = {
+    x: x,
+    y: y,
+    w: w,
+    h: h,
+    color: color,
+    originalColor: color,
+    isPlaced: isPlaced,
+    type: type,
+  };
+  wallPositions.push(position);
 }
 
 class Player {
@@ -159,6 +187,7 @@ function mouseClicked() {
   if (!directionChosen) {
     for (let item of board) {
       if (item instanceof Pawn) {
+        //distance = sqrt((mouseX - item.x)^2 + (mouseY - item.y)^2)
         distance = dist(mouseX, mouseY, item.x, item.y);
 
         if (distance < item.diameter / 2) {
