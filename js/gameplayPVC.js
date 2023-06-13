@@ -422,13 +422,12 @@ function mouseClicked() {
                 if (random === 1) {
                   moveAI();
                 } else if (random === 2) {
-                  if (player1.wallCount === 0) {
-                    moveAI();
-                  } else {
-                    placeWallAI();
-                  }
+                  if (player1.wallCount != 0) {
+                   placeWallAI();
+                }else{
+                  moveAI();
                 }
-              }
+              }}
               break;
             }
           } else {
@@ -508,6 +507,9 @@ function moveAI() {
     if (pawn1.x == initialx && pawn1.y == initialy) {
       moveAI();
     }
+    if(!ableToMove && player1.wallCount > 0){
+      placeWallAI();
+    }
     currentPlayer = 2;
   }
 }
@@ -521,7 +523,7 @@ function placeWallAI() {
 
   const adjacentWall = findWall(randomWall);
 
-  if(adjacentWall !== null){
+  if(adjacentWall !== null && adjacentWall.isPlaced == 0){
     randomWall.color = "purple";
     randomWall.isPlaced = 1;
     wallPositions.push(randomWall);
