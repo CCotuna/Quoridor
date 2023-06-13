@@ -1,4 +1,7 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
+document.getElementById("surrenderButton").addEventListener("click", surrender);
+
+
 let playerName = localStorage.getItem("playerName");
 
 let wallPositions = [];
@@ -647,4 +650,8 @@ function gameover(winningPawn) {
   localStorage.setItem("winner", pawnName);
   // Redirect to the winner.html page
   window.location.href = "winner.html";
+}
+
+function surrender(){
+  window.location.href = "looser.html";
 }

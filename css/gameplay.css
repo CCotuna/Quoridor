@@ -19,3 +19,8 @@
 #playerNameDisplay, .button{
     margin-left:15vh;
 }
+
+#surrenderButton{
+    float:right;
+    margin-right:15vh;
+}

@@ -16,7 +16,6 @@
             align-items: center;
             width:300px;
             height:300px;
-            margin-left:300px;
             margin-top:5%;
             color : white;
             font-size:2rem;
@@ -38,11 +37,11 @@
         <img src="images/menu-icon.svg" class="menu-icon" onclick="togglemenu()">
     </div>
     <div style="text-align:center; font-size:5rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);"><p>QUORIDOR</p></div>
-    <div style="display:flex;">
-        <div class="option_box" id="pvp" onclick="redirectingPage(1)" style="background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%);">Player VS Player</div>
+    <div style="display:flex; justify-content: center;">
+        <div class="option_box" id="pvp" onclick="redirectingPage(1)" style="background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%); margin-right:30px;">Player VS Player</div>
         <div class="option_box" id="pvc" onclick="redirectingPage(2)" style="background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%);">Player VS Computer</div>
     </div>
-    <div style="width:100%; background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%); height:10px; margin-top:10%;"></div>
+    <div style="width:100%; background: linear-gradient(90deg, #6441A5 0%, #2A0845 100%); height:10px; margin-top:3%"></div>
     
     <script>
         function redirectingPage(value){
