@@ -37,7 +37,7 @@ function setup() {
     for (let j = 0; j < 8; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall1 = new Wall(x + 50, y, 10, 50, "black", 0, 1); //verticale
+      let wall1 = new Wall(x + 50, y, 10, 50, "yellow", 0, 1); //verticale
       board.push(wall1);
     }
   }
@@ -46,12 +46,12 @@ function setup() {
     for (let j = 0; j < 9; j++) {
       let x = j * 60 + 50;
       let y = i * 60 + 50;
-      let wall2 = new Wall(x, y + 50, 50, 10, "black", 0, 2); //orizontale
+      let wall2 = new Wall(x, y + 50, 50, 10, "yellow", 0, 2); //orizontale
       board.push(wall2);
     }
   }
   player1 = new Player("Computer", 10, "rgb(220, 20, 60)");
-  player2 = new Player(playerName, 20, "rgb(0, 0, 0)");
+  player2 = new Player(playerName, 10, "rgb(0, 0, 0)");
   // step de 60 - sus jos stanga dreapta
   pawn1 = new Pawn(315, 75, 30, player1.color);
   board.push(pawn1);
@@ -73,7 +73,6 @@ function setup() {
       );
     }
   }
-
   // canvas.mouseMoved(mouseHover);
 }
 
