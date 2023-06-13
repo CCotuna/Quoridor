@@ -214,6 +214,17 @@ function mouseClicked() {
     let isValidStep = true;
     let isBlocked = false;
 
+    for(let item of board){
+      if(item instanceof Pawn && item !== selectedPawn){
+        let distanceBetPawn = dist(selectedPawn.x + newX, selectedPawn.y + newY, item.x, item.y);
+        if(distanceBetPawn < selectedPawn.diameter){
+          isValidStep = false;
+          isBlocked = true;
+          break;
+        }
+      }
+    }
+
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
         //DREAPTA
@@ -286,7 +297,7 @@ function mouseClicked() {
         }
 
         if (isBlocked) {
-          alert("You can't move the pawn there! There is a wall!");
+          alert("You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!");
         } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
@@ -450,49 +461,28 @@ function moveAI() {
           !checkForWall(pawn1.x - 25, pawn1.y - 35)
         ) {
           pawn1.y -= 60;
-        } else if (
-          pawn1.y > 180 &&
-          pawn1.y - 120 === pawn2.y &&
-          pawn1.x === pawn2.x &&
-          !checkForWall(pawn1.x - 25, pawn1.y - 95)
-        ) {
-          pawn1.y -= 120;
         } else {
           ableToMove = false;
         }
         break;
       case 2: // down
         if (
-          pawn1.y < height - 180 &&
+          pawn1.y < height - 120 &&
           !(pawn1.x === pawn2.x && pawn1.y + 60 === pawn2.y) &&
           !checkForWall(pawn1.x - 25, pawn1.y + 25)
         ) {
           pawn1.y += 60;
-        } else if (
-          pawn1.y < height - 240 &&
-          pawn1.y + 120 === pawn2.y &&
-          pawn1.x === pawn2.x &&
-          !checkForWall(pawn1.x - 25, pawn1.y + 55)
-        ) {
-          pawn1.y += 120;
         } else {
           ableToMove = false;
         }
         break;
       case 3: // right
         if (
-          pawn1.x < width - 180 &&
+          pawn1.x < width - 120 &&
           !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y) &&
           !checkForWall(pawn1.x + 25, pawn1.y - 25)
         ) {
           pawn1.x += 60;
-        } else if (
-          pawn1.x < width - 240 &&
-          pawn1.x + 120 === pawn2.x &&
-          pawn1.y === pawn2.y &&
-          !checkForWall(pawn1.x + 95, pawn1.y - 25)
-        ) {
-          pawn1.x += 120;
         } else {
           ableToMove = false;
         }
@@ -504,13 +494,6 @@ function moveAI() {
           !checkForWall(pawn1.x - 35, pawn1.y - 25)
         ) {
           pawn1.x -= 60;
-        } else if (
-          pawn1.x > 180 &&
-          pawn1.x - 120 === pawn2.x &&
-          pawn1.y === pawn2.y &&
-          !checkForWall(pawn1.x - 155, pawn1.y - 25)
-        ) {
-          pawn1.x -= 120;
         } else {
           ableToMove = false;
         }
@@ -624,6 +607,7 @@ function checkForWall(x, y) {
   }
   return false;
 }
+
 
 function resetPawns() {
   for (let item of board) {
