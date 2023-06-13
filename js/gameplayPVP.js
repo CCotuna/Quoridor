@@ -434,35 +434,15 @@ function mouseClicked() {
 }
 // console.log(wallsUsed);
 
-function checkForWall(pawn) {
-  const positions = [
-    { x: pawn.x - 25, y: pawn.y }, // left
-    { x: pawn.x + 25, y: pawn.y }, // right
-    { x: pawn.x, y : pawn.y + 25 }, // down
-    { x: pawn.x, y: pawn.y - 25 } // up
-  ];
-
-  for (let position of positions) {
-    let isBlocked = false;
-    
-    for (let item of board) {
-      if (
-        item instanceof Wall &&
-        item.x === position.x &&
-        item.y === position.y &&
-        item.isPlaced
-      ) {
-        isBlocked = true;
-        break; // Exit the inner loop since a wall is found
-      }
-    }
-    if (isBlocked) {
-      return true; // There is a wall blocking the pawn's movement
+function checkForWall(x, y) {
+  for (let wall of wallPositions) {
+    if (wall.x == x && wall.y == y && wall.isPlaced === 1) {
+      return true;
     }
   }
-
-  return false; // No wall found in the surrounding positions
+  return false;
 }
+
 
 function findWall(findWall) {
   for (let item of board) {
