@@ -329,10 +329,9 @@ function mouseClicked() {
             break;
           }
         }
-
         if (isBlocked) {
           alert(
-            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn!"
+            "You can't move the pawn there! There is a wall or you're trying to overlap the other pawn! Please check if it is your turn!"
           );
         } else if (!isBlocked) {
           if (isValidStep) {
@@ -490,16 +489,12 @@ function resetBoard() {
   player1.wallCount = 10;
   player2.wallCount = 10;
   currentPlayer = 1;
-  // Math.floor(Math.random() * 2) + 1;
 }
 
 document.getElementById("player1NameDisplay").textContent =
   "Player1 Name: " + player1Name;
 document.getElementById("player2NameDisplay").textContent =
   "Player2 Name: " + player2Name;
-
-// localStorage.removeItem("player1Name");
-// localStorage.removeItem("player2Name");
 
 function checkWinner(pawn1, pawn2) {
   if (pawn1.y == 555) {
@@ -520,6 +515,5 @@ function gameover(winningPawn) {
   alert(message);
 
   localStorage.setItem("winner", pawnName);
-  // Redirect to the winner.html page
   window.location.href = "winner.html";
 }
