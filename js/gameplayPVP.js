@@ -359,82 +359,84 @@ function mouseClicked() {
     directionChosen = false;
     selectedPawn = null;
   }
-
-  for (let item of board) {
-    if (item instanceof Wall) {
-      if (
-        mouseX < item.x + item.w &&
-        mouseX > item.x &&
-        mouseY < item.y + item.h &&
-        mouseY > item.y
-      ) {
-        if (item.type == findWall(item).type) {
-          wallsUsed.push(item);
-          wallsUsed.push(findWall(item));
-
-          let isWallPlaced = wallsUsed.some(
-            (pos) =>
-              (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
-              (pos.x === findWall(item).x &&
-                pos.y === findWall(item).y &&
-                pos.isPlaced === 1)
-          );
-          console.log(isWallPlaced);
-
-          if (!isWallPlaced) {
-            if (currentPlayer === 1 && player1.wallCount > 0) {
-              if (
-                findWall(item).w + findWall(item).x < canvasWidth ||
-                findWall(item).h + findWall(item).y < canvasHeight
-              ) {
-                item.color = "chocolate";
-                findWall(item).color = "chocolate";
-                console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log(
-                  "wall1below: x: " +
-                    findWall(item).x +
-                    "y: " +
-                    findWall(item).y
-                );
-                item.isPlaced = 1;
-                findWall(item).isPlaced = 1;
-                player1.wallCount--;
-                currentPlayer = 2;
-              }
-              break;
-            } else if (currentPlayer === 2 && player2.wallCount > 0) {
-              if (
-                findWall(item).w + findWall(item).x < canvasWidth ||
-                findWall(item).h + findWall(item).y < canvasHeight
-              ) {
-                item.color = "chocolate";
-                findWall(item).color = "chocolate";
-                console.log("wall1: x:" + item.x + "y: " + item.y);
-                console.log(
-                  "wall1below: x: " +
-                    findWall(item).x +
-                    "y: " +
-                    findWall(item).y
-                );
-                item.isPlaced = 1;
-                findWall(item).isPlaced = 1;
-                player2.wallCount--;
-                currentPlayer = 1;
-              }
-              break;
-            }
-          } else {
-            alert(
-              "You can't place a wall there. It must not overlap an existing wall!"
+  if(selectedPawn.isClicked == false){
+    for (let item of board) {
+      if (item instanceof Wall) {
+        if (
+          mouseX < item.x + item.w &&
+          mouseX > item.x &&
+          mouseY < item.y + item.h &&
+          mouseY > item.y
+        ) {
+          if (item.type == findWall(item).type) {
+            wallsUsed.push(item);
+            wallsUsed.push(findWall(item));
+  
+            let isWallPlaced = wallsUsed.some(
+              (pos) =>
+                (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+                (pos.x === findWall(item).x &&
+                  pos.y === findWall(item).y &&
+                  pos.isPlaced === 1)
             );
+            console.log(isWallPlaced);
+  
+            if (!isWallPlaced) {
+              if (currentPlayer === 1 && player1.wallCount > 0) {
+                if (
+                  findWall(item).w + findWall(item).x < canvasWidth ||
+                  findWall(item).h + findWall(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall(item).x +
+                      "y: " +
+                      findWall(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall(item).isPlaced = 1;
+                  player1.wallCount--;
+                  currentPlayer = 2;
+                }
+                break;
+              } else if (currentPlayer === 2 && player2.wallCount > 0) {
+                if (
+                  findWall(item).w + findWall(item).x < canvasWidth ||
+                  findWall(item).h + findWall(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall(item).x +
+                      "y: " +
+                      findWall(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall(item).isPlaced = 1;
+                  player2.wallCount--;
+                  currentPlayer = 1;
+                }
+                break;
+              }
+            } else {
+              alert(
+                "You can't place a wall there. It must not overlap an existing wall!"
+              );
+            }
           }
-        }
-        if (player1.wallCount == 0 || player2.wallCount == 0) {
-          alert("You don't have walls!");
+          if (player1.wallCount == 0 || player2.wallCount == 0) {
+            alert("You don't have walls!");
+          }
         }
       }
     }
   }
+  
 
   checkWinner(pawn1, pawn2);
 }

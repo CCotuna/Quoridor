@@ -531,8 +531,9 @@ function placeWallAI() {
         wallPositions.push(adjacentWall);
         adjacentWall.color = "chocolate";
         adjacentWall.isPlaced = 1;
+        player1.wallCount--;
       }
-
+     
       const updateWallIsPlaced = () => {
         const wallIndex = board.findIndex((item) => item === randomWall);
         if (wallIndex !== -1) {
@@ -546,12 +547,13 @@ function placeWallAI() {
           board[wallIndex].isPlaced = 1;
         }
       };
-
       updateWallIsPlaced();
       updateFindWallIsPlaced();
     }
-    player1.wallCount--;
+    console.log(randomWall.x + " " + randomWall.y + " asta e randomWall");
+    console.log(adjacentWall.x + " " + adjacentWall.y + " asta e findWall(randomWall)");
     currentPlayer = 2;
+
   } else {
     moveAI();
   }
