@@ -218,6 +218,7 @@ function mouseClicked() {
 
     let isValidStep = true;
     let isBlocked = false;
+    let isWall = false;
 
     for (let item of board) {
       if (item instanceof Pawn && item !== selectedPawn) {
