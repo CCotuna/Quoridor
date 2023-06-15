@@ -1,7 +1,6 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
 document.getElementById("surrenderButton").addEventListener("click", surrender);
 
-
 let playerName = localStorage.getItem("playerName");
 
 let wallPositions = [];
@@ -16,7 +15,6 @@ let player1, player2;
 let currentPlayer = 2;
 let isOverWall = false;
 
- 
 function setup() {
   canvas = createCanvas(630, 630);
   canvasWidth = width;
@@ -534,7 +532,7 @@ function placeWallAI() {
         adjacentWall.isPlaced = 1;
         player1.wallCount--;
       }
-     
+
       const updateWallIsPlaced = () => {
         const wallIndex = board.findIndex((item) => item === randomWall);
         if (wallIndex !== -1) {
@@ -549,13 +547,14 @@ function placeWallAI() {
         }
       };
       console.log(randomWall.x + " " + randomWall.y + " asta e randomWall");
-      console.log(adjacentWall.x + " " + adjacentWall.y + " asta e findWall(randomWall)");
+      console.log(
+        adjacentWall.x + " " + adjacentWall.y + " asta e findWall(randomWall)"
+      );
       updateWallIsPlaced();
       updateFindWallIsPlaced();
     }
-   
-    currentPlayer = 2;
 
+    currentPlayer = 2;
   } else {
     moveAI();
   }
@@ -656,12 +655,11 @@ function gameover(winningPawn) {
   window.location.href = "winner.html";
 }
 
-function surrender(){
+function surrender() {
   window.location.href = "loser.html";
 }
 
 function canReachParallelSide(pawn, targetY) {
-
   // Base case: reached the target position
   if (pawn.y === targetY) {
     return true;
@@ -674,7 +672,7 @@ function canReachParallelSide(pawn, targetY) {
       { x, y: y - 1 }, // Up
       { x, y: y + 1 }, // Down
       { x: x - 1, y }, // Left
-      { x: x + 1, y }  // Right
+      { x: x + 1, y }, // Right
     ];
 
     for (const { x, y } of nextMoves) {
