@@ -519,14 +519,14 @@ function mouseClicked() {
         mouseY > item.y &&
         item.type == 2
       ) {
-        if (item.type == findWall(item).type) {
+        if (item.type == findWall1(item).type) {
           wallPositions.push(item);
-          wallPositions.push(findWall(item));
+          wallPositions.push(findWall1(item));
           let isWallPlaced = wallPositions.some(
             (pos) =>
               (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
-              (pos.x === findWall(item).x &&
-                pos.y === findWall(item).y &&
+              (pos.x === findWall1(item).x &&
+                pos.y === findWall1(item).y &&
                 pos.isPlaced === 1)
           );
           console.log(isWallPlaced);
@@ -534,22 +534,22 @@ function mouseClicked() {
           if (!isWallPlaced) {
             if (currentPlayer === 2 && player2.wallCount > 0) {
               if (
-                findWall(item).w + findWall(item).x < canvasWidth ||
-                findWall(item).h + findWall(item).y < canvasHeight
+                findWall1(item).w + findWall1(item).x < canvasWidth ||
+                findWall1(item).h + findWall1(item).y < canvasHeight
               ) {
                 item.color = "chocolate";
-                findWall(item).color = "chocolate";
+                findWall1(item).color = "chocolate";
 
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
                   "wall1below: x: " +
-                    findWall(item).x +
+                    findWall1(item).x +
                     "y: " +
-                    findWall(item).y
+                    findWall1(item).y
                 );
 
                 item.isPlaced = 1;
-                findWall(item).isPlaced = 1;
+                findWall1(item).isPlaced = 1;
                 player2.wallCount--;
                 currentPlayer = 1;
 
@@ -641,20 +641,20 @@ function mouseClicked() {
           alert("You don't have walls!");
         }
       }else if ( //vezi in sus
-        mouseX < item.x + item.w / 2 &&
+        mouseX < item.x + item.w &&
         mouseX > item.x &&
-        mouseY < item.y + item.h &&
+        mouseY < item.y + item.h/2 &&
         mouseY > item.y &&
         item.type == 1
       ) {
-        if (item.type == findWall2(item).type) {
+        if (item.type == findWall3(item).type) {
           wallPositions.push(item);
-          wallPositions.push(findWall2(item));
+          wallPositions.push(findWall3(item));
           let isWallPlaced = wallPositions.some(
             (pos) =>
               (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
-              (pos.x === findWall2(item).x &&
-                pos.y === findWall2(item).y &&
+              (pos.x === findWall3(item).x &&
+                pos.y === findWall3(item).y &&
                 pos.isPlaced === 1)
           );
           console.log(isWallPlaced);
@@ -662,22 +662,22 @@ function mouseClicked() {
           if (!isWallPlaced) {
             if (currentPlayer === 2 && player2.wallCount > 0) {
               if (
-                findWall2(item).w + findWall2(item).x < canvasWidth ||
-                findWall2(item).h + findWall2(item).y < canvasHeight
+                findWall3(item).w + findWall3(item).x < canvasWidth ||
+                findWall3(item).h + findWall3(item).y < canvasHeight
               ) {
                 item.color = "chocolate";
-                findWall2(item).color = "chocolate";
+                findWall3(item).color = "chocolate";
 
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
                   "wall1below: x: " +
-                    findWall2(item).x +
+                    findWall3(item).x +
                     "y: " +
-                    findWall2(item).y
+                    findWall3(item).y
                 );
 
                 item.isPlaced = 1;
-                findWall2(item).isPlaced = 1;
+                findWall3(item).isPlaced = 1;
                 player2.wallCount--;
                 currentPlayer = 1;
 
@@ -706,20 +706,20 @@ function mouseClicked() {
         }
       }
       else if ( // vezi in jos
-        mouseX < item.x + item.w / 2 &&
         mouseX > item.x &&
+        mouseX < item.x + item.w &&
+        mouseY > item.y + item.h/2 &&
         mouseY < item.y + item.h &&
-        mouseY > item.y &&
         item.type == 1
       ) {
-        if (item.type == findWall2(item).type) {
+        if (item.type == findWall4(item).type) {
           wallPositions.push(item);
-          wallPositions.push(findWall2(item));
+          wallPositions.push(findWall4(item));
           let isWallPlaced = wallPositions.some(
             (pos) =>
               (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
-              (pos.x === findWall2(item).x &&
-                pos.y === findWall2(item).y &&
+              (pos.x === findWall4(item).x &&
+                pos.y === findWall4(item).y &&
                 pos.isPlaced === 1)
           );
           console.log(isWallPlaced);
@@ -727,22 +727,22 @@ function mouseClicked() {
           if (!isWallPlaced) {
             if (currentPlayer === 2 && player2.wallCount > 0) {
               if (
-                findWall2(item).w + findWall2(item).x < canvasWidth ||
-                findWall2(item).h + findWall2(item).y < canvasHeight
+                findWall4(item).w + findWall4(item).x < canvasWidth ||
+                findWall4(item).h + findWall4(item).y < canvasHeight
               ) {
                 item.color = "chocolate";
-                findWall2(item).color = "chocolate";
+                findWall4(item).color = "chocolate";
 
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
                   "wall1below: x: " +
-                    findWall2(item).x +
+                    findWall4(item).x +
                     "y: " +
-                    findWall2(item).y
+                    findWall4(item).y
                 );
 
                 item.isPlaced = 1;
-                findWall2(item).isPlaced = 1;
+                findWall4(item).isPlaced = 1;
                 player2.wallCount--;
                 currentPlayer = 1;
 
