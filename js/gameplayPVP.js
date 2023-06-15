@@ -252,7 +252,24 @@ function mouseClicked() {
               // daca e pozitiva mutam la dreapta
               if(checkForPawnRight(selectedPawn)){
                 if(selectedPawn.x + 120 < 580){
-                  selectedPawn.x +=120;
+                  for (let wall of wallsUsed) {
+                    if (
+                      wall.x === selectedPawn.x + 25 + 60 &&
+                      wall.y === selectedPawn.y - 25 &&
+                      wall.isPlaced === 1
+                    ) {
+                      isWall = true;
+                      break;
+                    }
+                  }
+                  if(isWall === true)
+                    {
+                      alert("You can't move there! There's a wall!")
+                      return;}
+                  else{
+                    selectedPawn.x += 120;
+                    isWall = false;
+                  }
                 }
                 else{
                   alert("You're trying to go outside the board!")
@@ -308,7 +325,6 @@ function mouseClicked() {
                       break;
                     }
                   }
-                  console.log(isWall);
                   if(isWall === true)
                     {
                       alert("You can't move there! There's a wall!")
@@ -373,7 +389,6 @@ function mouseClicked() {
                       break;
                     }
                   }
-                  console.log(isWall);
                   if(isWall === true)
                     {
                       alert("You can't move there! There's a wall!")
@@ -435,7 +450,6 @@ function mouseClicked() {
                       break;
                     }
                   }
-                  console.log(isWall);
                   if(isWall === true)
                     {
                       alert("You can't move there! There's a wall!")
