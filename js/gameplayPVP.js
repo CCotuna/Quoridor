@@ -579,7 +579,8 @@ function checkForPawnLeft(pawn) {
   return false;
 }
 
-function findWall(findWall) {
+
+function findWall1(findWall) {
   for (let item of board) {
     if (item instanceof Wall) {
       if (item.type == 2) {
@@ -590,12 +591,53 @@ function findWall(findWall) {
         )
           return item;
       }
+    }
+  }
+  return null;
+}
 
+function findWall2(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (item.type == 2) {
+        if (
+          item.x === findWall.x - 60 &&
+          item.y === findWall.y &&
+          item.w + findWall.w == 100
+        )
+          return item;
+      }
+    }
+  }
+  return null;
+}
+
+function findWall3(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (item.type == 1) {
+        if (
+          item.x === findWall.x &&
+          item.y < findWall.y &&
+          item.w === findWall.w &&
+          item.y + 60 === findWall.y
+        )
+          return item;
+      }
+    }
+  }
+  return null;
+}
+
+function findWall4(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
       if (item.type == 1) {
         if (
           item.x === findWall.x &&
           item.y > findWall.y &&
-          item.w === findWall.w
+          item.w === findWall.w &&
+          item.y - 60 === findWall.y
         )
           return item;
       }
