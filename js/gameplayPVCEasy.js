@@ -582,6 +582,7 @@ function moveAI() {
     const randomDirection = directions[randomIndex];
     let initialx = pawn1.x;
     let initialy = pawn1.y;
+    let isWallBeside = false;
 
     let ableToMove = true;
     switch (randomDirection) {
@@ -591,7 +592,36 @@ function moveAI() {
           !(pawn1.x === pawn2.x && pawn1.y - 60 === pawn2.y) &&
           !checkForWall(pawn1.x - 25, pawn1.y - 35)
         ) {
-          pawn1.y -= 60;
+          if(checkForPawnUp(pawn1)){
+            if(pawn1.x - 120 < 50){
+              for (let item of wallPositions) {
+                if (
+                  item.x === pawn1.x - 25 &&
+                  item.y === pawn1.y - 35 &&
+                  item.isPlaced === 1
+                ) {
+                  isWallBeside = true;
+                  break;
+                }
+              }
+              if(isWallBeside === true)
+                {
+                  alert("You can't move there! There's a wall!")
+                  return;
+                }
+              else{
+                pawn1.x -= 120;
+                isWallBeside = false;
+              }
+            }
+            else{
+              alert("You're trying to go outside the board!")
+              return;
+            }
+          }
+          else{
+            pawn1.x -= 60;
+          }
         } else {
           ableToMove = false;
         }
@@ -602,18 +632,77 @@ function moveAI() {
           !(pawn1.x === pawn2.x && pawn1.y + 60 === pawn2.y) &&
           !checkForWall(pawn1.x - 25, pawn1.y + 25)
         ) {
-          pawn1.y += 60;
+          if(checkForPawnDown(pawn1)){
+            if(pawn1.x + 120 < 580){
+              for (let item of wallPositions) {
+                if (
+                  item.x === pawn1.x - 25 &&
+                  item.y === pawn1.y + 25 + 60 &&
+                  item.isPlaced === 1
+                ) {
+                  isWallBeside = true;
+                  break;
+                }
+              }
+              if(isWallBeside === true)
+                {
+                  alert("You can't move there! There's a wall!")
+                  return;
+                }
+              else{
+                pawn1.x += 120;
+                isWallBeside = false;
+              }
+            }
+            else{
+              alert("You're trying to go outside the board!")
+              return;
+            }
+          }
+          else{
+            pawn1.x += 60;
+          }
         } else {
           ableToMove = false;
         }
         break;
       case 3: // right
         if (
-          pawn1.x < width - 120 &&
-          !(pawn1.x + 60 === pawn2.x && pawn1.y === pawn2.y) &&
+          pawn1.x < width - 50 &&
           !checkForWall(pawn1.x + 25, pawn1.y - 25)
         ) {
-          pawn1.x += 60;
+          if(checkForPawnRight(pawn1)){
+            if(pawn1.x + 120 < width-120){
+              for (let item of wallPositions) {
+                if (
+                  item.x === pawn1.x + 25 + 60 &&
+                  item.y === pawn1.y - 25 &&
+                  item.isPlaced === 1
+                ) {
+                  isWallBeside = true;
+                  break;
+                }
+              }
+              if(isWallBeside === true)
+                {
+                  alert("You can't move there! There's a wall!")
+                  return;
+                }
+              else{
+                pawn1.x += 120;
+                isWallBeside = false;
+              }
+            }
+            else{
+              alert("You're trying to go outside the board!")
+              return;
+            }
+          }
+          else{
+            if(pawn1.x + 60 < width-50){
+              pawn1.x += 60;
+            }
+          }
         } else {
           ableToMove = false;
         }
@@ -621,10 +710,38 @@ function moveAI() {
       case 4: // left
         if (
           pawn1.x > 120 &&
-          !(pawn1.x - 60 === pawn2.x && pawn1.y === pawn2.y) &&
           !checkForWall(pawn1.x - 35, pawn1.y - 25)
         ) {
-          pawn1.x -= 60;
+          if(checkForPawnLeft(pawn1)){
+            if(pawn1.x - 120 < 50){
+              for (let item of wallPositions) {
+                if (
+                  item.x === pawn1.x - 35 - 60 &&
+                  item.y === pawn1.y - 25 &&
+                  item.isPlaced === 1
+                ) {
+                  isWallBeside = true;
+                  break;
+                }
+              }
+              if(isWallBeside === true)
+                {
+                  alert("You can't move there! There's a wall!")
+                  return;
+                }
+              else{
+                pawn1.x -= 120;
+                isWallBeside = false;
+              }
+            }
+            else{
+              alert("You're trying to go outside the board!")
+              return;
+            }
+          }
+          else{
+            pawn1.x -= 60;
+          }
         } else {
           ableToMove = false;
         }
