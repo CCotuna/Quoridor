@@ -183,8 +183,10 @@ function draw() {
 
 let selectedPawn = null;
 let directionChosen = false;
+let placeWall = true;
 
 function mouseClicked() {
+  
   if (!directionChosen) {
     for (let item of board) {
       if (item instanceof Pawn) {
@@ -209,6 +211,7 @@ function mouseClicked() {
           selectedPawn.color = selectedPawn.originalColor;
           selectedPawn.isClicked = false;
           selectedPawn = false;
+          placeWall = true;
           break;
         }
       }
@@ -245,7 +248,9 @@ function mouseClicked() {
               (currentPlayer === 1 && selectedPawn === pawn1) ||
               (currentPlayer === 2 && selectedPawn === pawn2)
             ) {
-              selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+              // daca e pozitiva mutam la dreapta
+              selectedPawn.x += 60;
+              placeWall = false;
               currentPlayer = currentPlayer === 1 ? 2 : 1;
             } else {
               // It's not the pawn's turn, movement is blocked
@@ -279,6 +284,7 @@ function mouseClicked() {
               (currentPlayer === 2 && selectedPawn === pawn2)
             ) {
               selectedPawn.x -= 60; //daca e negativa mutam la stanga
+              placeWall = false;
               currentPlayer = currentPlayer === 1 ? 2 : 1;
             } else {
               isBlocked = true;
@@ -313,6 +319,7 @@ function mouseClicked() {
               (currentPlayer === 2 && selectedPawn === pawn2)
             ) {
               selectedPawn.y += 60; // daca e pozitiva mutam in jos
+              placeWall = false;
               currentPlayer = currentPlayer === 1 ? 2 : 1;
             } else {
               isBlocked = true;
@@ -343,6 +350,7 @@ function mouseClicked() {
               (currentPlayer === 2 && selectedPawn === pawn2)
             ) {
               selectedPawn.y -= 60; // daca e negativa mutam in sus
+              placeWall = false;
               currentPlayer = currentPlayer === 1 ? 2 : 1;
             } else {
               isBlocked = true;
@@ -358,8 +366,9 @@ function mouseClicked() {
     selectedPawn.color = selectedPawn.originalColor;
     directionChosen = false;
     selectedPawn = null;
+    placeWall = true;
   }
-  if(selectedPawn.isClicked == false){
+  if(placeWall === true){
     for (let item of board) {
       if (item instanceof Wall) {
         if (
@@ -439,6 +448,26 @@ function mouseClicked() {
   
 
   checkWinner(pawn1, pawn2);
+}
+
+function checkForPawn(firstPawn, secondPawn){
+  //If it's below
+  if(firstPawn.x == secondPawn.x && firstPawn.y == secondPawn.y+60){
+    return true
+  }
+  //If it's upside
+  if(firstPawn.x == secondPawn.x && firstPawn.y == secondPawn.y-60){
+    return true;
+  }
+  //If it's rightside
+  if(firstPawn.x == secondPawn.x+60 && firstPawn.y == secondPawn.y){
+    return true;
+  }
+  //If it's leftside
+  if(firstPawn.x == secondPawn.x-60 && firstPawn.y == secondPawn.y){
+    return true;
+  }
+  return false;
 }
 
 function findWall(findWall) {

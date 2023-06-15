@@ -180,6 +180,7 @@ function draw() {
 
 let selectedPawn = null;
 let directionChosen = false;
+placeWall = true;
 
 function mouseClicked() {
   if (!directionChosen) {
@@ -205,6 +206,7 @@ function mouseClicked() {
         if (distance < item.diameter / 2) {
           selectedPawn.color = selectedPawn.originalColor;
           selectedPawn.isClicked = false;
+          placeWall = true;
           selectedPawn = false;
           break;
         }
@@ -256,6 +258,7 @@ function mouseClicked() {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x += 60; // daca e pozitiva mutam la dreapta
+              placeWall = false;
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               // It's not the pawn's turn, movement is blocked
@@ -285,6 +288,7 @@ function mouseClicked() {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.x -= 60; //daca e negativa mutam la stanga
+              placeWall = false;
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               // It's not the pawn's turn, movement is blocked
@@ -316,6 +320,7 @@ function mouseClicked() {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.y += 60; // daca e pozitiva mutam in jos
+              placeWall = false;
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               // It's not the pawn's turn, movement is blocked
@@ -345,6 +350,7 @@ function mouseClicked() {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               selectedPawn.y -= 60; // daca e negativa mutam in sus
+              placeWall = false;
               currentPlayer = currentPlayer === 2 ? 1 : 2;
             } else {
               // It's not the pawn's turn, movement is blocked
@@ -360,6 +366,7 @@ function mouseClicked() {
     selectedPawn.color = selectedPawn.originalColor;
     directionChosen = false;
     selectedPawn = null;
+    placeWall = true;
 
     if (!isBlocked && !directionChosen && currentPlayer === 1) {
       if (player1.wallCount > 0) {
