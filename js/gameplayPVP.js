@@ -387,12 +387,12 @@ function mouseClicked() {
             ) {
               // daca e negativa mutam in sus
               if(checkForPawnUp(selectedPawn)){
-                if(selectedPawn.y - 120 > 120){
+                if(selectedPawn.y - 120 > 50){
 
                   for (let wall of wallsUsed) {
                     if (
-                      wall.x === item.x - 25 &&
-                      wall.y === item.y - 35 &&
+                      wall.x === selectedPawn.x - 25 &&
+                      wall.y === selectedPawn.y - 35 - 60&&
                       wall.isPlaced === 1
                     ) {
                       isWall = true;
