@@ -204,6 +204,7 @@ function mouseClicked() {
       }
     }
   } else {
+
     for (let item of board) {
       if (item instanceof Pawn) {
         distance = dist(mouseX, mouseY, item.x, item.y);

@@ -261,7 +261,7 @@ function mouseClicked() {
               // daca e pozitiva mutam la dreapta
               if(checkForPawnRight(selectedPawn)){
                 if(selectedPawn.x + 120 < 580){
-                  for (let wall of wallsUsed) {
+                  for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x + 25 + 60 &&
                       wall.y === selectedPawn.y - 25 &&
@@ -320,7 +320,7 @@ function mouseClicked() {
                //daca e negativa mutam la stanga
                if(checkForPawnLeft(selectedPawn)){
                 if(selectedPawn.x - 120 > 50){
-                  for (let wall of wallsUsed) {
+                  for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x - 35 - 60 &&
                       wall.y === selectedPawn.y - 25 &&
@@ -381,7 +381,7 @@ function mouseClicked() {
               // daca e pozitiva mutam in jos
               if(checkForPawnDown(selectedPawn)){
                 if(selectedPawn.y + 120 < 580){
-                  for (let wall of wallsUsed) {
+                  for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x - 25 &&
                       wall.y === selectedPawn.y + 25 + 60&&
@@ -441,7 +441,7 @@ function mouseClicked() {
               if(checkForPawnUp(selectedPawn)){
                 if(selectedPawn.y - 120 > 50){
 
-                  for (let wall of wallsUsed) {
+                  for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x - 25 &&
                       wall.y === selectedPawn.y - 35 - 60&&
