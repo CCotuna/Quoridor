@@ -511,12 +511,13 @@ function mouseClicked() {
   }
   // place walls
   for (let item of board) {
-    if (item instanceof Wall) {
+    if (item instanceof Wall) { // vezi spre dreapta
       if (
         mouseX > item.x + item.w / 2 &&
         mouseX < item.x + item.w &&
         mouseY < item.y + item.h &&
-        mouseY > item.y
+        mouseY > item.y &&
+        item.type == 2
       ) {
         if (item.type == findWall(item).type) {
           wallPositions.push(item);
@@ -575,11 +576,141 @@ function mouseClicked() {
         if (player2.wallCount == 0) {
           alert("You don't have walls!");
         }
-      } else if (
+      } else if ( // vezi spre stanga
         mouseX < item.x + item.w / 2 &&
         mouseX > item.x &&
         mouseY < item.y + item.h &&
-        mouseY > item.y
+        mouseY > item.y &&
+        item.type == 2
+      ) {
+        if (item.type == findWall2(item).type) {
+          wallPositions.push(item);
+          wallPositions.push(findWall2(item));
+          let isWallPlaced = wallPositions.some(
+            (pos) =>
+              (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+              (pos.x === findWall2(item).x &&
+                pos.y === findWall2(item).y &&
+                pos.isPlaced === 1)
+          );
+          console.log(isWallPlaced);
+
+          if (!isWallPlaced) {
+            if (currentPlayer === 2 && player2.wallCount > 0) {
+              if (
+                findWall2(item).w + findWall2(item).x < canvasWidth ||
+                findWall2(item).h + findWall2(item).y < canvasHeight
+              ) {
+                item.color = "chocolate";
+                findWall2(item).color = "chocolate";
+
+                console.log("wall1: x:" + item.x + "y: " + item.y);
+                console.log(
+                  "wall1below: x: " +
+                    findWall2(item).x +
+                    "y: " +
+                    findWall2(item).y
+                );
+
+                item.isPlaced = 1;
+                findWall2(item).isPlaced = 1;
+                player2.wallCount--;
+                currentPlayer = 1;
+
+                let random = generateRandomNumber();
+                console.log("the random number is: " + random);
+                if (random === 1) {
+                  moveAI();
+                } else if (random === 2) {
+                  if (player1.wallCount != 0) {
+                    placeWallAI();
+                  } else {
+                    moveAI();
+                  }
+                }
+              }
+              break;
+            }
+          } else {
+            alert(
+              "You can't place a wall there. It must not overlap an existing wall!"
+            );
+          }
+        }
+        if (player2.wallCount == 0) {
+          alert("You don't have walls!");
+        }
+      }else if ( //vezi in sus
+        mouseX < item.x + item.w / 2 &&
+        mouseX > item.x &&
+        mouseY < item.y + item.h &&
+        mouseY > item.y &&
+        item.type == 1
+      ) {
+        if (item.type == findWall2(item).type) {
+          wallPositions.push(item);
+          wallPositions.push(findWall2(item));
+          let isWallPlaced = wallPositions.some(
+            (pos) =>
+              (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+              (pos.x === findWall2(item).x &&
+                pos.y === findWall2(item).y &&
+                pos.isPlaced === 1)
+          );
+          console.log(isWallPlaced);
+
+          if (!isWallPlaced) {
+            if (currentPlayer === 2 && player2.wallCount > 0) {
+              if (
+                findWall2(item).w + findWall2(item).x < canvasWidth ||
+                findWall2(item).h + findWall2(item).y < canvasHeight
+              ) {
+                item.color = "chocolate";
+                findWall2(item).color = "chocolate";
+
+                console.log("wall1: x:" + item.x + "y: " + item.y);
+                console.log(
+                  "wall1below: x: " +
+                    findWall2(item).x +
+                    "y: " +
+                    findWall2(item).y
+                );
+
+                item.isPlaced = 1;
+                findWall2(item).isPlaced = 1;
+                player2.wallCount--;
+                currentPlayer = 1;
+
+                let random = generateRandomNumber();
+                console.log("the random number is: " + random);
+                if (random === 1) {
+                  moveAI();
+                } else if (random === 2) {
+                  if (player1.wallCount != 0) {
+                    placeWallAI();
+                  } else {
+                    moveAI();
+                  }
+                }
+              }
+              break;
+            }
+          } else {
+            alert(
+              "You can't place a wall there. It must not overlap an existing wall!"
+            );
+          }
+        }
+        if (player2.wallCount == 0) {
+          alert("You don't have walls!");
+        }
+      }
+      else if ( // vezi in jos
+        mouseX < item.x + item.w / 2 &&
+        mouseX > item.x &&
+        mouseY < item.y + item.h &&
+        mouseY > item.y &&
+        item.type == 1
       ) {
         if (item.type == findWall2(item).type) {
           wallPositions.push(item);
@@ -815,6 +946,22 @@ function findWall(findWall) {
   return null;
 }
 
+function findWall1(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (item.type == 2) {
+        if (
+          item.x === findWall.x + 60 &&
+          item.y === findWall.y &&
+          item.w + findWall.w == 100
+        )
+          return item;
+      }
+    }
+  }
+  return null;
+}
+
 function findWall2(findWall) {
   for (let item of board) {
     if (item instanceof Wall) {
@@ -826,11 +973,37 @@ function findWall2(findWall) {
         )
           return item;
       }
+    }
+  }
+  return null;
+}
+
+function findWall3(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
       if (item.type == 1) {
         if (
           item.x === findWall.x &&
           item.y < findWall.y &&
-          item.w === findWall.w
+          item.w === findWall.w &&
+          item.y + 60 === findWall.y
+        )
+          return item;
+      }
+    }
+  }
+  return null;
+}
+
+function findWall4(findWall) {
+  for (let item of board) {
+    if (item instanceof Wall) {
+      if (item.type == 1) {
+        if (
+          item.x === findWall.x &&
+          item.y > findWall.y &&
+          item.w === findWall.w &&
+          item.y - 60 === findWall.y
         )
           return item;
       }
