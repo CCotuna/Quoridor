@@ -667,7 +667,7 @@ function mouseClicked() {
               ) {
                 item.color = "chocolate";
                 findWall3(item).color = "chocolate";
-
+ 
                 console.log("wall1: x:" + item.x + "y: " + item.y);
                 console.log(
                   "wall1below: x: " +

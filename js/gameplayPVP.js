@@ -464,22 +464,23 @@ function mouseClicked() {
   }
   if (placeWall === true) {
     for (let item of board) {
-      if (item instanceof Wall) {
+      if (item instanceof Wall) { // spre dreapta
         if (
+          mouseX > item.x + item.w / 2 &&
           mouseX < item.x + item.w &&
-          mouseX > item.x &&
           mouseY < item.y + item.h &&
-          mouseY > item.y
+          mouseY > item.y &&
+          item.type == 2
         ) {
-          if (item.type == findWall(item).type) {
+          if (item.type == findWall1(item).type) {
             wallsUsed.push(item);
-            wallsUsed.push(findWall(item));
+            wallsUsed.push(findWall1(item));
 
             let isWallPlaced = wallsUsed.some(
               (pos) =>
                 (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
-                (pos.x === findWall(item).x &&
-                  pos.y === findWall(item).y &&
+                (pos.x === findWall1(item).x &&
+                  pos.y === findWall1(item).y &&
                   pos.isPlaced === 1)
             );
             console.log(isWallPlaced);
@@ -487,40 +488,256 @@ function mouseClicked() {
             if (!isWallPlaced) {
               if (currentPlayer === 1 && player1.wallCount > 0) {
                 if (
-                  findWall(item).w + findWall(item).x < canvasWidth ||
-                  findWall(item).h + findWall(item).y < canvasHeight
+                  findWall1(item).w + findWall1(item).x < canvasWidth ||
+                  findWall1(item).h + findWall1(item).y < canvasHeight
                 ) {
                   item.color = "chocolate";
-                  findWall(item).color = "chocolate";
+                  findWall1(item).color = "chocolate";
                   console.log("wall1: x:" + item.x + "y: " + item.y);
                   console.log(
                     "wall1below: x: " +
-                      findWall(item).x +
+                      findWall1(item).x +
                       "y: " +
-                      findWall(item).y
+                      findWall1(item).y
                   );
                   item.isPlaced = 1;
-                  findWall(item).isPlaced = 1;
+                  findWall1(item).isPlaced = 1;
                   player1.wallCount--;
                   currentPlayer = 2;
                 }
                 break;
               } else if (currentPlayer === 2 && player2.wallCount > 0) {
                 if (
-                  findWall(item).w + findWall(item).x < canvasWidth ||
-                  findWall(item).h + findWall(item).y < canvasHeight
+                  findWall1(item).w + findWall1(item).x < canvasWidth ||
+                  findWall1(item).h + findWall1(item).y < canvasHeight
                 ) {
                   item.color = "chocolate";
-                  findWall(item).color = "chocolate";
+                  findWall1(item).color = "chocolate";
                   console.log("wall1: x:" + item.x + "y: " + item.y);
                   console.log(
                     "wall1below: x: " +
-                      findWall(item).x +
+                      findWall1(item).x +
                       "y: " +
-                      findWall(item).y
+                      findWall1(item).y
                   );
                   item.isPlaced = 1;
-                  findWall(item).isPlaced = 1;
+                  findWall1(item).isPlaced = 1;
+                  player2.wallCount--;
+                  currentPlayer = 1;
+                }
+                break;
+              }
+            } else {
+              alert(
+                "You can't place a wall there. It must not overlap an existing wall!"
+              );
+            }
+          }
+          if (player1.wallCount == 0 || player2.wallCount == 0) {
+            alert("You don't have walls!");
+          }
+        }
+        else if ( // spre stanga
+        mouseX < item.x + item.w / 2 &&
+        mouseX > item.x &&
+        mouseY < item.y + item.h &&
+        mouseY > item.y &&
+        item.type == 2
+        ) {
+          if (item.type == findWall2(item).type) {
+            wallsUsed.push(item);
+            wallsUsed.push(findWall2(item));
+
+            let isWallPlaced = wallsUsed.some(
+              (pos) =>
+                (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+                (pos.x === findWall2(item).x &&
+                  pos.y === findWall2(item).y &&
+                  pos.isPlaced === 1)
+            );
+            console.log(isWallPlaced);
+
+            if (!isWallPlaced) {
+              if (currentPlayer === 1 && player1.wallCount > 0) {
+                if (
+                  findWall2(item).w + findWall2(item).x < canvasWidth ||
+                  findWall2(item).h + findWall2(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall2(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall2(item).x +
+                      "y: " +
+                      findWall2(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall2(item).isPlaced = 1;
+                  player1.wallCount--;
+                  currentPlayer = 2;
+                }
+                break;
+              } else if (currentPlayer === 2 && player2.wallCount > 0) {
+                if (
+                  findWall2(item).w + findWall2(item).x < canvasWidth ||
+                  findWall2(item).h + findWall2(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall2(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall2(item).x +
+                      "y: " +
+                      findWall2(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall2(item).isPlaced = 1;
+                  player2.wallCount--;
+                  currentPlayer = 1;
+                }
+                break;
+              }
+            } else {
+              alert(
+                "You can't place a wall there. It must not overlap an existing wall!"
+              );
+            }
+          }
+          if (player1.wallCount == 0 || player2.wallCount == 0) {
+            alert("You don't have walls!");
+          }
+        }
+        else if ( // in sus
+        mouseX < item.x + item.w &&
+        mouseX > item.x &&
+        mouseY < item.y + item.h/2 &&
+        mouseY > item.y &&
+        item.type == 1
+        ) {
+          if (item.type == findWall3(item).type) {
+            wallsUsed.push(item);
+            wallsUsed.push(findWall3(item));
+
+            let isWallPlaced = wallsUsed.some(
+              (pos) =>
+                (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+                (pos.x === findWall3(item).x &&
+                  pos.y === findWall3(item).y &&
+                  pos.isPlaced === 1)
+            );
+            console.log(isWallPlaced);
+
+            if (!isWallPlaced) {
+              if (currentPlayer === 1 && player1.wallCount > 0) {
+                if (
+                  findWall3(item).w + findWall3(item).x < canvasWidth ||
+                  findWall3(item).h + findWall3(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall3(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall3(item).x +
+                      "y: " +
+                      findWall3(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall3(item).isPlaced = 1;
+                  player1.wallCount--;
+                  currentPlayer = 2;
+                }
+                break;
+              } else if (currentPlayer === 2 && player2.wallCount > 0) {
+                if (
+                  findWall3(item).w + findWall3(item).x < canvasWidth ||
+                  findWall3(item).h + findWall3(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall3(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall3(item).x +
+                      "y: " +
+                      findWall3(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall3(item).isPlaced = 1;
+                  player2.wallCount--;
+                  currentPlayer = 1;
+                }
+                break;
+              }
+            } else {
+              alert(
+                "You can't place a wall there. It must not overlap an existing wall!"
+              );
+            }
+          }
+          if (player1.wallCount == 0 || player2.wallCount == 0) {
+            alert("You don't have walls!");
+          }
+        }
+        else if (
+          mouseX > item.x &&
+        mouseX < item.x + item.w &&
+        mouseY > item.y + item.h/2 &&
+        mouseY < item.y + item.h &&
+        item.type == 1
+        ) {
+          if (item.type == findWall4(item).type) {
+            wallsUsed.push(item);
+            wallsUsed.push(findWall4(item));
+
+            let isWallPlaced = wallsUsed.some(
+              (pos) =>
+                (pos.x === item.x && pos.y === item.y && pos.isPlaced === 1) ||
+                (pos.x === findWall4(item).x &&
+                  pos.y === findWall4(item).y &&
+                  pos.isPlaced === 1)
+            );
+            console.log(isWallPlaced);
+
+            if (!isWallPlaced) {
+              if (currentPlayer === 1 && player1.wallCount > 0) {
+                if (
+                  findWall4(item).w + findWall4(item).x < canvasWidth ||
+                  findWall4(item).h + findWall4(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall4(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall4(item).x +
+                      "y: " +
+                      findWall4(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall4(item).isPlaced = 1;
+                  player1.wallCount--;
+                  currentPlayer = 2;
+                }
+                break;
+              } else if (currentPlayer === 2 && player2.wallCount > 0) {
+                if (
+                  findWall4(item).w + findWall4(item).x < canvasWidth ||
+                  findWall4(item).h + findWall4(item).y < canvasHeight
+                ) {
+                  item.color = "chocolate";
+                  findWall4(item).color = "chocolate";
+                  console.log("wall1: x:" + item.x + "y: " + item.y);
+                  console.log(
+                    "wall1below: x: " +
+                      findWall4(item).x +
+                      "y: " +
+                      findWall4(item).y
+                  );
+                  item.isPlaced = 1;
+                  findWall4(item).isPlaced = 1;
                   player2.wallCount--;
                   currentPlayer = 1;
                 }
