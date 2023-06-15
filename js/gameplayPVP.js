@@ -255,6 +255,7 @@ function mouseClicked() {
                 }
                 else{
                   alert("You're trying to go outside the board!")
+                  return;
                 }
               }
               else{
@@ -300,6 +301,7 @@ function mouseClicked() {
                 }
                 else{
                   alert("You're trying to go outside the board!")
+                  return;
                 }
               }
               else{
@@ -346,6 +348,7 @@ function mouseClicked() {
                 }
                 else{
                   alert("You're trying to go outside the board!")
+                  return;
                 }
               }
               else{
@@ -386,7 +389,10 @@ function mouseClicked() {
                 if(selectedPawn.y - 120 > 120){
                   selectedPawn.y -=120;
                 }
-                else{alert("You're trying to go outside the board!")}
+                else{
+                  alert("You're trying to go outside the board!")
+                  return;
+                }
               }
               else{
                 selectedPawn.y -= 60;
