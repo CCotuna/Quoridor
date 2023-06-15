@@ -298,7 +298,25 @@ function mouseClicked() {
               //daca e negativa mutam la stanga
               if(checkForPawnLeft(selectedPawn)){
                 if(selectedPawn.x - 120 > 50){
-                  selectedPawn.x -=120;
+                  for (let wall of wallsUsed) {
+                    if (
+                      wall.x === selectedPawn.x - 35 - 60 &&
+                      wall.y === selectedPawn.y - 25 &&
+                      wall.isPlaced === 1
+                    ) {
+                      isWall = true;
+                      break;
+                    }
+                  }
+                  console.log(isWall);
+                  if(isWall === true)
+                    {
+                      alert("You can't move there! There's a wall!")
+                      return;}
+                  else{
+                    selectedPawn.x -=120;
+                    isWall = false;
+                  }
                 }
                 else{
                   alert("You're trying to go outside the board!")
@@ -345,7 +363,25 @@ function mouseClicked() {
               // daca e pozitiva mutam in jos
               if(checkForPawnDown(selectedPawn)){
                 if(selectedPawn.y + 120 < 580){
-                  selectedPawn.y +=120;
+                  for (let wall of wallsUsed) {
+                    if (
+                      wall.x === selectedPawn.x - 25 &&
+                      wall.y === selectedPawn.y + 25 + 60&&
+                      wall.isPlaced === 1
+                    ) {
+                      isWall = true;
+                      break;
+                    }
+                  }
+                  console.log(isWall);
+                  if(isWall === true)
+                    {
+                      alert("You can't move there! There's a wall!")
+                      return;}
+                  else{
+                    selectedPawn.y += 120;
+                    isWall = false;
+                  }
                 }
                 else{
                   alert("You're trying to go outside the board!")
