@@ -1,7 +1,6 @@
 document.getElementById("resetButton").addEventListener("click", resetBoard);
 document.getElementById("surrenderButton").addEventListener("click", surrender);
 
-
 let playerName = localStorage.getItem("playerName");
 
 let wallPositions = [];
@@ -15,6 +14,31 @@ let canvasHeight;
 let player1, player2;
 let currentPlayer = 2;
 let isOverWall = false;
+
+
+//    Functions / Classes used
+// function setup() - 18
+// function addWallPosition() - 80
+// class Player - 94
+// class Box - 102
+// class Wall - 120
+// class Pawn - 143
+// function draw() - 162
+// function mouseClicked() - 184
+// function generateRandomNumber() - 560
+// function moveAI() - 564
+// function placeWallAI() - 626
+// function checkForPawnUp() - 671
+// function checkForPawnDown() - 680
+// function checkForPawnRight() - 689
+// function checkForPawnLeft() - 698
+// function findWall() - 707
+// function checkForWall() - 731
+// function resetPawns() - 740
+// function resetBoard() - 754
+// function checkWinner() - 768
+// function gameover()
+// function surrender()
 
 function setup() {
   canvas = createCanvas(630, 630);
@@ -259,8 +283,8 @@ function mouseClicked() {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               // daca e pozitiva mutam la dreapta
-              if(checkForPawnRight(selectedPawn)){
-                if(selectedPawn.x + 120 < 580){
+              if (checkForPawnRight(selectedPawn)) {
+                if (selectedPawn.x + 120 < 580) {
                   for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x + 25 + 60 &&
@@ -271,21 +295,18 @@ function mouseClicked() {
                       break;
                     }
                   }
-                  if(isWall === true)
-                    {
-                      alert("You can't move there! There's a wall!")
-                      return;}
-                  else{
+                  if (isWall === true) {
+                    alert("You can't move there! There's a wall!");
+                    return;
+                  } else {
                     selectedPawn.x += 120;
                     isWall = false;
                   }
-                }
-                else{
-                  alert("You're trying to go outside the board!")
+                } else {
+                  alert("You're trying to go outside the board!");
                   return;
                 }
-              }
-              else{
+              } else {
                 selectedPawn.x += 60;
               }
               placeWall = false;
@@ -317,9 +338,9 @@ function mouseClicked() {
         } else if (!isBlocked) {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
-               //daca e negativa mutam la stanga
-               if(checkForPawnLeft(selectedPawn)){
-                if(selectedPawn.x - 120 > 50){
+              //daca e negativa mutam la stanga
+              if (checkForPawnLeft(selectedPawn)) {
+                if (selectedPawn.x - 120 > 50) {
                   for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x - 35 - 60 &&
@@ -330,21 +351,18 @@ function mouseClicked() {
                       break;
                     }
                   }
-                  if(isWall === true)
-                    {
-                      alert("You can't move there! There's a wall!")
-                      return;}
-                  else{
-                    selectedPawn.x -=120;
+                  if (isWall === true) {
+                    alert("You can't move there! There's a wall!");
+                    return;
+                  } else {
+                    selectedPawn.x -= 120;
                     isWall = false;
                   }
-                }
-                else{
-                  alert("You're trying to go outside the board!")
+                } else {
+                  alert("You're trying to go outside the board!");
                   return;
                 }
-              }
-              else{
+              } else {
                 selectedPawn.x -= 60;
               }
               placeWall = false;
@@ -379,33 +397,30 @@ function mouseClicked() {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               // daca e pozitiva mutam in jos
-              if(checkForPawnDown(selectedPawn)){
-                if(selectedPawn.y + 120 < 580){
+              if (checkForPawnDown(selectedPawn)) {
+                if (selectedPawn.y + 120 < 580) {
                   for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x - 25 &&
-                      wall.y === selectedPawn.y + 25 + 60&&
+                      wall.y === selectedPawn.y + 25 + 60 &&
                       wall.isPlaced === 1
                     ) {
                       isWall = true;
                       break;
                     }
                   }
-                  if(isWall === true)
-                    {
-                      alert("You can't move there! There's a wall!")
-                      return;}
-                  else{
+                  if (isWall === true) {
+                    alert("You can't move there! There's a wall!");
+                    return;
+                  } else {
                     selectedPawn.y += 120;
                     isWall = false;
                   }
-                }
-                else{
-                  alert("You're trying to go outside the board!")
+                } else {
+                  alert("You're trying to go outside the board!");
                   return;
                 }
-              }
-              else{
+              } else {
                 selectedPawn.y += 60;
               }
               placeWall = false;
@@ -438,34 +453,30 @@ function mouseClicked() {
           if (isValidStep) {
             if (currentPlayer === 2 && selectedPawn === pawn2) {
               // daca e negativa mutam in sus
-              if(checkForPawnUp(selectedPawn)){
-                if(selectedPawn.y - 120 > 50){
-
+              if (checkForPawnUp(selectedPawn)) {
+                if (selectedPawn.y - 120 > 50) {
                   for (let wall of wallPositions) {
                     if (
                       wall.x === selectedPawn.x - 25 &&
-                      wall.y === selectedPawn.y - 35 - 60&&
+                      wall.y === selectedPawn.y - 35 - 60 &&
                       wall.isPlaced === 1
                     ) {
                       isWall = true;
                       break;
                     }
                   }
-                  if(isWall === true)
-                    {
-                      alert("You can't move there! There's a wall!")
-                      return;}
-                  else{
-                    selectedPawn.y -=120;
+                  if (isWall === true) {
+                    alert("You can't move there! There's a wall!");
+                    return;
+                  } else {
+                    selectedPawn.y -= 120;
                     isWall = false;
                   }
-                }
-                else{
-                  alert("You're trying to go outside the board!")
+                } else {
+                  alert("You're trying to go outside the board!");
                   return;
                 }
-              }
-              else{
+              } else {
                 selectedPawn.y -= 60;
               }
               placeWall = false;
@@ -637,7 +648,6 @@ function moveAI() {
   }
 }
 
-
 function placeWallAI() {
   if (player1.wallCount != 0) {
     const walls = board.filter((item) => item instanceof Wall);
@@ -683,46 +693,40 @@ function placeWallAI() {
   }
 }
 
-function checkForPawnUp(pawn){
-  let isWall = false; 
-  for(let item of board){
-   if(item instanceof Pawn && item !== pawn){
-     if(pawn.x == item.x && pawn.y - 60 == item.y)
-       return true;
-   }
+function checkForPawnUp(pawn) {
+  for (let item of board) {
+    if (item instanceof Pawn && item !== pawn) {
+      if (pawn.x == item.x && pawn.y - 60 == item.y) return true;
+    }
   }
   return false;
-} 
-
-function checkForPawnDown(pawn){
- for(let item of board){ 
-   if(item instanceof Pawn && item !== pawn){
-     if(pawn.x == item.x && pawn.y + 60 == item.y)
-     return true;
-   }
- }
- return false;
 }
 
-function checkForPawnRight(pawn){
- for(let item of board){ 
-   if(item instanceof Pawn && item !== pawn){
-     if(pawn.x + 60 == item.x && pawn.y == item.y)
-     return true;
-   }
- }
- return false;
+function checkForPawnDown(pawn) {
+  for (let item of board) {
+    if (item instanceof Pawn && item !== pawn) {
+      if (pawn.x == item.x && pawn.y + 60 == item.y) return true;
+    }
+  }
+  return false;
 }
 
+function checkForPawnRight(pawn) {
+  for (let item of board) {
+    if (item instanceof Pawn && item !== pawn) {
+      if (pawn.x + 60 == item.x && pawn.y == item.y) return true;
+    }
+  }
+  return false;
+}
 
-function checkForPawnLeft(pawn){
- for(let item of board){ 
-   if(item instanceof Pawn && item !== pawn){
-     if(pawn.x -60 == item.x && pawn.y == item.y)
-     return true;
-   }
- }
- return false;
+function checkForPawnLeft(pawn) {
+  for (let item of board) {
+    if (item instanceof Pawn && item !== pawn) {
+      if (pawn.x - 60 == item.x && pawn.y == item.y) return true;
+    }
+  }
+  return false;
 }
 
 function findWall(findWall) {
@@ -786,12 +790,6 @@ function resetBoard() {
   // Math.floor(Math.random() * 2) + 1;
 }
 
-function checkWinner(pawn) {
-  if (pawn.y == 555 || pawn.y == 100) {
-    gameover();
-  }
-}
-
 document.getElementById("playerNameDisplay").textContent =
   "Player Name: " + playerName;
 
@@ -820,6 +818,6 @@ function gameover(winningPawn) {
   window.location.href = "winner.html";
 }
 
-function surrender(){
+function surrender() {
   window.location.href = "loser.html";
 }
