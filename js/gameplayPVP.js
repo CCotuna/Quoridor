@@ -222,6 +222,7 @@ function mouseClicked() {
 
     let isValidStep = true;
     let isBlocked = false;
+    let isWall = false;
 
     if (abs(newX) > abs(newY)) {
       if (newX > 0 && selectedPawn.x < width - 120) {
@@ -387,7 +388,26 @@ function mouseClicked() {
               // daca e negativa mutam in sus
               if(checkForPawnUp(selectedPawn)){
                 if(selectedPawn.y - 120 > 120){
-                  selectedPawn.y -=120;
+
+                  for (let wall of wallsUsed) {
+                    if (
+                      wall.x === item.x - 25 &&
+                      wall.y === item.y - 35 &&
+                      wall.isPlaced === 1
+                    ) {
+                      isWall = true;
+                      break;
+                    }
+                  }
+                  console.log(isWall);
+                  if(isWall === true)
+                    {
+                      alert("You can't move there! There's a wall!")
+                      return;}
+                  else{
+                    selectedPawn.y -=120;
+                    isWall = false;
+                  }
                 }
                 else{
                   alert("You're trying to go outside the board!")
@@ -496,10 +516,11 @@ function mouseClicked() {
 }
 
 function checkForPawnUp(pawn){
+   let isWall = false; 
    for(let item of board){
     if(item instanceof Pawn && item !== pawn){
       if(pawn.x == item.x && pawn.y - 60 == item.y)
-      return true;
+        return true;
     }
    }
    return false;
