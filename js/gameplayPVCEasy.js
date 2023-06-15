@@ -162,14 +162,6 @@ class Wall {
     fill(this.color);
     rect(this.x, this.y, this.w, this.h);
   }
-
-  over(){
-    fill("gray");
-  }
-
-  notOver(){
-    fill(this.color);
-  }
 }
 
 class Pawn {
@@ -207,6 +199,7 @@ function draw() {
   currentPlayer === 1
     ? text(`Current turn: ${player1.name}`, 270, 30)
     : text(`Current turn: ${player2.name}`, 270, 30);
+
 }
 
 let selectedPawn = null;
