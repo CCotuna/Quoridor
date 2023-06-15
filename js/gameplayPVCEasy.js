@@ -162,6 +162,14 @@ class Wall {
     fill(this.color);
     rect(this.x, this.y, this.w, this.h);
   }
+
+  over(){
+    fill("gray");
+  }
+
+  notOver(){
+    fill(this.color);
+  }
 }
 
 class Pawn {
@@ -537,6 +545,7 @@ function mouseClicked() {
                 findWall1(item).w + findWall1(item).x < canvasWidth ||
                 findWall1(item).h + findWall1(item).y < canvasHeight
               ) {
+                
                 item.color = "chocolate";
                 findWall1(item).color = "chocolate";
 
